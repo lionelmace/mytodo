@@ -2,7 +2,7 @@ applications:
 - path: .
   memory: 256M
   instances: 1
-  domain: lm.mybluemix.net
+  domain: lma.mybluemix.net
   name: todo
   host: todo
   disk_quota: 1024M
