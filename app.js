@@ -8,7 +8,7 @@ var bodyParser = require('body-parser')
 var vcapLocal = null
 try {
   vcapLocal = require("./vcap-local.json");
-  console.log("Loaded local VCAP", vcapLocal);
+  console.log("APP - Loaded local VCAP", vcapLocal);
 } catch (e) {
   console.error(e);
 }
@@ -17,14 +17,10 @@ try {
 var options = vcapLocal ? { vcap: vcapLocal } : {}
 var appEnv = cfenv.getAppEnv(options);
 
-console.log('BASE_INFO');
-console.log('---------');
-console.log('Is Local: ' + appEnv.isLocal);
-console.log('App Name: ' + appEnv.name);
+console.log('APP - Running Local: ' + appEnv.isLocal);
+console.log('APP - App Name: ' + appEnv.name);
 
 // load the services bound to this application
-console.log('SERVICES');
-console.log('--------');
 var services = appEnv.getServices();
 var dbServiceName;
 //console.log(services);
@@ -33,14 +29,14 @@ for (var serviceName in services) {
   if (services.hasOwnProperty(serviceName)) {
     count++;
     var service = services[serviceName];
-    console.log('Name=' + service.name + ' - Label=' + service.label);
+    console.log('APP - Svc Name=' + service.name + ', Label=' + service.label);
     if (service.label == "cloudantNoSQLDB") {
       dbServiceName =  service.name;
     }
   }
 }
 if (!count) {
-  console.log('No services are bound to this app.\n');
+  console.log('APP - No services are bound to this app.\n');
 }
 
 // expect a service whose name matches the regular expression
@@ -65,5 +61,5 @@ app.use(favicon(__dirname + '/public/icons/favicon.ico'));
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, "0.0.0.0", function () {
-  console.log("Server starting on " + appEnv.url);
+  console.log("APP - Server starting on " + appEnv.url);
 });

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="newTodoApp">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Todo List</title>
+  <link rel="stylesheet" href="vendor/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/new.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+</head>
+
+<body>
+  <header>
+    <h1>Todo List</h1>
+  </header>
+
+  <section ng-controller="todoCtrlNew">
+    <form id="todo-form" ng-submit="addTodo()">
+      <input id="new-todo" placeholder="What do you need to do ?" ng-model="newTodo.text" />
+    </form>
+
+    <article ng-show="todos.length">
+      <ul id="todo-list">
+        <li ng-repeat="todo in todos" ng-class="{completed: todo.completed}">
+          <div class="view">
+            <input class="mark" type="checkbox" ng-model="todo.completed" />
+            <span>{{todo.text}}</span>
+            <!--span class="close" ng-click="deleteTodo(todo)">x</span-->
+            <small><span class="glyphicon glyphicon-trash close" aria-hidden="true" ng-click="deleteTodo(todo)"></span></small>
+          </div>
+        </li>
+      </ul>
+      <input id="mark-all" type="checkbox" ng-model="allChecked" ng-click="markAll(allChecked)" />
+      <label class="btn btn-info" for="mark-all">Select All</label>
+      <button class="btn btn-danger" ng-click="clearCompletedTodos()">Clear selected todos</button>
+    </article>
+
+  </section>
+
+  <script src="vendor/angular/angular.js"></script>
+
+  <!-- load our todo service -->
+  <script src="js/services/todo.service.js"></script>
+  <!-- load up our controller -->
+  <!-- script src="js/controllers/todo.controller.js"></script -->
+  <script src="js/controllers/todoList.js"></script>
+  <!-- load our main application -->
+  <script src="js/todo.js"></script>
+
+</body>
+
+</html>
