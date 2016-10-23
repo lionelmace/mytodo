@@ -10,6 +10,7 @@
   "moduleType": [],
   "dependencies": {
     "bootstrap": "~3.3.6",
-    "angular": "~1.5.0"
+    "angular": "~1.5.0",
+    "font-awesome": "fontawesome#^4.6.3"
   }
 }
