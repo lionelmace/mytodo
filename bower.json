@@ -6,7 +6,7 @@
     "Lionel"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/lionelmace/node-todo",
+  "homepage": "https://github.com/lionelmace/mytodo",
   "moduleType": [],
   "dependencies": {
     "bootstrap": "~3.3.6",
