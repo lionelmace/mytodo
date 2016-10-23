@@ -1505,7 +1505,7 @@ section {
   border-top-right-radius: 2px;
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.15);
   width: 50%;
-  min-width: 500px;
+  min-width: 340px;
 }
 article {
   margin: 0px!important;

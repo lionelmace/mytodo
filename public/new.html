@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
 
-  <!-- Optimize mobile viewport -->
+  <!-- Optimize mobile viewport for responsive design -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Todo List</title>
@@ -26,7 +26,7 @@
 
   <section ng-controller="todoCtrl">
     <form id="todo-form" ng-submit="addTodo()">
-      <input id="new-todo" placeholder="What do you need to do ?" ng-model="newTodo.text" />
+      <input id="new-todo" placeholder="Type a new todo" ng-model="newTodo.text" />
     </form>
 
     <article ng-show="todos.length">
