@@ -17,5 +17,18 @@
     "morgan": "~1.1.1",
     "nano": "^6.2.0",
     "serve-favicon": "^2.3.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "async": true,
+      "body-parser": true,
+      "bower": true,
+      "cfenv": true,
+      "express": true,
+      "method-override": true,
+      "morgan": true,
+      "nano": true,
+      "serve-favicon": true
+    }
   }
 }
