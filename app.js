@@ -1,3 +1,5 @@
+/*eslint-env express*/
+
 var express = require('express');
 var cfenv   = require('cfenv');
 var favicon = require('serve-favicon');

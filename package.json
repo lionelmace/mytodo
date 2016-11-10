@@ -6,6 +6,9 @@
     "start": "node app.js",
     "postinstall": "bower install --allow-root"
   },
+  "engines": {
+    "node": "6.x"
+  },
   "main": "app.js",
   "dependencies": {
     "async": "^1.5.2",
@@ -17,18 +20,5 @@
     "morgan": "~1.1.1",
     "nano": "^6.2.0",
     "serve-favicon": "^2.3.0"
-  },
-  "eslintConfig": {
-    "env": {
-      "async": true,
-      "body-parser": true,
-      "bower": true,
-      "cfenv": true,
-      "express": true,
-      "method-override": true,
-      "morgan": true,
-      "nano": true,
-      "serve-favicon": true
-    }
   }
 }
