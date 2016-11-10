@@ -1,4 +1,4 @@
-/*eslint-env express*/
+/*eslint-env express, node*/
 
 var express = require('express');
 var cfenv   = require('cfenv');
