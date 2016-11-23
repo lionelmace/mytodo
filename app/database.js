@@ -1,11 +1,11 @@
 var async = require("async");
 
-function Database(appEnv, serviceName, dbName, waterfallCallback) {
+function Database(appEnv, cloudantCreds, dbName, waterfallCallback) {
   var self = this;
 
   console.log("DBA - Initializing database...");
 
-  var cloudant = require('nano')(appEnv.getServiceCreds(serviceName).url).db;
+  var cloudant = require('nano')(cloudantCreds.url).db;
   var todoDb;
   var prepareDbTasks = [];
 

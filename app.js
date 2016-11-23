@@ -1,14 +1,18 @@
 /*eslint-env express, node*/
 
+// This application uses express as its web server
+// for more info, see: http://expressjs.com
 var express = require('express');
 var cfenv   = require('cfenv');
 var favicon = require('serve-favicon');
 var app     = express();
 var bodyParser = require('body-parser')
 
-// load local VCAP configuration
+// Set up environment variables
+// cfenv provides access to your Cloud Foundry environment
 var vcapLocal = null
 try {
+  // load local VCAP configuration
   vcapLocal = require("./vcap-local.json");
   console.log("APP - Loaded local VCAP", vcapLocal);
 } catch (e) {
@@ -22,10 +26,10 @@ var appEnv = cfenv.getAppEnv(options);
 console.log('APP - Running Local: ' + appEnv.isLocal);
 console.log('APP - App Name: ' + appEnv.name);
 
-// load the services bound to this application
+// Configure Cloudant database service
+// Return all services, in an object keyed by service name.
 var services = appEnv.getServices();
-var dbServiceName;
-//console.log(services);
+var cloudantCreds;
 var count = 0;
 for (var serviceName in services) {
   if (services.hasOwnProperty(serviceName)) {
@@ -33,7 +37,7 @@ for (var serviceName in services) {
     var service = services[serviceName];
     console.log('APP - Svc Name=' + service.name + ', Label=' + service.label);
     if (service.label == "cloudantNoSQLDB") {
-      dbServiceName =  service.name;
+      cloudantCreds =  service.credentials;
     }
   }
 }
@@ -41,13 +45,15 @@ if (!count) {
   console.log('APP - No services are bound to this app.\n');
 }
 
-// expect a service whose name matches the regular expression
-//console.log('toto ' + appEnv.getServiceCreds(/cloudant/i));
+// To be used when the string is the exact name of the service
+//var cloudantCreds = getServiceCreds(appEnv, 'Cloudant NoSQL DB-px');
+// To be used when the service name matches the regular expression
+//var cloudantCreds =  appEnv.getServiceCreds(/cloudant/i));
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()); // parse application/json
 
-require("./app/database.js")(appEnv, dbServiceName, "todos", 
+require("./app/database.js")(appEnv, cloudantCreds, "todos",
   function (err, database) {
     if (err) {
       console.log(err);
@@ -65,3 +71,13 @@ app.use(favicon(__dirname + '/public/icons/favicon.ico'));
 app.listen(appEnv.port, "0.0.0.0", function () {
   console.log("APP - Server starting on " + appEnv.url);
 });
+
+// Retrieves service credentials by service name
+function getServiceCreds(appEnv, serviceName) {
+    var serviceCreds = appEnv.getServiceCreds(serviceName);
+    if (!serviceCreds) {
+        console.log("service " + serviceName + " not bound to this application");
+        return null;
+    }
+    return serviceCreds;
+}
