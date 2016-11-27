@@ -1,4 +1,6 @@
 /*eslint-env express, node*/
+// turn off warnings for semicolons
+/*eslint semi:0*/
 
 // This application uses express as its web server
 // for more info, see: http://expressjs.com
