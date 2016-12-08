@@ -73,8 +73,8 @@ app.use(favicon(__dirname + '/public/icons/favicon.ico'));
 
 // start server on the specified port and binding host
 //Not supported on DIEGO
-//app.listen(appEnv.port, "0.0.0.0", function () {
-app.listen(port, function () {
+app.listen(appEnv.port, "0.0.0.0", function () {
+//app.listen(port, function () {
   console.log("APP - Server starting on " + port);
 });
 
