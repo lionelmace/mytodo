@@ -11,6 +11,8 @@ var app     = express();
 var bodyParser = require('body-parser')
 
 // Set up environment variables
+var port = process.env.PORT || 8080;
+
 // cfenv provides access to your Cloud Foundry environment
 var vcapLocal = null
 try {
@@ -70,8 +72,10 @@ app.use(express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/icons/favicon.ico'));
 
 // start server on the specified port and binding host
-app.listen(appEnv.port, "0.0.0.0", function () {
-  console.log("APP - Server starting on " + appEnv.url);
+//Not supported on DIEGO
+//app.listen(appEnv.port, "0.0.0.0", function () {
+app.listen(port, function () {
+  console.log("APP - Server starting on " + port);
 });
 
 // Retrieves service credentials by service name
