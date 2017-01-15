@@ -4,3 +4,4 @@ applications:
   instances: 1
   name: todo
   disk_quota: 1024M
+  buildpack: sdk-for-nodejs
