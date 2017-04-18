@@ -72,7 +72,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/icons/favicon-check.ico'));
 
 // start server on the specified port and binding host
-//Not supported on DIEGO
 //app.listen(appEnv.port, "0.0.0.0", function () {
 app.listen(appEnv.port, function () {
   console.log("APP - Server started on " + appEnv.url);
