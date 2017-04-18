@@ -69,13 +69,13 @@ require("./app/database.js")(appEnv, cloudantCreds, "todos",
 
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));
-app.use(favicon(__dirname + '/public/icons/favicon.ico'));
+app.use(favicon(__dirname + '/public/icons/favicon-check.ico'));
 
 // start server on the specified port and binding host
 //Not supported on DIEGO
-app.listen(appEnv.port, "0.0.0.0", function () {
-//app.listen(port, function () {
-  console.log("APP - Server starting on " + port);
+//app.listen(appEnv.port, "0.0.0.0", function () {
+app.listen(appEnv.port, function () {
+  console.log("APP - Server started on " + appEnv.url);
 });
 
 // Retrieves service credentials by service name
