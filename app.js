@@ -11,7 +11,8 @@ var app     = express();
 var bodyParser = require('body-parser')
 
 // Set up environment variables
-var port = process.env.PORT || 8080;
+if (!process.env.PORT) process.env.PORT = 8080;
+// var port = process.env.PORT || 8080;
 
 // cfenv provides access to your Cloud Foundry environment
 var vcapLocal = null
