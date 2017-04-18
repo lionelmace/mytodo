@@ -71,7 +71,7 @@ todoController.controller('todoCtrl', ['$scope', '$http', 'todos', function ($sc
       console.log('CTR - Deleting all selected todos...');
       $scope.todos.filter(function (todo) {
         //return !todo.completed;
-        todos.delete(todo)
+        if (todo.completed) todos.delete(todo)
         // if successful deletion, call get function to get all new todos
         .success(function (data) {
           $scope.loading = false;
