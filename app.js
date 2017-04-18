@@ -18,7 +18,7 @@ var vcapLocal = null
 try {
   // load local VCAP configuration
   vcapLocal = require("./vcap-local.json");
-  console.log("APP - Loaded local VCAP", vcapLocal);
+  console.log("Loaded local VCAP", vcapLocal);
 } catch (e) {
   console.error(e);
 }
@@ -27,8 +27,8 @@ try {
 var options = vcapLocal ? { vcap: vcapLocal } : {}
 var appEnv = cfenv.getAppEnv(options);
 
-console.log('APP - Running Local: ' + appEnv.isLocal);
-console.log('APP - App Name: ' + appEnv.name);
+console.log('Running locally: ' + appEnv.isLocal);
+console.log('Application Name: ' + appEnv.name);
 
 // Configure Cloudant database service
 // Return all services, in an object keyed by service name.
@@ -39,14 +39,14 @@ for (var serviceName in services) {
   if (services.hasOwnProperty(serviceName)) {
     count++;
     var service = services[serviceName];
-    console.log('APP - Svc Name=' + service.name + ', Label=' + service.label);
+    console.log('Service name=' + service.name + ', Label=' + service.label);
     if (service.label == "cloudantNoSQLDB") {
       cloudantCreds =  service.credentials;
     }
   }
 }
 if (!count) {
-  console.log('APP - No services are bound to this app.\n');
+  console.log('No services are bound to this app.\n');
 }
 
 // To be used when the string is the exact name of the service
@@ -74,7 +74,7 @@ app.use(favicon(__dirname + '/public/icons/favicon-check.ico'));
 // start server on the specified port and binding host
 //app.listen(appEnv.port, "0.0.0.0", function () {
 app.listen(appEnv.port, function () {
-  console.log("APP - Server started on " + appEnv.url);
+  console.log("Server running on " + appEnv.url);
 });
 
 // Retrieves service credentials by service name
