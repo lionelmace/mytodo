@@ -10,7 +10,7 @@ var favicon = require('serve-favicon');
 var app     = express();
 var bodyParser = require('body-parser')
 
-// Set up environment variables
+// Set up environment variables (Port)
 if (!process.env.PORT) process.env.PORT = 8080;
 // var port = process.env.PORT || 8080;
 
