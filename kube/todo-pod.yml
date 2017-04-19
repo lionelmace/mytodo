@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: todo
-        image: jcantosz/watson
+        image: registry.eu-gb.bluemix.net/mace/todo
         resources:
           requests:
             cpu: 100m
