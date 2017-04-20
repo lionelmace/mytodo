@@ -36,11 +36,6 @@ spec:
             cpu: 100m
             memory: 100Mi
         env:
-          - name: WORKSPACE_ID
-            valueFrom:
-              configMapKeyRef:
-                name: car-dashboard-config
-                key: workspace_id
           - name: CONVERSATION_SERVICE_CAR
             valueFrom:
               secretKeyRef:
