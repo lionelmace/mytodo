@@ -3,34 +3,34 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: todo
+  name: mytodos
   labels:
-    app: todo
+    app: mytodos
     tier: frontend
 spec:
   type: NodePort
   ports:
   - port: 3000
   selector:
-    app: todo
+    app: mytodos
     tier: frontend
 ---
 # Application to deploy
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: todo
+  name: mytodos
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: todo
+        app: mytodos
         tier: frontend
     spec:
       containers:
-      - name: todo
-        image: registry.eu-gb.bluemix.net/mace/todo
+      - name: mytodos
+        image: registry.ng.bluemix.net/mace/todo
         resources:
           requests:
             cpu: 100m
