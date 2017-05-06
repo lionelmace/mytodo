@@ -30,14 +30,16 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.ng.bluemix.net/mace/todo
+        image: registry.ng.bluemix.net/mace/todo:secrets
         resources:
           requests:
             cpu: 100m
             memory: 100Mi
-        env:
-          - name: CONVERSATION_SERVICE_CAR
-            valueFrom:
-              secretKeyRef:
-                name: binding-conversation-service-car
-                key: binding
+        volumeMounts:
+          - mountPath: /opt/service-bind # Mount the "service-bind-volume" volume into the pod.
+            name: service-bind-volume
+      volumes:
+        - name: service-bind-volume
+          secret:
+            defaultMode: 420
+            secretName: binding-todo-cloudant

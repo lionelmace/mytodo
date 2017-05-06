@@ -1,4 +1,6 @@
-FROM node:6.9.2
+# FROM node:6.9.2
+# Much more reasonable in size (100MB instead of 700MB)
+FROM node:6.10.3-alpine
 
 # Create app directory
 RUN mkdir -p /usr/src/app

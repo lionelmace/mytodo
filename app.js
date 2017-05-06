@@ -7,6 +7,7 @@
 var express = require('express');
 var cfenv   = require('cfenv');
 var favicon = require('serve-favicon');
+var fs      = require('fs')
 var app     = express();
 var bodyParser = require('body-parser')
 
@@ -28,6 +29,21 @@ try {
 var options = vcapLocal ? { vcap: vcapLocal } : {}
 var appEnv = cfenv.getAppEnv(options);
 
+// Search credentials in Kubernetes Secrets if deployed in Kube cluster
+// Reference in todo-kube-deployment.yml
+console.log('parsing secrets from volume....')
+var binding
+try {
+   binding = JSON.parse(fs.readFileSync('/opt/service-bind/binding', 'utf8'));
+   console.log('binding.username', binding.username)
+   console.log('binding.password', binding.password)
+   console.log('binding.host', binding.host)
+   console.log('binding.port', binding.port)
+   console.log('binding.url', binding.url)
+} catch (e) {
+  console.log('Kubernetes - no such file or directory /opt/service-bind/binding');
+}
+
 console.log('Running locally: ' + appEnv.isLocal);
 console.log('Application Name: ' + appEnv.name);
 
@@ -47,8 +63,9 @@ for (var serviceName in services) {
   }
 }
 if (!count) {
-  console.log('No services are bound to this app.\n');
+  console.log('No services are bind to this app.\n');
 }
+console.log('cloudantCreds', cloudantCreds)
 
 // To be used when the string is the exact name of the service
 //var cloudantCreds = getServiceCreds(appEnv, 'Cloudant NoSQL DB-px');
