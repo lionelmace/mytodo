@@ -8,9 +8,13 @@ metadata:
     app: mytodos
     tier: frontend
 spec:
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  # type: LoadBalancer
   type: NodePort
   ports:
   - port: 3000
+    nodePort: 31513
   selector:
     app: mytodos
     tier: frontend

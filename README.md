@@ -16,4 +16,12 @@ To deploy this application into Kubernetes on IBM Bluemix, follow the steps belo
 
 ```kubectl create -f kubernetes-deployment.yml```
 
+```bx cs workers <cluster-name>``` to get the worker node ip
+
+```kubectl get services``` to get the port
+
+The applicaiton is running on http://<ip-address>:<port>
+
+```kubectl scale --replicas=3 -f kubernetes-deployment.yml```
+
 ```kubectl delete -f kubernetes-deployment.yml```
