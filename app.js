@@ -3,7 +3,6 @@
 /*eslint semi:0*/
 
 // This application uses express as its web server
-// for more info, see: http://expressjs.com
 var express = require('express');
 var cfenv   = require('cfenv');
 var favicon = require('serve-favicon');
@@ -22,7 +21,7 @@ try {
   vcapLocal = require("./vcap-local.json");
   console.log("Loaded local VCAP", vcapLocal);
 } catch (e) {
-  console.error(e);
+  console.error('Cannot load file vcap-local.json');
 }
 
 // This option property is ignored if not running locally.
@@ -30,16 +29,18 @@ var options = vcapLocal ? { vcap: vcapLocal } : {}
 var appEnv = cfenv.getAppEnv(options);
 
 // Search credentials in Kubernetes Secrets if deployed in Kube cluster
-// Reference in todo-kube-deployment.yml
-console.log('parsing secrets from volume....')
-var binding
+// Refer to todo-kube-deployment.yml
+console.log('Parsing Kubernetes secrets from volume...')
+var cloudantCreds;
 try {
-   binding = JSON.parse(fs.readFileSync('/opt/service-bind/binding', 'utf8'));
-   console.log('binding.username', binding.username)
-   console.log('binding.password', binding.password)
-   console.log('binding.host', binding.host)
-   console.log('binding.port', binding.port)
-   console.log('binding.url', binding.url)
+   var binding = JSON.parse(fs.readFileSync('/opt/service-bind/binding', 'utf8'));
+   cloudantCreds = {
+     'username': binding.username,
+     'password': binding.password,
+     'host': binding.host,
+     'port': binding.port,
+     'url': binding.url
+   }
 } catch (e) {
   console.log('Kubernetes - no such file or directory /opt/service-bind/binding');
 }
@@ -50,7 +51,7 @@ console.log('Application Name: ' + appEnv.name);
 // Configure Cloudant database service
 // Return all services, in an object keyed by service name.
 var services = appEnv.getServices();
-var cloudantCreds;
+// var cloudantCreds;
 var count = 0;
 for (var serviceName in services) {
   if (services.hasOwnProperty(serviceName)) {
@@ -63,7 +64,7 @@ for (var serviceName in services) {
   }
 }
 if (!count) {
-  console.log('No services are bind to this app.\n');
+  console.log('No services are bound to this app.\n');
 }
 console.log('cloudantCreds', cloudantCreds)
 

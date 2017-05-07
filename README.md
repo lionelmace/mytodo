@@ -14,6 +14,6 @@ To deploy this application into Kubernetes on IBM Bluemix, follow the steps belo
 
 ```docker push registry.ng.bluemix.net/<namespace>/todo:secrets```
 
-```kubectl create -f todo-kube-deployment.yml```
+```kubectl create -f kubernetes-deployment.yml```
 
-```kubectl delete -f todo-kube-deployment.yml```
+```kubectl delete -f kubernetes-deployment.yml```

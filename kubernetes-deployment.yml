@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.ng.bluemix.net/mace/todo:secrets
+        image: registry.ng.bluemix.net/mace/todo:kube4
         resources:
           requests:
             cpu: 100m
