@@ -34,7 +34,8 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.ng.bluemix.net/mace/todo:kube4
+        image: registry.ng.bluemix.net/mace/mytodos:v1
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: 100m
