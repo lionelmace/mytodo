@@ -1,24 +1,4 @@
 ---
-# Service to expose frontend
-apiVersion: v1
-kind: Service
-metadata:
-  name: mytodos
-  labels:
-    app: mytodos
-    tier: frontend
-spec:
-  # if your cluster supports it, uncomment the following to automatically create
-  # an external load-balanced IP for the frontend service.
-  # type: LoadBalancer
-  type: NodePort
-  ports:
-  - port: 3000
-    nodePort: 31513
-  selector:
-    app: mytodos
-    tier: frontend
----
 # Application to deploy
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -48,3 +28,23 @@ spec:
           secret:
             defaultMode: 420
             secretName: binding-todo-cloudant
+---
+# Service to expose frontend
+apiVersion: v1
+kind: Service
+metadata:
+  name: mytodos
+  labels:
+    app: mytodos
+    tier: frontend
+spec:
+  # if your cluster supports it, uncomment the following to automatically create
+  # an external load-balanced IP for the frontend service.
+  # type: LoadBalancer
+  type: NodePort
+  ports:
+  - port: 8080 # Internal Port
+    nodePort: 31513
+  selector:
+    app: mytodos
+    tier: frontend
