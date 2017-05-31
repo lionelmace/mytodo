@@ -64,7 +64,7 @@ for (var serviceName in services) {
   }
 }
 if (!count) {
-  console.log('No services are buund to this app.\n');
+  console.log('No services are bound to this app.\n');
 }
 console.log('cloudantCreds', cloudantCreds)
 
