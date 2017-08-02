@@ -33,14 +33,16 @@ var appEnv = cfenv.getAppEnv(options);
 console.log('Parsing Kubernetes secrets from volume...')
 var cloudantCreds;
 try {
-   var binding = JSON.parse(fs.readFileSync('/opt/service-bind/binding', 'utf8'));
-   cloudantCreds = {
-     'username': binding.username,
-     'password': binding.password,
-     'host': binding.host,
-     'port': binding.port,
-     'url': binding.url
-   }
+  var encodedBuffer = fs.readFileSync('/opt/service-bind/binding', 'utf8');
+  var decodedBuffer = new Buffer(encodedBuffer, 'base64');
+  var binding = JSON.parse(decodedBuffer);
+  cloudantCreds = {
+    'username': binding.username,
+    'password': binding.password,
+    'host': binding.host,
+    'port': binding.port,
+    'url': binding.url
+  }
 } catch (e) {
   console.log('Kubernetes - no such file or directory /opt/service-bind/binding');
 }
