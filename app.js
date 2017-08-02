@@ -33,9 +33,9 @@ var appEnv = cfenv.getAppEnv(options);
 console.log('Parsing Kubernetes secrets from volume...')
 var cloudantCreds;
 try {
-  var encodedBuffer = fs.readFileSync('/opt/service-bind/binding', 'utf8');
-  var decodedBuffer = new Buffer(encodedBuffer, 'base64');
-  var binding = JSON.parse(decodedBuffer);
+  var bindingEncoded = fs.readFileSync('/opt/service-bind/binding', 'utf8');
+  var bindingDecoded = new Buffer(bindingEncoded, 'base64');
+  var binding = JSON.parse(bindingDecoded);
   cloudantCreds = {
     'username': binding.username,
     'password': binding.password,
