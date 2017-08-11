@@ -34,8 +34,9 @@ console.log('Parsing Kubernetes secrets from volume...')
 var cloudantCreds;
 try {
   var bindingEncoded = fs.readFileSync('/opt/service-bind/binding', 'utf8');
-  var bindingDecoded = new Buffer(bindingEncoded, 'base64');
-  var binding = JSON.parse(bindingDecoded);
+  //var bindingDecoded = new Buffer(bindingEncoded, 'base64');
+  //var binding = JSON.parse(bindingDecoded);
+  var binding = JSON.parse(bindingEncoded);
   cloudantCreds = {
     'username': binding.username,
     'password': binding.password,
