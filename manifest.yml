@@ -4,4 +4,4 @@ applications:
   instances: 1
   name: mytodos
   disk_quota: 1024M
-  buildpack: sdk-for-nodejs
+  buildpack: nodejs_buildpack
