@@ -12,6 +12,7 @@
   "main": "app.js",
   "dependencies": {
     "async": "^1.5.2",
+    "bluemix-autoscaling-agent": "^1.0.11",
     "body-parser": "~1.4.3",
     "bower": "^1.7.7",
     "cfenv": "^1.0.3",
