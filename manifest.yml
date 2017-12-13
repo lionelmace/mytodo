@@ -5,6 +5,3 @@ applications:
   name: mytodos
   disk_quota: 1024M
   buildpack: nodejs_buildpack
-  services:
-    - auto-scaling-20170825
-    - todo-cloudant
