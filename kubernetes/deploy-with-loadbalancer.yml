@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-gb.bluemix.net/techsales/mytodos:v1
+        image: registry.eu-de.bluemix.net/mace/mytodos:v6
         imagePullPolicy: Always
         resources:
           requests:
@@ -40,11 +40,11 @@ metadata:
 spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the frontend service.
-  # type: LoadBalancer
-  type: NodePort
+  type: LoadBalancer
+  # type: NodePort
   ports:
   - port: 8080 # Internal Port
-    nodePort: 31513
+    # nodePort: 31513
   selector:
     app: mytodos
     tier: frontend

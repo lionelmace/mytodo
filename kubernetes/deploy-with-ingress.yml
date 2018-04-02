@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-gb.bluemix.net/techsales/mytodos:v1
+        image: registry.eu-de.bluemix.net/mace/mytodos:v6
         imagePullPolicy: Always
         resources:
           requests:
@@ -29,6 +29,20 @@ spec:
             defaultMode: 420
             secretName: binding-todo-cloudant
 ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mytodos-ingress
+spec:
+  rules:
+  - host: dev-cluster.eu-central.containers.mybluemix.net
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mytodos
+          servicePort: 8080
+---
 # Service to expose frontend
 apiVersion: v1
 kind: Service
@@ -40,11 +54,9 @@ metadata:
 spec:
   # if your cluster supports it, uncomment the following to automatically create
   # an external load-balanced IP for the frontend service.
-  type: LoadBalancer
-  # type: NodePort
   ports:
-  - port: 8080 # Internal Port
-    # nodePort: 31513
+  - protocol: TCP
+    port: 8080
   selector:
     app: mytodos
     tier: frontend
