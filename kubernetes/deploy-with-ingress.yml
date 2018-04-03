@@ -42,6 +42,13 @@ spec:
         backend:
           serviceName: mytodos
           servicePort: 8080
+  - host: www.mycustomdomain.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mytodos
+          servicePort: 3000
 ---
 # Service to expose frontend
 apiVersion: v1
