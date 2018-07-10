@@ -6,7 +6,7 @@ metadata:
   name: mytodos
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
-  template: # create pods using pod definition in this template
+  template:   # create pods using pod definition in this template
     metadata:
       labels:
         app: mytodos
@@ -18,8 +18,11 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 250m     # 250 millicores = 1/4 core
+            memory: 100Mi # 100 MB
+          limits:
+            cpu: 500m
+            memory: 300Mi
         volumeMounts:
           - mountPath: /opt/service-bind # Mount the "service-bind-volume" volume into the pod.
             name: service-bind-volume
@@ -42,13 +45,13 @@ spec:
         backend:
           serviceName: mytodos
           servicePort: 8080
-  - host: www.mycustomdomain.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: mytodos
-          servicePort: 3000
+  # - host: www.mycustomdomain.com
+  #   http:
+  #     paths:
+  #     - path: /
+  #       backend:
+  #         serviceName: mytodos
+  #         servicePort: 3000
 ---
 # Service to expose frontend
 apiVersion: v1
@@ -59,8 +62,6 @@ metadata:
     app: mytodos
     tier: frontend
 spec:
-  # if your cluster supports it, uncomment the following to automatically create
-  # an external load-balanced IP for the frontend service.
   ports:
   - protocol: TCP
     port: 8080
