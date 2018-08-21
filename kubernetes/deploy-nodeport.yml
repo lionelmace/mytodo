@@ -16,7 +16,7 @@ spec:
       # - name: private-registry-secret
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:v6
+        image: registry.eu-de.bluemix.net/mace/mytodos:1
         imagePullPolicy: Always
         resources:
           requests:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:v1
+        image: registry.eu-de.bluemix.net/mace/mytodos:1
         imagePullPolicy: Always
         ports: #istio
         - containerPort: 8080 #istio
