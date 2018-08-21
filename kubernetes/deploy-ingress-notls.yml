@@ -38,7 +38,7 @@ metadata:
   name: mytodos-ingress
 spec:
   rules:
-  - host: dev-cluster.eu-central.containers.mybluemix.net
+  - host: nicehacluster-504960.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /

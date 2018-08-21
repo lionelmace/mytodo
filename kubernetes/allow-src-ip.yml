@@ -1,0 +1,34 @@
+# This policy whitelists a source IP and allows that IP access to a specific IP (ingress or load balancer) and port.
+# If you are using a multizone cluster, you must also whitelist the listed Cloudflare IPs in order to allow successful routing: https://www.cloudflare.com/ips/.
+
+- apiVersion: v1
+  kind: policy
+  metadata:
+    name: allow-src-ip
+  spec:
+    ingress:
+    - action: allow
+      protocol: tcp
+      destination:
+        nets:
+        - <cluster ip to allow access to>/32      
+        ports:
+        - <port>
+      source:
+        nets:
+        - <source ip to whitelist> 
+    - action: allow
+      protocol: udp
+      destination:
+        nets:
+        - <cluster ip to allow access to>/32
+        ports:
+        - <port>
+      source:
+        nets:
+        - <source ip to whitelist>    
+    preDNAT: true   
+    order: 500
+    selector: ibm.role=='worker_public'
+    types:
+    - ingress
