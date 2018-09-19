@@ -1,7 +1,7 @@
 applications:
 - path: .
   memory: 256M
-  instances: 1
+  instances: 2
   name: mytodos
   disk_quota: 1024M
   buildpack: nodejs_buildpack
