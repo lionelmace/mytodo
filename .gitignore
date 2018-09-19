@@ -3,3 +3,4 @@ public/vendor
 vcap-local.json
 myreadme.txt
 .editorconfig
+credentials.env
