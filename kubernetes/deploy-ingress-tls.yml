@@ -41,14 +41,14 @@ metadata:
     ingress.bluemix.net/redirect-to-https: "True"
     # Activate App ID for Authentication
     # Requires the existence of an App Id service bound to the cluster
-    #ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=app-id-20180705"
+    # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos"
 spec:
   tls:
   - hosts:
-    - nicehacluster-504960.eu-de.containers.appdomain.cloud
-    secretName: nicehacluster-504960
+    - hacluster.eu-de.containers.appdomain.cloud
+    secretName: hacluster
   rules:
-  - host: nicehacluster-504960.eu-de.containers.appdomain.cloud
+  - host: hacluster.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /
