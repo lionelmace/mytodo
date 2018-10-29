@@ -45,10 +45,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - hacluster.eu-de.containers.appdomain.cloud
+    - todo.hacluster.eu-de.containers.appdomain.cloud
     secretName: hacluster
   rules:
-  - host: hacluster.eu-de.containers.appdomain.cloud
+  - host: todo.hacluster.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /

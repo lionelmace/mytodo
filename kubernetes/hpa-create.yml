@@ -1,0 +1,23 @@
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mytodos-scaler
+spec:
+  scaleTargetRef:
+    # HPA needs to use the same apiVersion than the target resource
+    # otherwide kubectl describe hpa returns: no matches for kind "Deployment"
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: mytodos
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 60
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: 55
