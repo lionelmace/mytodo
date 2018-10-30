@@ -1,4 +1,3 @@
-// js/todoList.js
 'use strict';
 
 // Declaration of todoController module
@@ -7,7 +6,6 @@ var todoController = angular.module('todoController', []);
 // Application Controller of "Todo List"
 todoController.controller('todoCtrl', ['$scope', '$http', 'todos', function ($scope, $http, todos)
 {
-    console.log('CTR - In Controller...');
     $scope.newTodo = '';
     $scope.loading = true;
 
@@ -26,7 +24,6 @@ todoController.controller('todoCtrl', ['$scope', '$http', 'todos', function ($sc
       // .trim() enables to remove all useless spaces before and after a string
       //bug var newTodo = $scope.newTodo.trim();
       var newTodo = $scope.newTodo;
-      console.log('CTR - Adding todo: ' + newTodo.text );
       if (!newTodo.text.length) {
         // éviter les todos vides
         return;
@@ -47,7 +44,6 @@ todoController.controller('todoCtrl', ['$scope', '$http', 'todos', function ($sc
 
     // Delete a todo
     $scope.deleteTodo = function (todo) {
-      console.log('CTR - Deleting todo...');
       $scope.loading = true;
 
       todos.delete(todo)
@@ -60,7 +56,6 @@ todoController.controller('todoCtrl', ['$scope', '$http', 'todos', function ($sc
 
     // Select or Deselect all todos
     $scope.markAll = function (completed) {
-      console.log('CTR - Selecting all todos...');
       $scope.todos.forEach(function (todo) {
         todo.completed = completed;
       });
@@ -68,7 +63,6 @@ todoController.controller('todoCtrl', ['$scope', '$http', 'todos', function ($sc
 
     // Delete all selected todos
     $scope.clearCompletedTodos = function () {
-      console.log('CTR - Deleting all selected todos...');
       $scope.todos.filter(function (todo) {
         //return !todo.completed;
         if (todo.completed) todos.delete(todo)
