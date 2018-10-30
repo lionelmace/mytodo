@@ -19,11 +19,13 @@ module.exports = function (app, todoDb) {
   // api ---------------------------------------------------------------------
   // get all todos
   app.get('/api/todos', function (req, res) {
+    console.log('API GET todos')
     getTodos(res);
   });
 
   // create todo and send back all todos after creation
   app.put('/api/todos', function (req, res) {
+    console.log('API PUT todo:', req.body.text)
     todoDb.insert({
       type: "todo",
       text: req.body.text,
@@ -41,6 +43,7 @@ module.exports = function (app, todoDb) {
 
   // delete a todo
   app.delete('/api/todos/:id', function (req, res) {
+    console.log('API DEL todo:', req.params.id)
     todoDb.destroy(req.params.id, req.query.rev, function (err, body) {
       if (err) {
         res.status(500).send({
