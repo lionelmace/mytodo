@@ -2,10 +2,10 @@
 // turn off warnings for semicolons
 /*eslint semi:0*/
 
-if (process.env.VCAP_SERVICES) {
-  console.log('Enabling Bluemix autoscaling agent');
-  require('bluemix-autoscaling-agent');
-}
+// if (process.env.VCAP_SERVICES) {
+//   console.log('Enabling Bluemix autoscaling agent');
+//   require('bluemix-autoscaling-agent');
+// }
 
 // This application uses express as its web server
 var express = require('express');
