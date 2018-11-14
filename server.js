@@ -20,6 +20,9 @@ const favicon = require('serve-favicon');
 const app = express();
 const bodyParser = require('body-parser')
 
+// Set up Port variable (required for Kubernetes)
+if (!process.env.PORT) process.env.PORT = 8080;
+
 // load local VCAP configuration
 let vcapLocal = null
 try {
@@ -33,6 +36,25 @@ const appEnvOpts = vcapLocal ? {
   vcap: vcapLocal
 } : {}
 const appEnv = cfenv.getAppEnv(appEnvOpts);
+
+// Read Kubernetes secrets if running in IKS
+console.log('K8S - Parsing secrets from volume...');
+var cloudantCreds;
+try {
+  var bindingEncoded = fs.readFileSync('/opt/service-bind/binding', 'utf8');
+  //var bindingDecoded = new Buffer(bindingEncoded, 'base64');
+  //var binding = JSON.parse(bindingDecoded);
+  var binding = JSON.parse(bindingEncoded);
+  cloudantCreds = {
+    'username': binding.username,
+    'password': binding.password,
+    'host': binding.host,
+    'port': binding.port,
+    'url': binding.url
+  }
+} catch (e) {
+  console.log('K8S - No such file or directory /opt/service-bind/binding');
+}
 
 let db;
 if (appEnv.services['cloudantNoSQLDB']) {

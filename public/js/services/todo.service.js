@@ -8,7 +8,6 @@ todoService.factory('todos', ['$http', function ($http) {
       return $http.get('/api/todos');
     },
     create: function (todoData) {
-      //LMA return $http.put('/api/todos', todoData);
       return $http.post('/api/todos', todoData);
     },
     delete: function (todo) {
