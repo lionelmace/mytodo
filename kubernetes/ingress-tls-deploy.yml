@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:1
+        image: registry.eu-de.bluemix.net/mace/mytodos:1.0
         imagePullPolicy: Always
         resources:
           requests:

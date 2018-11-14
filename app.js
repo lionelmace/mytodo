@@ -60,23 +60,6 @@ try {
   console.log('K8S - No such file or directory /opt/service-bind/binding');
 }
 
-//---------
-// Initialize Cloudant using IAM authentication
-// var Cloudant = require('@cloudant/cloudant');
-// var cloudant = new Cloudant({
-//   account: process.env.cloudant_account,
-//   plugins: [
-//     'promises',
-//     {
-//       iamauth: {
-//         iamApiKey: process.env.cloudant_iam_apikey
-//       }
-//     }
-//   ]
-// });
-// var db = cloudant.db.use(process.env.cloudant_database || 'secure-file-storage');
-// console.log('process.env.cloudant_account =', process.env.cloudant_account)
-//---------
 
 // Configure Cloudant database service
 // Return all services, in an object keyed by service name.
@@ -103,16 +86,6 @@ if (!count) {
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json()); // parse application/json
-
-require("./app/database.js")(appEnv, cloudantCreds, "todos",
-  function (err, database) {
-    if (err) {
-      console.log(err);
-    } else {
-      // database is initialized, install our CRUD route for Todo objects
-      require('./app/todos.js')(app, database);
-    }
-});
 
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));

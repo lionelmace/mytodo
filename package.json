@@ -2,15 +2,16 @@
   "name": "mytodo",
   "version": "1.0.0",
   "description": "Todo application.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node server.js",
     "postinstall": "bower install --allow-root"
   },
   "engines": {
     "node": ">=8"
   },
   "dependencies": {
+    "cloudant": "1.6.2",
     "@cloudant/cloudant": "^2.4.0",
     "async": "^2.6.1",
     "bluemix-autoscaling-agent": "^1.0.11",
