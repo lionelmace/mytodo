@@ -1,22 +1,8 @@
-/**
- * Copyright 2016 IBM Corp. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the “License”);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an “AS IS” BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 const express = require('express');
 const cfenv = require('cfenv');
 const favicon = require('serve-favicon');
+const fs = require('fs')
 const app = express();
 const bodyParser = require('body-parser')
 
@@ -29,7 +15,7 @@ try {
   vcapLocal = require('./vcap-local.json');
   console.log("Loaded local VCAP", vcapLocal);
 } catch (e) {
-  console.error(e);
+  console.log('ERR Cannot find module ./vcap-local.json');
 }
 
 const appEnvOpts = vcapLocal ? {
@@ -37,22 +23,24 @@ const appEnvOpts = vcapLocal ? {
 } : {}
 const appEnv = cfenv.getAppEnv(appEnvOpts);
 
-// Read Kubernetes secrets if running in IKS
+// Retrieve Kubernetes secrets
 console.log('K8S - Parsing secrets from volume...');
-var cloudantCreds;
+var secretCredentials;
+var runningInKube = false;
 try {
   var bindingEncoded = fs.readFileSync('/opt/service-bind/binding', 'utf8');
   //var bindingDecoded = new Buffer(bindingEncoded, 'base64');
   //var binding = JSON.parse(bindingDecoded);
   var binding = JSON.parse(bindingEncoded);
-  cloudantCreds = {
+  secretCredentials = {
     'username': binding.username,
     'password': binding.password,
     'host': binding.host,
     'port': binding.port,
     'url': binding.url
   }
-} catch (e) {
+  runningInKube = true;
+} catch (err) {
   console.log('K8S - No such file or directory /opt/service-bind/binding');
 }
 
@@ -61,6 +49,8 @@ if (appEnv.services['cloudantNoSQLDB']) {
   db = require('./lib/cloudant-db')(appEnv.services['cloudantNoSQLDB'][0].credentials);
 } else if (appEnv.services['compose-for-mongodb']) {
   db = require('./lib/compose-db')(appEnv.services['compose-for-mongodb'][0].credentials);
+} else if (runningInKube) {
+  db = require('./lib/cloudant-db')(secretCredentials);
 } else {
   db = require('./lib/in-memory')();
 }
