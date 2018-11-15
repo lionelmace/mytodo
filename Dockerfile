@@ -1,3 +1,4 @@
+# FROM node:6.10.3-alpine
 FROM node:10.13.0-alpine
 
 # Create app directory
