@@ -6,7 +6,7 @@ replicaCount: 3
 
 image:
   repository: registry.eu-de.bluemix.net/mace/mytodos
-  tag: 9
+  tag: 1
   pullPolicy: Always
 
 secret:
