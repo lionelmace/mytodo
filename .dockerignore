@@ -2,3 +2,4 @@ node_modules
 credentials.env
 npm-debug.log
 vcap-local.json
+kubernetes/helm/simple/local-values.yaml

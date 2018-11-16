@@ -2,7 +2,6 @@
 const express = require('express');
 const cfenv = require('cfenv');
 const favicon = require('serve-favicon');
-const fs = require('fs')
 const app = express();
 const bodyParser = require('body-parser')
 
@@ -23,34 +22,22 @@ const appEnvOpts = vcapLocal ? {
 } : {}
 const appEnv = cfenv.getAppEnv(appEnvOpts);
 
-// Retrieve Kubernetes secrets
-console.log('K8S - Parsing secrets from volume...');
-var secretCredentials;
-var runningInKube = false;
-try {
-  var bindingEncoded = fs.readFileSync('/opt/service-bind/binding', 'utf8');
-  //var bindingDecoded = new Buffer(bindingEncoded, 'base64');
-  //var binding = JSON.parse(bindingDecoded);
-  var binding = JSON.parse(bindingEncoded);
-  secretCredentials = {
-    'username': binding.username,
-    'password': binding.password,
-    'host': binding.host,
-    'port': binding.port,
-    'url': binding.url
-  }
-  runningInKube = true;
-} catch (err) {
-  console.log('K8S - No such file or directory /opt/service-bind/binding');
+// Load environment variables from .env file
+const result = require('dotenv').config({
+  path: __dirname + '/credentials.env'
+}); 
+if (result.error) {
+  console.log('Running locally - Cannot find credentials.env');
+} else {
+  console.log(result.parsed)
 }
 
 let db;
-if (appEnv.services['cloudantNoSQLDB']) {
-  db = require('./lib/cloudant-db')(appEnv.services['cloudantNoSQLDB'][0].credentials);
-} else if (appEnv.services['compose-for-mongodb']) {
-  db = require('./lib/compose-db')(appEnv.services['compose-for-mongodb'][0].credentials);
-} else if (runningInKube) {
-  db = require('./lib/cloudant-db')(secretCredentials);
+if (process.env.CLOUDANT_USERNAME != '')  {
+  db = require('./lib/cloudant-db')(process.env);
+} else if (process.env.COMPOSE_USERNAME != '') {
+  console.log('Using Compose');
+  db = require('./lib/compose-db')(process.env);
 } else {
   db = require('./lib/in-memory')();
 }

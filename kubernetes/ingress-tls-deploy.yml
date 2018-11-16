@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:2
+        image: registry.eu-de.bluemix.net/mace/mytodos:4
         imagePullPolicy: Always
         resources:
           requests:
@@ -26,14 +26,6 @@ spec:
         envFrom:
         - secretRef:
             name: database-credentials
-      #   volumeMounts:
-      #     - mountPath: /opt/service-bind # Mount the "service-bind-volume" volume into the pod.
-      #       name: service-bind-volume
-      # volumes:
-      #   - name: service-bind-volume
-      #     secret:
-      #       defaultMode: 420
-      #       secretName: binding-todo-cloudant
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress

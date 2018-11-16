@@ -3,3 +3,4 @@ credentials.env
 vcap-local.json
 myreadme.txt
 .editorconfig
+kubernetes/helm/simple/local-values.yaml
