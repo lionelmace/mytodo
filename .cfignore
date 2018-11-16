@@ -1,4 +1,5 @@
 node_modules
 public/vendor
+credentials.env
 vcap-local.json
 .editorconfig

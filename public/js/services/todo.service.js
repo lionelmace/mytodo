@@ -1,6 +1,5 @@
 var todoService = angular.module('todoService', [])
 
-// super simple service
 // each function returns a promise object 
 todoService.factory('todos', ['$http', function ($http) {
   return {

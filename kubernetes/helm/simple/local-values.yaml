@@ -1,0 +1,54 @@
+# Default values for mytodos.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: registry.eu-de.bluemix.net/mace/mytodos
+  tag: 2
+  pullPolicy: Always
+
+secret:
+  database: database-credentials
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  # type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: true
+  annotations:
+    # Force the use of https if the request is http
+    ingress.bluemix.net/redirect-to-https: "True"
+    # Activate App ID for Authentication
+    # Requires the existence of an App Id service bound to the cluster
+    # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos"
+  path: /
+  hosts:
+    - todo.hacluster.eu-de.containers.appdomain.cloud
+  tls:
+    - secretName: hacluster
+      hosts:
+        - todo.hacluster.eu-de.containers.appdomain.cloud
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 500m
+    memory: 384Mi
+  requests:
+    cpu: 250m
+    memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

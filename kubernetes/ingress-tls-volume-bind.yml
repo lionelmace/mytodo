@@ -14,18 +14,15 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:2
+        image: registry.eu-de.bluemix.net/mace/mytodos:4.0
         imagePullPolicy: Always
         resources:
           requests:
             cpu: 250m     # 250 millicores = 1/4 core
-            memory: 128Mi # 128 MB
+            memory: 100Mi # 100 MB
           limits:
             cpu: 500m
-            memory: 384Mi
-        envFrom:
-        - secretRef:
-            name: database-credentials
+            memory: 300Mi
       #   volumeMounts:
       #     - mountPath: /opt/service-bind # Mount the "service-bind-volume" volume into the pod.
       #       name: service-bind-volume

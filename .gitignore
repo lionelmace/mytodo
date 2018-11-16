@@ -1,5 +1,5 @@
 node_modules
+credentials.env
 vcap-local.json
 myreadme.txt
 .editorconfig
-credentials.env
