@@ -26,7 +26,7 @@ services:
     service_id: hostedgit
     parameters:
       repo_name: 'mytodos-{{timestamp}}'
-      repo_url: 'https://github.com/lionelmace/mytodos'
+      repo_url: 'https://github.com/lionelmace/mytodo'
       type: clone
       has_issues: true
       enable_traceability: true
