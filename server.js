@@ -14,7 +14,7 @@ try {
   vcapLocal = require('./vcap-local.json');
   console.log("Loaded local VCAP", vcapLocal);
 } catch (e) {
-  console.log('ERR Cannot find module ./vcap-local.json');
+  console.log('Cannot find module ./vcap-local.json');
 }
 
 const appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {}
@@ -25,7 +25,7 @@ const result = require('dotenv').config({
   path: __dirname + '/credentials.env'
 }); 
 if (result.error) {
-  console.log('Running locally - Cannot find credentials.env');
+  console.log('Cannot find credentials.env');
 } else {
   console.log('credentials.env =', result.parsed)
 }
@@ -33,6 +33,7 @@ if (result.error) {
 // Cloud Foundry -----------------------------------------------------------
 // Run in Cloud Foundry - Read VCAP variables
 if (!appEnv.isLocal) {
+  console.log('Run in Cloud Foundry');
   var services = appEnv.getServices();
   for (var svcName in services) {
     if (services.hasOwnProperty(svcName)) {
