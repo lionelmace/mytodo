@@ -17,21 +17,37 @@ try {
   console.log('ERR Cannot find module ./vcap-local.json');
 }
 
-const appEnvOpts = vcapLocal ? {
-  vcap: vcapLocal
-} : {}
+const appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {}
 const appEnv = cfenv.getAppEnv(appEnvOpts);
 
-// Load environment variables from .env file
+// Run locally - Load env variables from .env file
 const result = require('dotenv').config({
   path: __dirname + '/credentials.env'
 }); 
 if (result.error) {
   console.log('Running locally - Cannot find credentials.env');
 } else {
-  console.log(result.parsed)
+  console.log('credentials.env =', result.parsed)
 }
 
+// Cloud Foundry -----------------------------------------------------------
+// Run in Cloud Foundry - Read VCAP variables
+if (!appEnv.isLocal) {
+  var services = appEnv.getServices();
+  for (var svcName in services) {
+    if (services.hasOwnProperty(svcName)) {
+      var svc = services[svcName];
+      console.log('Service name=' + svc.name + ', Label=' + svc.label);
+      if (svc.label == "cloudantNoSQLDB") {
+        cloudantCreds =  svc.credentials;
+        process.env.CLOUDANT_USERNAME=cloudantCreds.username;
+        process.env.CLOUDANT_APIKEY=cloudantCreds.apikey;
+      }
+    }
+  }
+}
+
+// Database ----------------------------------------------------------------
 let db;
 if (process.env.CLOUDANT_USERNAME != '')  {
   db = require('./lib/cloudant-db')(process.env);
