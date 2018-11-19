@@ -33,10 +33,12 @@ if (result.error) {
 // Cloud Foundry -----------------------------------------------------------
 // Run in Cloud Foundry - Read VCAP variables
 if (!appEnv.isLocal) {
-  console.log('Run in Cloud Foundry');
+  console.log('Running in Cloud Foundry');
   var services = appEnv.getServices();
   for (var svcName in services) {
+    console.log('svcName=', svcName);
     if (services.hasOwnProperty(svcName)) {
+      console.log('svc=', svc);
       var svc = services[svcName];
       console.log('Service name=' + svc.name + ', Label=' + svc.label);
       if (svc.label == "cloudantNoSQLDB") {
