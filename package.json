@@ -8,7 +8,7 @@
     "start": "node server.js"
   },
   "engines": {
-    "node": ">=10.12.0"
+    "node": ">=10.13.0"
   },
   "dependencies": {
     "@cloudant/cloudant": "^2.4.1",
