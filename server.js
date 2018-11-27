@@ -32,32 +32,31 @@ if (result.error) {
 
 // Cloud Foundry -----------------------------------------------------------
 // Run in Cloud Foundry - Read VCAP variables
-if (!appEnv.isLocal) {
-  console.log('Running in Cloud Foundry');
-  console.log('appEnv=', appEnv);
-  var services = appEnv.getServices();
-  console.log('services=', services);
-  for (var svcName in services) {
-    console.log('svcName=', svcName);
-    if (services.hasOwnProperty(svcName)) {
-      console.log('svc=', svc);
-      var svc = services[svcName];
-      console.log('Service name=' + svc.name + ', Label=' + svc.label);
-      if (svc.label == "cloudantNoSQLDB") {
-        cloudantCreds =  svc.credentials;
-        process.env.CLOUDANT_USERNAME=cloudantCreds.username;
-        process.env.CLOUDANT_APIKEY=cloudantCreds.apikey;
-      }
-    }
-  }
-}
+// if (!appEnv.isLocal) {
+//   console.log('Running in Cloud Foundry');
+//   console.log('appEnv=', appEnv);
+//   var services = appEnv.getServices();
+//   console.log('services=', services);
+//   for (var svcName in services) {
+//     console.log('svcName=', svcName);
+//     if (services.hasOwnProperty(svcName)) {
+//       console.log('svc=', svc);
+//       var svc = services[svcName];
+//       console.log('Service name=' + svc.name + ', Label=' + svc.label);
+//       if (svc.label == "cloudantNoSQLDB") {
+//         cloudantCreds =  svc.credentials;
+//         process.env.CLOUDANT_USERNAME=cloudantCreds.username;
+//         process.env.CLOUDANT_APIKEY=cloudantCreds.apikey;
+//       }
+//     }
+//   }
+// }
 
 // Database ----------------------------------------------------------------
 let db;
-if (process.env.CLOUDANT_USERNAME != '')  {
+if (process.env.CLOUDANT_USERNAME !== undefined)  {
   db = require('./lib/cloudant-db')(process.env);
-} else if (process.env.COMPOSE_USERNAME != '') {
-  console.log('Using Compose');
+} else if (process.env.COMPOSE_USERNAME !== undefined) {
   db = require('./lib/compose-db')(process.env);
 } else {
   db = require('./lib/in-memory')();
@@ -115,6 +114,12 @@ app.delete('/api/todos/:id', (req, res) => {
     res.status(500).send({ error: err });
   });
 });
+
+// Activate this route to debug
+// app.get('*', (req, res) => {
+//   console.log(req);
+//   res.status(404).send('Not found');
+// });
 
 // connect to the database
 db.init().then(() => {

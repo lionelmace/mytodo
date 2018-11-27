@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:1
+        image: registry.eu-de.bluemix.net/mace/mytodos:5
         imagePullPolicy: Always
         resources:
           requests:
@@ -32,6 +32,7 @@ kind: Ingress
 metadata:
   name: mytodos-ingress
   annotations:
+    ingress.bluemix.net/rewrite-path: "serviceName=mytodos rewrite=/"
     # Force the use of https if the request is http
     ingress.bluemix.net/redirect-to-https: "True"
     # Activate App ID for Authentication
@@ -40,13 +41,13 @@ metadata:
 spec:
   tls:
   - hosts:
-    - todo.hacluster.eu-de.containers.appdomain.cloud
+    - hacluster.eu-de.containers.appdomain.cloud
     secretName: hacluster
   rules:
-  - host: todo.hacluster.eu-de.containers.appdomain.cloud
+  - host: hacluster.eu-de.containers.appdomain.cloud
     http:
       paths:
-      - path: /
+      - path: /todo/
         backend:
           serviceName: mytodos
           servicePort: 8080
