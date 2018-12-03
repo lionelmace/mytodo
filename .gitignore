@@ -4,3 +4,6 @@ vcap-local.json
 myreadme.txt
 .editorconfig
 kubernetes/helm/simple/local-values.yaml
+terraform/provider.tf
+terraform/.terraform
+terraform/terraform.tfstate
