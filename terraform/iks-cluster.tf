@@ -1,5 +1,8 @@
+data "ibm_resource_group" "group" {
+  name = "dev"
+}
 variable "environment_name" {
-  default = "dev"
+  default = "terraform-env"
 }
 
 variable "cluster_datacenter" {
@@ -31,26 +34,31 @@ variable "cluster_hardware" {
   default     = "shared"
 }
 
+variable "cluster_kube_version" {
+  description = "Retrieve the Kubernetes version using cli: ibmcloud ks kube-versions"
+  default     = "1.12.2"
+}
 
 # a cluster
 resource "ibm_container_cluster" "cluster" {
   name              = "${var.environment_name}-cluster"
   datacenter        = "${var.cluster_datacenter}"
-  # account_guid    = "${data.terraform_remote_state.global.account_guid}"
   machine_type      = "${var.cluster_machine_type}"
   # worker_num        = "${var.cluster_worker_num}"
   public_vlan_id    = "${var.cluster_public_vlan_id}"
   private_vlan_id   = "${var.cluster_private_vlan_id}"
   hardware          = "${var.cluster_hardware}"
-  kube_version      = "1.12.2"
-  # resource_group_id = ""
+  kube_version      = "${var.cluster_kube_version}"
+  region            = "${var.ibmcloud_location}"
+  # resource_group_id = "${data.ibm_resource_group.group.id}"
+  # tags              = ["terraform", "dev"]
 }
 
-resource "ibm_container_worker_pool" "cluster_workerpool" {
-  worker_pool_name  = "${var.environment_name}-pool"
-  machine_type      = "${var.cluster_machine_type}"
-  cluster           = "${ibm_container_cluster.cluster.id}"
-  size_per_zone     = "${var.cluster_worker_num}"
-  hardware          = "${var.cluster_hardware}"
-  # resource_group_id = "${ibm_resource_group.group.id}"
-}
+# resource "ibm_container_worker_pool" "cluster_workerpool" {
+#   worker_pool_name  = "${var.environment_name}-pool"
+#   machine_type      = "${var.cluster_machine_type}"
+#   cluster           = "${ibm_container_cluster.cluster.id}"
+#   size_per_zone     = "${var.cluster_worker_num}"
+#   hardware          = "${var.cluster_hardware}"
+#   # resource_group_id = "${ibm_resource_group.group.id}"  
+# }
