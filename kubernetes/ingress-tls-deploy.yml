@@ -1,11 +1,14 @@
 ---
 # Application to deploy
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mytodos
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
+  selector:
+    matchLabels:
+      app: mytodos
   template:   # create pods using pod definition in this template
     metadata:
       labels:
@@ -14,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:5
+        image: registry.eu-de.bluemix.net/mace/mytodos:1.0
         imagePullPolicy: Always
         resources:
           requests:
