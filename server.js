@@ -55,9 +55,9 @@ if (result.error) {
 // Database ----------------------------------------------------------------
 let db;
 if (process.env.CLOUDANT_USERNAME !== undefined)  {
-  db = require('./lib/cloudant-db')(process.env);
-} else if (process.env.COMPOSE_USERNAME !== undefined) {
-  db = require('./lib/compose-db')(process.env);
+  db = require('./lib/db-cloudant')(process.env);
+} else if (process.env.MONGO_URI !== undefined) {
+  db = require('./lib/db-mongo')(process.env);
 } else {
   db = require('./lib/in-memory')();
 }
