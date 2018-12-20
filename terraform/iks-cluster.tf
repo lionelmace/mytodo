@@ -1,6 +1,4 @@
-data "ibm_resource_group" "group" {
-  name = "dev"
-}
+
 variable "environment_name" {
   default = "terraform-env"
 }
