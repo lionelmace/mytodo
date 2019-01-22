@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:1.0
+        image: registry.eu-de.bluemix.net/<namespace>/mytodos:1.0
         imagePullPolicy: Always
         resources:
           requests:
@@ -26,9 +26,9 @@ spec:
           limits:
             cpu: 500m
             memory: 384Mi
-        envFrom:
-        - secretRef:
-            name: database-credentials
+        # envFrom:
+        # - secretRef:
+        #     name: database-credentials
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
