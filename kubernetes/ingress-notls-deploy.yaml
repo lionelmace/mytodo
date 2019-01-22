@@ -6,7 +6,7 @@ metadata:
   name: mytodos
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
-  template: # create pods using pod definition in this template
+  template:   # create pods using pod definition in this template
     metadata:
       labels:
         app: mytodos
@@ -14,12 +14,15 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.eu-de.bluemix.net/mace/mytodos:1
+        image: registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
         imagePullPolicy: Always
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 250m     # 250 millicores = 1/4 core
+            memory: 100Mi # 100 MB
+          limits:
+            cpu: 500m
+            memory: 300Mi
         volumeMounts:
           - mountPath: /opt/service-bind # Mount the "service-bind-volume" volume into the pod.
             name: service-bind-volume
@@ -28,6 +31,27 @@ spec:
           secret:
             defaultMode: 420
             secretName: binding-todo-cloudant
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: mytodos-ingress
+spec:
+  rules:
+  - host: <cluster-name>.<region>.containers.appdomain.cloud
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: mytodos
+          servicePort: 8080
+  # - host: www.mycustomdomain.com
+  #   http:
+  #     paths:
+  #     - path: /
+  #       backend:
+  #         serviceName: mytodos
+  #         servicePort: 3000
 ---
 # Service to expose frontend
 apiVersion: v1
@@ -38,10 +62,9 @@ metadata:
     app: mytodos
     tier: frontend
 spec:
-  type: LoadBalancer
   ports:
-  - port: 8080 # Internal Port
-    # nodePort: 31513
+  - protocol: TCP
+    port: 8080
   selector:
     app: mytodos
     tier: frontend

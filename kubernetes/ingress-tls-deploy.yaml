@@ -44,10 +44,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - <cluster-name>.eu-de.containers.appdomain.cloud
+    - <cluster-name>.<region>.containers.appdomain.cloud
     secretName: <cluster-name>
   rules:
-  - host: <cluster-name>.eu-de.containers.appdomain.cloud
+  - host: <cluster-name>.<region>.containers.appdomain.cloud
     http:
       paths:
       - path: /todo/
