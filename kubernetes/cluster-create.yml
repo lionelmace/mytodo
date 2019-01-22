@@ -1,7 +1,7 @@
 # File to provision a cluster using the command line
 # ic cs cluster-create [--file FILE_LOCATION]
 name: dev-cluster
-location: fra02
+zone: fra02
 # no-subnet: <no-subnet>
 # ic cs machine-types fra02
 machine-type: b2c.4x16
