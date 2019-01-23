@@ -5,7 +5,7 @@
 replicaCount: 3
 
 image:
-  repository: registry.eu-de.bluemix.net/mace/mytodos
+  repository: registry.<region>.bluemix.net/<namespace>/todo-<lastname>
   tag: "1.0"
   pullPolicy: Always
 
@@ -29,11 +29,11 @@ ingress:
     # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos"
   path: /
   hosts:
-    - todo.hacluster.eu-de.containers.appdomain.cloud
+    - todo.<cluster-name>.eu-de.containers.appdomain.cloud
   tls:
-    - secretName: hacluster
+    - secretName: <cluster-name>
       hosts:
-        - todo.hacluster.eu-de.containers.appdomain.cloud
+        - todo.<cluster-name>.eu-de.containers.appdomain.cloud
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
