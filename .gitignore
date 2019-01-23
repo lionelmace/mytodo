@@ -3,7 +3,7 @@ credentials.env
 vcap-local.json
 myreadme.txt
 .editorconfig
-kubernetes/helm/simple/local-values.yaml
+chart/mytodos/local-values.yaml
 package-lock.json
 terraform/provider.tf
 terraform/.terraform
