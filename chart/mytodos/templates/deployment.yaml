@@ -23,9 +23,9 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-          - secretRef:
-              name: {{ .Values.secret.database }}
+          # envFrom:
+          # - secretRef:
+          #     name: {{ .Values.secret.database }}
           # ports:
           #   - name: http
           #     containerPort: 80

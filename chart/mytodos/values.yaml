@@ -9,8 +9,8 @@ image:
   tag: "1.0"
   pullPolicy: Always
 
-secret:
-  database: database-credentials
+# secret:
+#   database: database-credentials
 
 nameOverride: ""
 fullnameOverride: ""
