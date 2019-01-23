@@ -39,15 +39,38 @@ echo -e "Release name: ${RELEASE_NAME}"
 
 echo "=========================================================="
 echo "DEPLOYING HELM chart"
+
+echo -e "\n==## Installing Helm 2.12.2"
+wget https://storage.googleapis.com/kubernetes-helm/helm-v2.12.2-linux-amd64.tar.gz
+tar -xzvf helm-v2.12.2-linux-amd64.tar.gz
+mkdir $HOME/helm212
+mv linux-amd64/helm $HOME/helm212/
+export PATH=$HOME/helm212:$PATH
+rm helm-v2.12.2-linux-amd64.tar.gz
+    
+helm init --client-only
+#--force-upgrade
+
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
 
+INGRESS_HOST="todo.${PIPELINE_KUBERNETES_CLUSTER_NAME}.eu-de.containers.appdomain.cloud"
+
+echo "##### ON REMPLACE AVEC LES VALEURS SUIVANTES:"
+echo "RELEASE_NAME=${RELEASE_NAME}"
+echo "CHART_PATH=${CHART_PATH}"
+echo "image.repository=${IMAGE_REPOSITORY}"
+echo "image.tag=${IMAGE_TAG}"
+echo "image.pullSecret=${IMAGE_PULL_SECRET_NAME}"
+echo "INGRESS_HOST=${INGRESS_HOST}"
+
 # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
 echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-helm upgrade --install --debug --dry-run ${RELEASE_NAME} ${CHART_PATH} --set image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+helm upgrade --install --debug --dry-run ${RELEASE_NAME} ${CHART_PATH} --set ingress.hosts[0]=${INGRESS_HOST},ingress.tls.secretName[0]=${PIPELINE_KUBERNETES_CLUSTER_NAME},image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
 
 echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-helm upgrade  --install ${RELEASE_NAME} ${CHART_PATH} --set image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+helm upgrade --install --debug ${RELEASE_NAME} ${CHART_PATH} --set ingress.hosts[0]=${INGRESS_HOST},ingress.tls.secretName[0]=${PIPELINE_KUBERNETES_CLUSTER_NAME},image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+# helm upgrade  --install ${RELEASE_NAME} ${CHART_PATH} --set image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
 
 echo "=========================================================="
 echo -e "CHECKING deployment status of release ${RELEASE_NAME} with image tag: ${IMAGE_TAG}"
@@ -122,7 +145,7 @@ helm history ${RELEASE_NAME}
 # echo "Deployed Pods:"
 # kubectl describe pods --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
 
-echo "=========================================================="
-IP_ADDR=$(ibmcloud ks workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
-PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
-echo -e "View the application at: http://${IP_ADDR}:${PORT}"
+#echo "=========================================================="
+#IP_ADDR=$(ibmcloud ks workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
+#PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
+#echo -e "View the application at: http://${IP_ADDR}:${PORT}"

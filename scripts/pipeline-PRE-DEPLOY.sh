@@ -88,7 +88,16 @@ fi
 
 echo "=========================================================="
 echo "CONFIGURING TILLER enabled (Helm server-side component)"
-helm init --force-upgrade
+
+echo -e "\n==## Installing Helm 2.12.2"
+wget https://storage.googleapis.com/kubernetes-helm/helm-v2.12.2-linux-amd64.tar.gz
+tar -xzvf helm-v2.12.2-linux-amd64.tar.gz
+mkdir $HOME/helm212
+mv linux-amd64/helm $HOME/helm212/
+export PATH=$HOME/helm212:$PATH
+rm helm-v2.12.2-linux-amd64.tar.gz
+    
+helm init #--force-upgrade
 kubectl rollout status -w deployment/tiller-deploy --namespace=kube-system
 helm version
 

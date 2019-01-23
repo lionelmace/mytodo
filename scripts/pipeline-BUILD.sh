@@ -48,6 +48,7 @@ helm lint ${CHART_PATH}
 
 echo "=========================================================="
 echo "CHECKING REGISTRY current plan and quota"
+# Commented becase fails if the user running the pipeline is not the owner LMA
 # bx cr plan
 # bx cr quota
 echo "If needed, discard older images using: bx cr image-rm"
