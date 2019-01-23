@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           # envFrom:
           # - secretRef:
-          #     name: {{ .Values.secret.database }}
+          #     name: {#{ .Values.secret.database }}
           # ports:
           #   - name: http
           #     containerPort: 80
