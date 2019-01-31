@@ -48,7 +48,7 @@ mv linux-amd64/helm $HOME/helm212/
 export PATH=$HOME/helm212:$PATH
 rm helm-v2.12.2-linux-amd64.tar.gz
     
-helm init --client-only
+helm init --upgrade
 #--force-upgrade
 
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
