@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.<region>.bluemix.net/<namespace>/todo-<lastname>:1.0
+        image: <region>.icr.io/<namespace>/todo-<lastname>:1.0
         imagePullPolicy: Always
         resources:
           requests:

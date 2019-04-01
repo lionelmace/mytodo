@@ -1,5 +1,6 @@
 # This policy whitelists a source IP and allows that IP access to a specific IP (ingress or load balancer) and port.
-# If you are using a multizone cluster, you must also whitelist the listed Cloudflare IPs in order to allow successful routing: https://www.cloudflare.com/ips/.
+# If you are using a multizone cluster, you must also whitelist the listed Cloudflare IPs 
+# in order to allow successful routing: https://www.cloudflare.com/ips/.
 
 - apiVersion: v1
   kind: policy

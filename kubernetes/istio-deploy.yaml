@@ -6,6 +6,9 @@ metadata:
   name: mytodos
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
+  selector:
+    matchLabels:
+      app: mytodos
   template: # create pods using pod definition in this template
     metadata:
       labels:
@@ -14,14 +17,17 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: registry.<region>.bluemix.net/<namespace>/mytodos:1
+        image: <region>.icr.io/<namespace>/mytodos:1.0
         imagePullPolicy: Always
         ports: #istio
         - containerPort: 8080 #istio
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
+            cpu: 250m     # 250 millicores = 1/4 core
+            memory: 128Mi # 128 MB
+          limits:
+            cpu: 500m
+            memory: 384Mi
         volumeMounts:
           - mountPath: /opt/service-bind # Mount the "service-bind-volume" volume into the pod.
             name: service-bind-volume
