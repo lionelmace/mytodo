@@ -3,5 +3,5 @@ variable "ibmcloud_location" {
 }
 
 data "ibm_resource_group" "group" {
-  name = "default"
+  name = "demo"
 }
