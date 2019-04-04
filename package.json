@@ -11,15 +11,15 @@
     "node": ">=10.13.0"
   },
   "dependencies": {
-    "@cloudant/cloudant": "^2.4.1",
-    "async": "^2.6.1",
+    "@cloudant/cloudant": "^4.0.0",
+    "async": "^2.6.2",
     "body-parser": "~1.18.3",
-    "cfenv": "^1.1.0",
-    "dotenv": "^6.1.0",
+    "cfenv": "^1.2.2",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "method-override": "~3.0.0",
-    "nano": "^7.1.1",
-    "serve-favicon": "^2.5.0",
-    "mongodb": "^3.1.10"
+    "mongodb": "^3.2.2",
+    "nano": "^8.0.1",
+    "serve-favicon": "^2.5.0"
   }
 }

@@ -1,6 +1,7 @@
 node_modules
 credentials.env
 vcap-local.json
+mongodb-ca.pem
 myreadme.txt
 .editorconfig
 chart/mytodos/local-values.yaml
