@@ -66,8 +66,8 @@ variable "cluster_kube_version" {
   default     = "1.13.4"
 }
 
-resource "ibm_container_cluster" "hacluster" {
-  name              = "${var.environment_name}-hacluster"
+resource "ibm_container_cluster" "azcluster" {
+  name              = "${var.environment_name}-azcluster"
   datacenter        = "${var.cluster_datacenter}"
   hardware = "shared"
   machine_type      = "${var.cluster_machine_type}"
@@ -78,7 +78,8 @@ resource "ibm_container_cluster" "hacluster" {
 }
 
 # resource "ibm_container_worker_pool" "test_pool" {
-#   cluster          = "${var.environment_name}-hacluster"
+#   # cluster          = "${var.environment_name}-azcluster"
+#   cluster          = "${ibm_container_cluster.azcluster.id}"
 #   worker_pool_name = "my_pool"
 #   machine_type     = "u2c.2x4"
 #   size_per_zone    = 1
@@ -92,7 +93,8 @@ resource "ibm_container_cluster" "hacluster" {
 # }
 
 resource ibm_container_worker_pool_zone_attachment az1 {
-  cluster          = "${var.environment_name}-hacluster"
+  # cluster         = "${var.environment_name}-azcluster"
+  cluster         = "${ibm_container_cluster.azcluster.id}"
   worker_pool     = "default"
   zone            = "${var.az1}"
   public_vlan_id  = "${var.az1_vlan_id_public}"
@@ -100,7 +102,8 @@ resource ibm_container_worker_pool_zone_attachment az1 {
   region          = "${var.ibmcloud_region}"
 }
 resource ibm_container_worker_pool_zone_attachment az2 {
-  cluster          = "${var.environment_name}-hacluster"
+  # cluster         = "${var.environment_name}-azcluster"
+  cluster         = "${ibm_container_cluster.azcluster.id}"
   worker_pool     = "default"
   zone            = "${var.az2}"
   public_vlan_id  = "${var.az2_vlan_id_public}"
@@ -108,7 +111,8 @@ resource ibm_container_worker_pool_zone_attachment az2 {
   region          = "${var.ibmcloud_region}"
 }
 resource ibm_container_worker_pool_zone_attachment az3 {
-  cluster          = "${var.environment_name}-hacluster"
+  # cluster          = "${var.environment_name}-azcluster"
+  cluster         = "${ibm_container_cluster.azcluster.id}"
   worker_pool     = "default"
   zone            = "${var.az3}"
   public_vlan_id  = "${var.az3_vlan_id_public}"
