@@ -32,25 +32,25 @@ if (result.error) {
 
 // Cloud Foundry -----------------------------------------------------------
 // Run in Cloud Foundry - Read VCAP variables
-if (!appEnv.isLocal) {
-  console.log('Running in Cloud Foundry');
-  console.log('appEnv=', appEnv);
-  var services = appEnv.getServices();
-  console.log('services=', services);
-  for (var svcName in services) {
-    console.log('svcName=', svcName);
-    if (services.hasOwnProperty(svcName)) {
-      console.log('svc=', svc);
-      var svc = services[svcName];
-      console.log('Service name=' + svc.name + ', Label=' + svc.label);
-      if (svc.label == "cloudantNoSQLDB") {
-        cloudantCreds =  svc.credentials;
-        process.env.CLOUDANT_USERNAME=cloudantCreds.username;
-        process.env.CLOUDANT_APIKEY=cloudantCreds.apikey;
-      }
-    }
-  }
-}
+// if (!appEnv.isLocal) {
+//   console.log('Running in Cloud Foundry');
+//   console.log('appEnv=', appEnv);
+//   var services = appEnv.getServices();
+//   console.log('services=', services);
+//   for (var svcName in services) {
+//     console.log('svcName=', svcName);
+//     if (services.hasOwnProperty(svcName)) {
+//       console.log('svc=', svc);
+//       var svc = services[svcName];
+//       console.log('Service name=' + svc.name + ', Label=' + svc.label);
+//       if (svc.label == "cloudantNoSQLDB") {
+//         cloudantCreds =  svc.credentials;
+//         process.env.CLOUDANT_USERNAME=cloudantCreds.username;
+//         process.env.CLOUDANT_APIKEY=cloudantCreds.apikey;
+//       }
+//     }
+//   }
+// }
 
 // Database ----------------------------------------------------------------
 let db;

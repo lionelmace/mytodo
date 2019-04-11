@@ -1,4 +1,5 @@
 node_modules
+ibmcloud/certificate
 credentials.env
 vcap-local.json
 mongodb-ca.pem
