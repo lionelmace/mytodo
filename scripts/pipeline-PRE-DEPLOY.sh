@@ -96,8 +96,10 @@ mkdir $HOME/helm212
 mv linux-amd64/helm $HOME/helm212/
 export PATH=$HOME/helm212:$PATH
 rm helm-v2.12.2-linux-amd64.tar.gz
-    
-helm init --upgrade
+
+kubectl apply -f kubernetes/tiller-rbac-config.yaml
+
+helm init --upgrade --service-account tiller
 kubectl rollout status -w deployment/tiller-deploy --namespace=kube-system
 helm version
 

@@ -69,6 +69,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json()); // parse application/json
 
 // Force HTTPS -------------------------------------------------------------
+/*
 // Enable reverse proxy support in Express. This causes the
 // the "X-Forwarded-Proto" header field to be trusted so its
 // value can be used to determine the protocol. See 
@@ -87,6 +88,7 @@ app.use (function (req, res, next) {
           res.redirect('https://' + req.headers.host + req.url);
   }
 });
+*/
 
 app.use(express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/icons/favicon-check.ico'));
