@@ -1,5 +1,5 @@
 variable "cluster_name" {
-  default = "terraform-env-hacluster"
+  default = "terraform-env-azcluster"
 }
 
 # The datacenter of the worker nodes
@@ -63,13 +63,13 @@ variable "cluster_hardware" {
 # If present, at least major.minor must be specified.
 variable "cluster_kube_version" {
   description = "CLI: ibmcloud ks kube-versions"
-  default     = "1.13.4"
+  default     = "1.13.5"
 }
 
 resource "ibm_container_cluster" "azcluster" {
   name              = "${var.cluster_name}"
   datacenter        = "${var.cluster_datacenter}"
-  hardware = "shared"
+  hardware          = "shared"
   machine_type      = "${var.cluster_machine_type}"
   region            = "${var.ibmcloud_region}"
   kube_version      = "${var.cluster_kube_version}"
@@ -96,7 +96,7 @@ resource "ibm_container_worker_pool" "test_pool" {
 resource ibm_container_worker_pool_zone_attachment az1 {
   # cluster         = "${var.environment_name}-azcluster"
   cluster           = "${ibm_container_cluster.azcluster.id}"
-  worker_pool       = "default"
+  worker_pool       = "${element(split("/",ibm_container_worker_pool.test_pool.id),1)}"
   zone              = "${var.az1}"
   public_vlan_id    = "${var.az1_vlan_id_public}"
   private_vlan_id   = "${var.az1_vlan_id_private}"
@@ -106,7 +106,7 @@ resource ibm_container_worker_pool_zone_attachment az1 {
 resource ibm_container_worker_pool_zone_attachment az2 {
   # cluster         = "${var.environment_name}-azcluster"
   cluster           = "${ibm_container_cluster.azcluster.id}"
-  worker_pool       = "default"
+  worker_pool       = "${element(split("/",ibm_container_worker_pool.test_pool.id),1)}"
   zone              = "${var.az2}"
   public_vlan_id    = "${var.az2_vlan_id_public}"
   private_vlan_id   = "${var.az2_vlan_id_private}"
@@ -117,7 +117,7 @@ resource ibm_container_worker_pool_zone_attachment az2 {
 resource ibm_container_worker_pool_zone_attachment az3 {
   # cluster         = "${var.environment_name}-azcluster"
   cluster           = "${ibm_container_cluster.azcluster.id}"
-  worker_pool       = "default"
+  worker_pool       = "${element(split("/",ibm_container_worker_pool.test_pool.id),1)}"
   zone              = "${var.az3}"
   public_vlan_id    = "${var.az3_vlan_id_public}"
   private_vlan_id   = "${var.az3_vlan_id_private}"
