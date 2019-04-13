@@ -1,11 +1,11 @@
 node_modules
 ibmcloud/certificate
+chart/mytodos/local-values.yaml
 credentials.env
-vcap-local.json
-mongodb-ca.pem
+kubernetes/ingress-tls-mydeploy.yaml
 myreadme.txt
 .editorconfig
-chart/mytodos/local-values.yaml
 terraform/provider.tf
 terraform/.terraform
 terraform/terraform.tfstate*
+vcap-local.json
