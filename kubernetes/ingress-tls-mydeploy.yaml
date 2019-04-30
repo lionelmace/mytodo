@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mytodos
-        image: de.icr.io/mace/mytodos:1.0
+        image: de.icr.io/lab-demo/mytodos:1.1
         imagePullPolicy: Always
         resources:
           requests:
@@ -26,9 +26,10 @@ spec:
           limits:
             cpu: 500m
             memory: 384Mi
-        envFrom:
-        - secretRef:
-            name: database-credentials
+        # envFrom:
+        # - secretRef:
+        #     name: database-credentials
+            #name: database-credentials-private
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -44,20 +45,20 @@ metadata:
 spec:
   tls:
   - hosts:
-    - hacluster.eu-de.containers.appdomain.cloud
-    secretName: hacluster
+    - macecluster.eu-de.containers.appdomain.cloud
+    secretName: macecluster
   rules:
-  - host: hacluster.eu-de.containers.appdomain.cloud
+  - host: macecluster.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /todo/
         backend:
           serviceName: mytodos
           servicePort: 8080
-  # - host: www.mycustomdomain.com
+  # - host: www.lionelmace.com
   #   http:
   #     paths:
-  #     - path: /
+  #     - path: /todo/
   #       backend:
   #         serviceName: mytodos
   #         servicePort: 3000

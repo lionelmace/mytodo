@@ -1,6 +1,7 @@
 node_modules
 ibmcloud/certificate
+chart/mytodos/local-values.yaml
 credentials.env
+kubernetes/ingress-tls-mydeploy.yaml
 npm-debug.log
 vcap-local.json
-chart/mytodos/local-values.yaml
