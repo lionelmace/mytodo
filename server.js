@@ -93,6 +93,14 @@ app.use (function (req, res, next) {
 app.use(express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/icons/favicon-check.ico'));
 
+// Healthcheck use for LivenessProbe ---------------------------------------
+app.get('/healthcheck',(req,res)=> {
+  res.send ("Health check passed");
+ });
+ app.get('/badhealth',(req,res)=> {
+     res.status(500).send('Health check did not pass');
+ });
+ 
 // API ---------------------------------------------------------------------
 app.get('/api/todos', (req, res) => {
   db.search().then(todos => {
