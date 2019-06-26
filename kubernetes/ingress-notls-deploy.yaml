@@ -38,7 +38,7 @@ metadata:
   name: mytodos-ingress
 spec:
   rules:
-  - host: <cluster-name>.<region>.containers.appdomain.cloud
+  - host: todo.<cluster-name>.<region>.containers.appdomain.cloud
     http:
       paths:
       - path: /

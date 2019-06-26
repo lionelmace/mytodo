@@ -13,7 +13,8 @@ vcap-local.json
 ibmcloud/certificate
 chart/mytodos/local-values.yaml
 credentials.env
-kubernetes/ingress-tls-mydeploy.yaml
+kubernetes/ingress-tls-rewrite.yaml
+kubernetes/ingress-tls-deploy-full.yaml
 
 # Miscellaneous
 myreadme.txt
