@@ -100,6 +100,17 @@ app.get('/healthcheck',(req,res)=> {
  app.get('/badhealth',(req,res)=> {
      res.status(500).send('Health check did not pass');
  });
+
+// Load test - will generate CPU stress for a few seconds. 
+app.get('/loadtest', function (req, res) {
+    res.send("Load test complete: " + fibo(45));
+})
+
+function fibo(n) {
+    if (n < 2)
+        return 1;
+    else return fibo(n - 2) + fibo(n - 1);
+}
  
 // API ---------------------------------------------------------------------
 app.get('/api/todos', (req, res) => {
