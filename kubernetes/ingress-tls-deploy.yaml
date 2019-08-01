@@ -29,6 +29,7 @@ spec:
         envFrom:
         - secretRef:
             name: database-credentials
+            optional: true
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
