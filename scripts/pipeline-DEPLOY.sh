@@ -54,7 +54,8 @@ helm init --upgrade
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
 
-INGRESS_HOST="todo.${PIPELINE_KUBERNETES_CLUSTER_NAME}.eu-de.containers.appdomain.cloud"
+INGRESS_SUBDOMAIN=$(ibmcloud ks cluster-get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep 'Ingress Subdomain' | awk '{ print $3 }')
+INGRESS_HOST="todo.${INGRESS_SUBDOMAIN}"
 
 echo "##### ON REMPLACE AVEC LES VALEURS SUIVANTES:"
 echo "RELEASE_NAME=${RELEASE_NAME}"
