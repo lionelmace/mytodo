@@ -1,6 +1,6 @@
 resource "ibm_database" "icd_mongo" {
   name     = "icd-mongo-created-with-terraform"
-  location = "${var.ibmcloud_location}"
+  location = "${var.ibmcloud_region}"
   service  = "databases-for-mongodb"
   plan     = "standard"
   version  = "4.0"

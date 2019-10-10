@@ -1,6 +1,6 @@
 resource "ibm_resource_instance" "icd_postgres" {
   name              = "icd-postgres-created-with-terraform"
-  location          = "${var.ibmcloud_location}"
+  location          = "${var.ibmcloud_region}"
   service           = "databases-for-postgresql"
   plan              = "standard"
   # If not provided it takes the default resource group.
