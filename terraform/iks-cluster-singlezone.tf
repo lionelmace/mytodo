@@ -1,4 +1,3 @@
-
 variable "environment_name" {
   default = "terraform-env"
 }
@@ -6,8 +5,7 @@ variable "environment_name" {
 # The datacenter of the worker nodes
 variable "cluster_datacenter" {
   description = "CLI: ibmcloud ks locations"
-  default     = "fra02, fra04, fra05"
-  
+  default     = "fra02"
 }
 
 variable "cluster_machine_type" {
@@ -38,7 +36,7 @@ variable "cluster_hardware" {
 # If present, at least major.minor must be specified.
 variable "cluster_kube_version" {
   description = "CLI: ibmcloud ks kube-versions"
-  default     = "1.13.4"
+  default     = "1.13.5"
 }
 
 # a cluster
@@ -52,16 +50,7 @@ resource "ibm_container_cluster" "cluster" {
   hardware          = "${var.cluster_hardware}"
   kube_version      = "${var.cluster_kube_version}"
   # The region where the cluster is provisioned
-  region            = "${var.ibmcloud_location}"
+  region            = "${var.ibmcloud_region}"
   resource_group_id = "${data.ibm_resource_group.group.id}"
   tags              = ["terraform", "dev"]
-}
-
-resource "ibm_container_worker_pool" "cluster_worker_pool" {
-  cluster           = "${var.environment_name}-cluster"
-  worker_pool_name  = "${var.environment_name}-pool"
-  machine_type      = "${var.cluster_machine_type}"
-  size_per_zone     = "${var.cluster_worker_num}"
-  hardware          = "${var.cluster_hardware}"
-  region            = "${var.ibmcloud_location}"
 }
