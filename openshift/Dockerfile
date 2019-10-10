@@ -1,6 +1,8 @@
+# Catalog: https://access.redhat.com/containers/?tab=tech-details#/registry.access.redhat.com/ubi8/nodejs-10
+#
 # docker login registry.redhat.io
-# Username: ${REGISTRY-SERVICE-ACCOUNT-USERNAME}
-# Password: ${REGISTRY-SERVICE-ACCOUNT-PASSWORD}
+#   Username: ${REGISTRY-SERVICE-ACCOUNT-USERNAME}
+#   Password: ${REGISTRY-SERVICE-ACCOUNT-PASSWORD}
 # Login Succeeded!
 # 
 # docker pull registry.redhat.io/ubi8/ubi
