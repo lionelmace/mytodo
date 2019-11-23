@@ -1,5 +1,5 @@
 # FROM node:11.13.0-alpine
-FROM node:12.13.0-alpine
+FROM node:12.13.1-alpine
 
 # Create app directory
 RUN mkdir -p /usr/src/app

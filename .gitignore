@@ -14,7 +14,7 @@ ibmcloud/certificate
 chart/mytodos/local-values.yaml
 credentials.env
 kubernetes/ingress-tls-rewrite.yaml
-kubernetes/ingress-tls-deploy-full.yaml
+kubernetes/ingress-tls-deploy-vpc.yaml
 
 # Miscellaneous
 myreadme.txt
