@@ -2,19 +2,19 @@
 node_modules
 
 # Terraform
-terraform/provider.tf
-terraform/.terraform
-terraform/terraform.tfstate*
+.cloud/terraform/provider.tf
+.cloud/terraform/.terraform
+.cloud/terraform/terraform.tfstate*
 
 # Cloud Foundry
 vcap-local.json
 
 # Local Values
-ibmcloud/certificate
-chart/mytodos/local-values.yaml
+.cloud/certificate
+.cloud/chart/mytodos/local-values.yaml
 credentials.env
-kubernetes/ingress-tls-rewrite.yaml
-kubernetes/ingress-tls-deploy-vpc.yaml
+.cloud/kubernetes/ingress-tls-rewrite.yaml
+.cloud/kubernetes/ingress-tls-deploy-vpc.yaml
 
 # Miscellaneous
 myreadme.txt
