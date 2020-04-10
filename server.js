@@ -162,11 +162,17 @@ app.delete('/api/todos/:id', (req, res) => {
 //   res.status(404).send('Not found');
 // });
 
-// connect to the database
-db.init().then(() => {
-  // start server on the specified port and binding host
-  // app.listen(appEnv.port, "0.0.0.0", function () {
-  app.listen(appEnv.port, function () {
-    console.log("server starting on " + appEnv.url);
-  });
+app.listen(appEnv.port, function () {
+  console.log("server starting on " + appEnv.url);
 });
+
+// Try to reconnect to the DB after 5sec
+function initDb() {
+  db.init().catch((err) => {
+    setTimeout(initDb, 5000);
+  })
+}
+
+// connect to the database
+initDb();
+
