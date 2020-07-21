@@ -1,8 +1,8 @@
-This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and Node.js) is ready to be deployed on IBM Cloud.
+This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and Node.js) is ready to be deployed on ICP IBM Cloud Platform.
 
 ![Todo](./screenshot.png)
 
-Deploy this app in a few clicks on an existing Kubernetes cluster using DevOps
+Deploy this app in a few clicks on an existing Kubernetes cluster using DevOps:
 
 <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](createtoolchain.png)</a>
 

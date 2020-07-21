@@ -4,6 +4,9 @@ properties:
 - name: IBM_CLOUD_API_KEY
   value: ${API_KEY}
   type: secure
+- name: HELM_VERSION
+  value: ''
+  type: text
 stages:
 - name: BUILD
   inputs:
@@ -24,15 +27,18 @@ stages:
     script: |+
       #!/bin/bash
       # set -x
+
       # Git repo cloned at $WORKING_DIR, copy into $ARCHIVE_DIR
       mkdir -p $ARCHIVE_DIR
       cp -R -n ./ $ARCHIVE_DIR/ || true
+
       # Record git info
       echo "GIT_URL=${GIT_URL}" >> $ARCHIVE_DIR/build.properties
       echo "GIT_BRANCH=${GIT_BRANCH}" >> $ARCHIVE_DIR/build.properties
       echo "GIT_COMMIT=${GIT_COMMIT}" >> $ARCHIVE_DIR/build.properties
       echo "SOURCE_BUILD_NUMBER=${BUILD_NUMBER}" >> $ARCHIVE_DIR/build.properties
       cat $ARCHIVE_DIR/build.properties
+
       # check if doi is integrated in this toolchain
       if jq -e '.services[] | select(.service_id=="draservicebroker")' _toolchain.json; then
         # Record build information
@@ -72,7 +78,7 @@ stages:
     value: Dockerfile
     type: text
   - name: PIPELINE_IMAGE_URL
-    value: undefined
+    value: ''
     type: text
   inputs:
   - type: job
@@ -93,6 +99,7 @@ stages:
       #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh")
       # ------------------
       # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh
+
       # This script lints Dockerfile.
       source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_dockerfile.sh")
   - name: Check registry
@@ -114,6 +121,7 @@ stages:
       #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_registry.sh")
       # ------------------
       # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_registry.sh
+
       # This script checks presence of registry namespace.
       source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_registry.sh")
   - name: Build container image
@@ -135,6 +143,7 @@ stages:
       #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh")
       # ------------------
       # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/build_image.sh
+
       # This script does build a Docker image into IBM Container Service private image registry.
       # Minting image tag using format: BUILD_NUMBER-BRANCH-COMMIT_ID-TIMESTAMP
       # Also copies information into a build.properties file, so they can be reused later on by other scripts (e.g. image url, chart name, ...)
@@ -173,14 +182,14 @@ stages:
   - name: CLUSTER_NAMESPACE
     value: ${PROD_CLUSTER_NAMESPACE}
     type: text
-  - name: DEPLOYMENT_FILE
-    value: deployment.yml
+  - name: CHART_ROOT
+    value: chart
     type: text
   - name: APP_URL
-    value: undefined
+    value: ''
     type: text  
   jobs:
-  - name: Deploy to Kubernetes
+  - name: Deploy with Helm
     type: deployer
     target:
       region_id: ${PROD_REGION_ID}
@@ -190,15 +199,16 @@ stages:
       #!/bin/bash
       # uncomment to debug the script
       # set -x
-      # copy the script below into your app code repo (e.g. ./scripts/check_and_deploy_kubectl.sh) and 'source' it from your pipeline job
-      #    source ./scripts/check_and_deploy_kubectl.sh
+      # copy the script below into your app code repo (e.g. ./scripts/check_and_deploy_helm.sh) and 'source' it from your pipeline job
+      #    source ./scripts/check_and_deploy_helm.sh
       # alternatively, you can source it from online script:
-      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_kubectl.sh")
+      #    source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm.sh")
       # ------------------
-      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_kubectl.sh
+      # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm.sh
+
       # This script checks the IBM Container Service cluster is ready, has a namespace configured with access to the private
-      # image registry (using an IBM Cloud API Key), perform a kubectl deploy of container image and check on outcome.
-      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_kubectl.sh")
+      # image registry (using an IBM Cloud API Key), perform a Helm deploy of container image and check on outcome.
+      source <(curl -sSL "https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/check_and_deploy_helm.sh")
   - name: Check health
     type: deployer
     target:
