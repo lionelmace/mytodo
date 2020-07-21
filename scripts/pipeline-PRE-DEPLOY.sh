@@ -27,10 +27,13 @@ echo "CLUSTER_NAMESPACE=${CLUSTER_NAMESPACE}"
 #Check cluster availability
 echo "=========================================================="
 echo "CHECKING CLUSTER readiness and namespace existence"
-IP_ADDR=$(ibmcloud ks workers -c ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | awk '{ print $2 }')
-if [ -z "${IP_ADDR}" ]; then
-  echo -e "${PIPELINE_KUBERNETES_CLUSTER_NAME} not created or workers not ready"
-  exit 1
+if [ -z "${KUBERNETES_MASTER_ADDRESS}" ]; then
+  CLUSTER_ID=${PIPELINE_KUBERNETES_CLUSTER_ID:-${PIPELINE_KUBERNETES_CLUSTER_NAME}} # use cluster id instead of cluster name to handle case where there are multiple clusters with same name
+  IP_ADDR=$( ibmcloud ks workers --cluster ${CLUSTER_ID} | grep normal | head -n 1 | awk '{ print $2 }' )
+  if [ -z "${IP_ADDR}" ]; then
+    echo -e "${PIPELINE_KUBERNETES_CLUSTER_NAME} not created or workers not ready"
+    exit 1
+  fi
 fi
 echo "Configuring cluster namespace"
 if kubectl get namespace ${CLUSTER_NAMESPACE}; then
@@ -41,50 +44,36 @@ else
 fi
 
 # Grant access to private image registry from namespace $CLUSTER_NAMESPACE
-# reference https://console.bluemix.net/docs/containers/cs_cluster.html#bx_registry_other
+# reference https://cloud.ibm.com/docs/containers?topic=containers-images#other_registry_accounts
 echo "=========================================================="
 echo -e "CONFIGURING ACCESS to private image registry from namespace ${CLUSTER_NAMESPACE}"
 IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
+
 echo -e "Checking for presence of ${IMAGE_PULL_SECRET_NAME} imagePullSecret for this toolchain"
 if ! kubectl get secret ${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}; then
   echo -e "${IMAGE_PULL_SECRET_NAME} not found in ${CLUSTER_NAMESPACE}, creating it"
   # for Container Registry, docker username is 'token' and email does not matter
+  if [ -z "${PIPELINE_BLUEMIX_API_KEY}" ]; then PIPELINE_BLUEMIX_API_KEY=${IBM_CLOUD_API_KEY}; fi #when used outside build-in kube job
   kubectl --namespace ${CLUSTER_NAMESPACE} create secret docker-registry ${IMAGE_PULL_SECRET_NAME} --docker-server=${REGISTRY_URL} --docker-password=${PIPELINE_BLUEMIX_API_KEY} --docker-username=iamapikey --docker-email=a@b.com
 else
   echo -e "Namespace ${CLUSTER_NAMESPACE} already has an imagePullSecret for this toolchain."
 fi
-echo "Checking ability to pass pull secret via Helm chart"
-CHART_PULL_SECRET=$( grep 'pullSecret' ./chart/${CHART_NAME}/values.yaml || : )
-if [ -z "$CHART_PULL_SECRET" ]; then
-  echo "WARNING: Chart is not expecting an explicit private registry imagePullSecret. Will patch the cluster default serviceAccount to pass it implicitly for now."
-  echo "Going forward, you should edit the chart to add in:"
-  echo -e "[./chart/${CHART_NAME}/templates/deployment.yaml] (under kind:Deployment)"
-  echo "    ..."
-  echo "    spec:"
-  echo "      imagePullSecrets:               #<<<<<<<<<<<<<<<<<<<<<<<<"
-  echo "        - name: __not_implemented__   #<<<<<<<<<<<<<<<<<<<<<<<<"
-  echo "      containers:"
-  echo "        - name: __not_implemented__"
-  echo "          image: "__not_implemented__:__not_implemented__"
-  echo "    ..."          
-  echo -e "[./chart/${CHART_NAME}/values.yaml]"
-  echo "or check out this chart example: https://github.com/open-toolchain/hello-helm/tree/master/chart/hello"
-  echo "or refer to: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret"
-  echo "    ..."
-  echo "    image:"
-  echo "repository: webapp"
-  echo "  tag: 1"
-  echo "  pullSecret: regsecret            #<<<<<<<<<<<<<<<<<<<<<<<<""
-  echo "  pullPolicy: IfNotPresent"
-  echo "    ..."
-  echo "Enabling default serviceaccount to use the pull secret"
-  kubectl patch -n ${CLUSTER_NAMESPACE} serviceaccount/default -p '{"imagePullSecrets":[{"name":"'"${IMAGE_PULL_SECRET_NAME}"'"}]}'
-  echo "default serviceAccount:"
-  kubectl get serviceAccount default -o yaml
-  echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using patched default serviceAccount"
+if [ -z "${KUBERNETES_SERVICE_ACCOUNT_NAME}" ]; then KUBERNETES_SERVICE_ACCOUNT_NAME="default" ; fi
+SERVICE_ACCOUNT=$(kubectl get serviceaccount ${KUBERNETES_SERVICE_ACCOUNT_NAME}  -o json --namespace ${CLUSTER_NAMESPACE} )
+if ! echo ${SERVICE_ACCOUNT} | jq -e '. | has("imagePullSecrets")' > /dev/null ; then
+  kubectl patch --namespace ${CLUSTER_NAMESPACE} serviceaccount/${KUBERNETES_SERVICE_ACCOUNT_NAME} -p '{"imagePullSecrets":[{"name":"'"${IMAGE_PULL_SECRET_NAME}"'"}]}'
 else
-  echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using Helm chart imagePullSecret"
+  if echo ${SERVICE_ACCOUNT} | jq -e '.imagePullSecrets[] | select(.name=="'"${IMAGE_PULL_SECRET_NAME}"'")' > /dev/null ; then 
+    echo -e "Pull secret already found in ${KUBERNETES_SERVICE_ACCOUNT_NAME} serviceAccount"
+  else
+    echo "Inserting toolchain pull secret into ${KUBERNETES_SERVICE_ACCOUNT_NAME} serviceAccount"
+    kubectl patch --namespace ${CLUSTER_NAMESPACE} serviceaccount/${KUBERNETES_SERVICE_ACCOUNT_NAME} --type='json' -p='[{"op":"add","path":"/imagePullSecrets/-","value":{"name": "'"${IMAGE_PULL_SECRET_NAME}"'"}}]'
+  fi
 fi
+echo "${KUBERNETES_SERVICE_ACCOUNT_NAME} serviceAccount:"
+kubectl get serviceaccount ${KUBERNETES_SERVICE_ACCOUNT_NAME} --namespace ${CLUSTER_NAMESPACE} -o yaml
+echo -e "Namespace ${CLUSTER_NAMESPACE} authorizing with private image registry using patched ${KUBERNETES_SERVICE_ACCOUNT_NAME} serviceAccount"
+
 
 echo "=========================================================="
 echo "CONFIGURING TILLER enabled (Helm server-side component)"
