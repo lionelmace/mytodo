@@ -54,7 +54,7 @@ mkdir -p $ARCHIVE_DIR
 # build as input and configured with an environment properties file valued 'build.properties'
 # will be able to reuse the env variables in their job shell scripts.
 
-CHART_ROOT="chart"
+CHART_ROOT=".cloud/chart"
 echo "Copy Helm chart along with the build"
 if [ ! -d $ARCHIVE_DIR/CHART_ROOT ]; then # no need to copy if working in ./ already
   cp -r $CHART_ROOT $ARCHIVE_DIR/
