@@ -54,7 +54,7 @@ stages:
       api_key: ${API_KEY}
     script: |
       #!/bin/bash
-      .bluemix/scripts/pipeline-VALIDATE.sh
+      ./.bluemix/scripts/pipeline-VALIDATE.sh
 - name: PROD
   inputs:
   - type: job
