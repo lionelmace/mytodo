@@ -19,7 +19,7 @@ stages:
     image_name: ${CF_APP_NAME}
     script: |-
       #!/bin/bash
-      .bluemix/scripts/pipeline-BUILD.sh
+      ./scripts/pipeline-BUILD.sh
   - name: Build Docker image
     type: builder
     build_type: cr
@@ -31,7 +31,7 @@ stages:
     image_name: ${CF_APP_NAME}
     script: |
       #!/bin/bash
-      .bluemix/scripts/pipeline-BUILD-DOCKER-IMAGE.sh
+      ./scripts/pipeline-BUILD-DOCKER-IMAGE.sh
 - name: VALIDATE
   inputs:
   - type: job
@@ -54,7 +54,7 @@ stages:
       api_key: ${API_KEY}
     script: |
       #!/bin/bash
-      ./.bluemix/scripts/pipeline-VALIDATE.sh
+      ./scripts/pipeline-VALIDATE.sh
 - name: PROD
   inputs:
   - type: job
@@ -78,7 +78,7 @@ stages:
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
       #!/bin/bash
-      .bluemix/scripts/pipeline-PRE-DEPLOY.sh
+      ./scripts/pipeline-PRE-DEPLOY.sh
   - name: Deploy Helm chart
     type: deployer
     target:
@@ -87,4 +87,4 @@ stages:
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
       #!/bin/bash
-      .bluemix/scripts/pipeline-DEPLOY.sh
+      ./scripts/pipeline-DEPLOY.sh
