@@ -7,15 +7,15 @@ template:
   description:
     $ref: "#/messages/template.description"
   header: '![](toolchain.svg?localize)'
-  icon: secure-lock-helm.svg
+  icon: secure-lock-kubernetes.svg
   required:
     - build
     - repo
   info:
     git url: >-
-      [https://github.com/open-toolchain/simple-helm-toolchain](https://github.com/open-toolchain/simple-helm-toolchain)
+      [https://github.com/open-toolchain/secure-kube-toolchain](https://github.com/open-toolchain/secure-kube-toolchain)
     git branch: >-
-      [master](https://github.com/open-toolchain/simple-helm-toolchain/tree/master)
+      [master](https://github.com/open-toolchain/secure-kube-toolchain/tree/master)
 toolchain:
   name: 'mytodo-toolchain-{{timestamp}}'
   template:
@@ -57,17 +57,7 @@ services:
 form:
   pipeline:
     parameters:
-      app-name: >
-        $env.appName ?
-          '{{appName}}' : '{{services.repo.parameters.repo_name}}'
-      prod-cluster-namespace: >
-        $env.prodClusterNamespace ?
-          '{{prodClusterNamespace}}' : 'prod'
-      registry-region: '{{registryRegion}}'
-      registry-namespace: '{{registryNamespace}}'
-      api-key: '{{apiKey}}'
-      prod-region: '{{prodRegion}}'
-      prod-resource-group: '{{prodResourceGroup}}'
-      prod-cluster-name: '{{prodClusterName}}'
+      app-name: '{{services.repo.parameters.repo_name}}'
+      prod-cluster-namespace: prod
     schema:
       $ref: deploy.json
