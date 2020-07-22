@@ -19,7 +19,7 @@ stages:
     image_name: ${APP_NAME}
     script: |-
       #!/bin/bash
-      ./scripts/pipeline-BUILD-DOCKER.sh
+      source <(curl -sSL "https://raw.githubusercontent.com/lionelmace/mytodo/master/scripts/pipeline-BUILD-DOCKER.sh")
 - name: VALIDATE
   inputs:
   - type: job
@@ -42,7 +42,7 @@ stages:
       api_key: ${API_KEY}
     script: |
       #!/bin/bash
-      ./scripts/pipeline-VALIDATE.sh
+      source <(curl -sSL "https://raw.githubusercontent.com/lionelmace/mytodo/master/scripts/pipeline-VALIDATE.sh")
 - name: DEPLOY
   inputs:
   - type: job
@@ -66,4 +66,4 @@ stages:
       kubernetes_cluster: ${PROD_CLUSTER_NAME}
     script: |
       #!/bin/bash
-      ./scripts/pipeline-CHECK-DEPLOY.sh
+      source <(curl -sSL "https://raw.githubusercontent.com/lionelmace/mytodo/master/scripts/pipeline-CHECK-DEPLOY.sh")

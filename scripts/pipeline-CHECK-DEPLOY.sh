@@ -151,19 +151,8 @@ echo -e "Release name: ${RELEASE_NAME}"
 echo -e "\\n=========================================================="
 echo "DEPLOYING HELM chart"
 
-# echo -e "\n==## Installing Helm 2.12.2"
-# wget https://storage.googleapis.com/kubernetes-helm/helm-v2.12.2-linux-amd64.tar.gz
-# tar -xzvf helm-v2.12.2-linux-amd64.tar.gz
-# mkdir $HOME/helm212
-# mv linux-amd64/helm $HOME/helm212/
-# export PATH=$HOME/helm212:$PATH
-# rm helm-v2.12.2-linux-amd64.tar.gz
-    
-# helm init --upgrade
-# #--force-upgrade
 
-
-WITH_INGRESS=$(ibmcloud ks cluster get --cluster demos-2 --json | jq ".isPaid")
+WITH_INGRESS=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} --json | jq ".isPaid")
 # WITH_INGRESS="false"
 
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
