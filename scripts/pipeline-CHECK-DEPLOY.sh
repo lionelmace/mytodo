@@ -260,9 +260,9 @@ echo ""
 echo -e "Status for release:${RELEASE_NAME}"
 helm status ${RELEASE_NAME}
 
-echo ""
-echo -e "History for release:${RELEASE_NAME}"
-helm history ${RELEASE_NAME}
+#LMA echo ""
+#echo -e "History for release:${RELEASE_NAME}"
+#helm history ${RELEASE_NAME}
 
 if [ "${WITH_INGRESS}" = "true" ]; then # Ingress deployment
   echo -e "\\nAccéder à votre application avec l'URL suivante:"
