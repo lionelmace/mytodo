@@ -162,29 +162,49 @@ echo "DEPLOYING HELM chart"
 # helm init --upgrade
 # #--force-upgrade
 
+
+WITH_INGRESS=$(ibmcloud ks cluster get --cluster demos-2 --json | jq ".isPaid")
+# WITH_INGRESS="false"
+
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
 
-INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep 'Ingress Subdomain' | awk '{ print $3 }')
-INGRESS_HOST="todo.${INGRESS_SUBDOMAIN}"
-
-INGRESS_SECRET=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep 'Ingress Secret' | awk '{ print $3 }')
-
-echo "##### ON REMPLACE AVEC LES VALEURS SUIVANTES:"
-echo "INGRESS_SECRET=${INGRESS_SECRET}"
+echo -e "\\n##### ON REMPLACE AVEC LES VALEURS SUIVANTES:"
 echo "RELEASE_NAME=${RELEASE_NAME}"
 echo "CHART_PATH=${CHART_PATH}"
 echo "image.repository=${IMAGE_REPOSITORY}"
 echo "image.tag=${IMAGE_TAG}"
 echo "image.pullSecret=${IMAGE_PULL_SECRET_NAME}"
-echo "INGRESS_HOST=${INGRESS_HOST}"
 
-# Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
-echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-helm upgrade --install --debug --dry-run ${RELEASE_NAME} ${CHART_PATH} --set ingress.hosts[0]=${INGRESS_HOST},ingress.tls[0].hosts[0]=${INGRESS_HOST},ingress.tls[0].secretName=${INGRESS_SECRET},image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+if [ "${WITH_INGRESS}" = "true" ]; then # Ingress deployment
+  echo -e "\\n##### INGRESS DEPLOYMENT..."
+  echo "INGRESS_HOST=${INGRESS_HOST}"
+  echo "INGRESS_SECRET=${INGRESS_SECRET}"
+  
+  INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep 'Ingress Subdomain' | awk '{ print $3 }')
+  INGRESS_HOST="todo.${INGRESS_SUBDOMAIN}"
 
-echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
-helm upgrade --install --debug ${RELEASE_NAME} ${CHART_PATH} --set ingress.hosts[0]=${INGRESS_HOST},ingress.tls[0].hosts[0]=${INGRESS_HOST},ingress.tls[0].secretName=${INGRESS_SECRET},image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+  INGRESS_SECRET=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep 'Ingress Secret' | awk '{ print $3 }')
+
+  # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
+  echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
+  helm upgrade --install --debug --dry-run ${RELEASE_NAME} ${CHART_PATH} --set ingress.hosts[0]=${INGRESS_HOST},ingress.tls[0].hosts[0]=${INGRESS_HOST},ingress.tls[0].secretName=${INGRESS_SECRET},image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+
+  echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
+  helm upgrade --install --debug ${RELEASE_NAME} ${CHART_PATH} --set ingress.hosts[0]=${INGRESS_HOST},ingress.tls[0].hosts[0]=${INGRESS_HOST},ingress.tls[0].secretName=${INGRESS_SECRET},image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+
+else # NodePort deployment
+  echo -e "\\n##### NODEPORT DEPLOYMENT..."
+
+  # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
+  echo -e "Dry run into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
+  helm upgrade --install --debug --dry-run ${RELEASE_NAME} ${CHART_PATH} --set ingress.enabled="false",service.type="NodePort",image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+
+  echo -e "Deploying into: ${PIPELINE_KUBERNETES_CLUSTER_NAME}/${CLUSTER_NAMESPACE}."
+  helm upgrade --install --debug ${RELEASE_NAME} ${CHART_PATH} --set ingress.enabled="false",service.type="NodePort",image.repository=${IMAGE_REPOSITORY},image.tag=${IMAGE_TAG},image.pullSecret=${IMAGE_PULL_SECRET_NAME} --namespace ${CLUSTER_NAMESPACE}
+
+fi
+
 
 echo -e "\\n=========================================================="
 echo -e "CHECKING deployment status of release ${RELEASE_NAME} with image tag: ${IMAGE_TAG}"
@@ -252,6 +272,16 @@ helm status ${RELEASE_NAME}
 echo ""
 echo -e "History for release:${RELEASE_NAME}"
 helm history ${RELEASE_NAME}
+
+if [ "${WITH_INGRESS}" = "true" ]; then # Ingress deployment
+  echo -e "\\nAccéder à votre application avec l'URL suivante:"
+  echo "${INGRESS_HOST}"
+else
+  NODEPORT=$(kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services prod-mytodos-20200721082346350 -n prod)
+  NODES=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="ExternalIP")].address }')
+  echo -e "\\nAccéder à votre application avec une des URL suivantes:"
+  for node in $NODES; do echo "App Url= http://$node:$NODEPORT"; done
+fi
 
 # echo ""
 # echo "Deployed Services:"
