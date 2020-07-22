@@ -151,8 +151,10 @@ echo -e "Release name: ${RELEASE_NAME}"
 echo -e "\\n=========================================================="
 echo "DEPLOYING HELM chart"
 
-
+echo -e "\\n LIONEL"
+echo -e "PIPELINE_KUBERNETES_CLUSTER_NAME=${PIPELINE_KUBERNETES_CLUSTER_NAME}"
 WITH_INGRESS=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} --json | jq ".isPaid")
+echo -e "WITH_INGRESS=${WITH_INGRESS}"
 # WITH_INGRESS="false"
 
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
