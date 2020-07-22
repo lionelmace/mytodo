@@ -20,7 +20,7 @@ echo "GIT_COMMIT=${GIT_COMMIT}"
 # https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
 
 # To review or change build options use:
-# bx cr build --help
+# ibmcloud cr build --help
 
 echo -e "\\n=========================================================="
 echo "CHECKING DOCKERFILE"
@@ -37,7 +37,7 @@ npm install -g dockerlint
 dockerlint -f Dockerfile
 
 # echo -e "Existing images in registry"
-# bx cr images
+# ibmcloud cr images
 
 TIMESTAMP=$( date -u "+%Y%m%d%H%M%SUTC")
 IMAGE_TAG=${BUILD_NUMBER}-${TIMESTAMP}
@@ -49,14 +49,14 @@ fi
 echo -e "\\n=========================================================="
 echo -e "BUILDING CONTAINER IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}"
 set -x
-bx cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} .
+ibmcloud cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} .
 set +x
-bx cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
+ibmcloud cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
 
 # Set PIPELINE_IMAGE_URL for subsequent jobs in stage (e.g. Vulnerability Advisor)
 export PIPELINE_IMAGE_URL="$REGISTRY_URL/$REGISTRY_NAMESPACE/$IMAGE_NAME:$BUILD_NUMBER"
 
-bx cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
+ibmcloud cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 
 echo -e "\\n=========================================================="
 echo "CHECKING HELM CHART"
