@@ -6,7 +6,7 @@ Deploy this app in a few clicks on an existing Kubernetes cluster using DevOps:
 
 <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](./images/createtoolchain.png)</a>
 
-> The deployment takes 5-10 mins.
+> The overal deployment takes 15-20 mins.
 
 ![Delivery Pipeline](./images/deliverypipeline.png)
 
