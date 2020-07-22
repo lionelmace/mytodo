@@ -43,7 +43,7 @@ stages:
     script: |
       #!/bin/bash
       ./scripts/pipeline-VALIDATE.sh
-- name: PROD
+- name: DEPLOY
   inputs:
   - type: job
     stage: BUILD

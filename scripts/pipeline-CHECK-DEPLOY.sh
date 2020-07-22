@@ -183,7 +183,6 @@ if [ "${WITH_INGRESS}" = "true" ]; then # Ingress deployment
   
   INGRESS_SUBDOMAIN=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep 'Ingress Subdomain' | awk '{ print $3 }')
   INGRESS_HOST="todo.${INGRESS_SUBDOMAIN}"
-
   INGRESS_SECRET=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep 'Ingress Secret' | awk '{ print $3 }')
 
   # Using 'upgrade --install" for rolling updates. Note that subsequent updates will occur in the same namespace the release is currently deployed in, ignoring the explicit--namespace argument".
