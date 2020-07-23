@@ -151,12 +151,8 @@ echo -e "Release name: ${RELEASE_NAME}"
 echo -e "\\n=========================================================="
 echo "DEPLOYING HELM chart"
 
-echo -e "\\n LIONEL"
-ibmcloud target
-echo -e "PIPELINE_KUBERNETES_CLUSTER_NAME=${PIPELINE_KUBERNETES_CLUSTER_NAME}"
 WITH_INGRESS=$(ibmcloud ks cluster get --cluster ${PIPELINE_KUBERNETES_CLUSTER_NAME} --json | jq ".isPaid")
 echo -e "WITH_INGRESS=${WITH_INGRESS}"
-# WITH_INGRESS="false"
 
 IMAGE_REPOSITORY=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 IMAGE_PULL_SECRET_NAME="ibmcloud-toolchain-${PIPELINE_TOOLCHAIN_ID}-${REGISTRY_URL}"
@@ -209,6 +205,7 @@ else
   STATUS="fail"
 fi
 
+set +x
 if [ "$STATUS" == "fail" ]; then
   echo ""
   echo -e "\\n=========================================================="
