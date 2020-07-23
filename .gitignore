@@ -20,3 +20,5 @@ credentials.env
 # Miscellaneous
 myreadme.txt
 .editorconfig
+.cloud/terraform/ibm-databases/terraform.tfstate
+.cloud/terraform/ibm-databases/terraform.tfstate.backup
