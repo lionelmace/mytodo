@@ -196,37 +196,20 @@ else # NodePort deployment
 
 fi
 
-
-echo -e "\\n=========================================================="
+echo "=========================================================="
 echo -e "CHECKING deployment status of release ${RELEASE_NAME} with image tag: ${IMAGE_TAG}"
+# Extract name from actual Kube deployment resource owning the deployed container image 
+DEPLOYMENT_NAME=$( helm get ${RELEASE_NAME} | yq read -d'*' --tojson - | jq -r | jq -r --arg image "$IMAGE_REPOSITORY:$IMAGE_TAG" '.[] | select (.kind=="Deployment") | . as $adeployment | .spec?.template?.spec?.containers[]? | select (.image==$image) | $adeployment.metadata.name' )
+echo -e "CHECKING deployment rollout of ${DEPLOYMENT_NAME}"
 echo ""
-for ITERATION in {1..30}
-do
-  # DATA=$(kubectl get pods --namespace ${CLUSTER_NAMESPACE} -a -l release=${RELEASE_NAME} -o json )
-  DATA=$(kubectl get pods --namespace ${CLUSTER_NAMESPACE} -l release=${RELEASE_NAME} -o json )
-  NOT_READY=$( echo $DATA | jq '.items[].status.containerStatuses[] | select(.image=="'"${IMAGE_REPOSITORY}:${IMAGE_TAG}"'") | select(.ready==false) ' )
-  if [[ -z "$NOT_READY" ]]; then
-    echo -e "All pods are ready:"
-    echo $DATA | jq '.items[].status.containerStatuses[] | select(.image=="'"${IMAGE_REPOSITORY}:${IMAGE_TAG}"'") | select(.ready==true) '
-    break # deployment succeeded
-  fi
-  REASON=$(echo $DATA | jq '.items[].status.containerStatuses[] | select(.image=="'"${IMAGE_REPOSITORY}:${IMAGE_TAG}"'") | .state.waiting.reason')
-  echo -e "${ITERATION} : Deployment still pending..."
-  echo -e "NOT_READY:${NOT_READY}"
-  echo -e "REASON: ${REASON}"
-  if [[ ${REASON} == *ErrImagePull* ]] || [[ ${REASON} == *ImagePullBackOff* ]]; then
-    echo "Detected ErrImagePull or ImagePullBackOff failure. "
-    echo "Please check proper authenticating to from cluster to image registry (e.g. image pull secret)"
-    break; # no need to wait longer, error is fatal
-  elif [[ ${REASON} == *CrashLoopBackOff* ]]; then
-    echo "Detected CrashLoopBackOff failure. "
-    echo "Application is unable to start, check the application startup logs"
-    break; # no need to wait longer, error is fatal
-  fi
-  sleep 5
-done
+set -x
+if kubectl rollout status deploy/${DEPLOYMENT_NAME} --watch=true --timeout=${ROLLOUT_TIMEOUT:-"150s"} --namespace ${CLUSTER_NAMESPACE}; then
+  STATUS="pass"
+else
+  STATUS="fail"
+fi
 
-if [[ ! -z "$NOT_READY" ]]; then
+if [ "$STATUS" == "fail" ]; then
   echo ""
   echo -e "\\n=========================================================="
   echo "DEPLOYMENT FAILED"
@@ -261,8 +244,8 @@ echo -e "Status for release:${RELEASE_NAME}"
 helm status ${RELEASE_NAME}
 
 #LMA echo ""
-#echo -e "History for release:${RELEASE_NAME}"
-#helm history ${RELEASE_NAME}
+echo -e "History for release:${RELEASE_NAME}"
+helm history ${RELEASE_NAME}
 
 if [ "${WITH_INGRESS}" = "true" ]; then # Ingress deployment
   echo -e "\\nAccéder à votre application avec l'URL suivante:"
@@ -270,19 +253,6 @@ if [ "${WITH_INGRESS}" = "true" ]; then # Ingress deployment
 else
   NODEPORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
   NODES=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="ExternalIP")].address }')
-  #LMA NODE_IP=$(kubectl get nodes --namespace prod -o jsonpath='{$.items[*].status.addresses[?(@.type=="ExternalIP")].address}')
   echo -e "\\nAccéder à votre application avec une des URL suivantes:"
   for node in $NODES; do echo "App Url= http://$node:$NODEPORT"; done
 fi
-
-# echo ""
-# echo "Deployed Services:"
-# kubectl describe services ${RELEASE_NAME}-${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
-# echo ""
-# echo "Deployed Pods:"
-# kubectl describe pods --selector app=${CHART_NAME} --namespace ${CLUSTER_NAMESPACE}
-
-#echo "=========================================================="
-#IP_ADDR=$(ibmcloud ks workers ${PIPELINE_KUBERNETES_CLUSTER_NAME} | grep normal | head -n 1 | awk '{ print $2 }')
-#PORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
-#echo -e "View the application at: http://${IP_ADDR}:${PORT}"
