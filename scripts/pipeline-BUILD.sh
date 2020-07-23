@@ -48,19 +48,18 @@ helm lint ${CHART_PATH}
 
 echo "=========================================================="
 echo "CHECKING REGISTRY current plan and quota"
-# Commented becase fails if the user running the pipeline is not the owner LMA
-# bx cr plan
-# bx cr quota
-echo "If needed, discard older images using: bx cr image-rm"
+# ibmcloud cr plan
+# ibmcloud cr quota
+echo "If needed, discard older images using: ibmcloud cr image-rm"
 
 echo "Current content of image registry"
-bx cr images
+ibmcloud cr images
 
 echo "Checking registry namespace: ${REGISTRY_NAMESPACE}"
-NS=$( bx cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
+NS=$( ibmcloud cr namespaces | grep ${REGISTRY_NAMESPACE} ||: )
 if [ -z "${NS}" ]; then
     echo "Registry namespace ${REGISTRY_NAMESPACE} not found, creating it."
-    bx cr namespace-add ${REGISTRY_NAMESPACE}
+    ibmcloud cr namespace-add ${REGISTRY_NAMESPACE}
     echo "Registry namespace ${REGISTRY_NAMESPACE} created."
 else 
     echo "Registry namespace ${REGISTRY_NAMESPACE} found."

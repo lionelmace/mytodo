@@ -240,7 +240,6 @@ echo ""
 echo -e "Status for release:${RELEASE_NAME}"
 helm status ${RELEASE_NAME}
 
-#LMA echo ""
 echo -e "History for release:${RELEASE_NAME}"
 helm history ${RELEASE_NAME}
 
