@@ -268,7 +268,7 @@ if [ "${WITH_INGRESS}" = "true" ]; then # Ingress deployment
   echo -e "\\nAccéder à votre application avec l'URL suivante:"
   echo "${INGRESS_HOST}"
 else
-  NODEPORT=$(kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services prod-mytodos-20200721082346350 -n prod)
+  NODEPORT=$(kubectl get services --namespace ${CLUSTER_NAMESPACE} | grep ${RELEASE_NAME} | sed 's/.*:\([0-9]*\).*/\1/g')
   NODES=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="ExternalIP")].address }')
   #LMA NODE_IP=$(kubectl get nodes --namespace prod -o jsonpath='{$.items[*].status.addresses[?(@.type=="ExternalIP")].address}')
   echo -e "\\nAccéder à votre application avec une des URL suivantes:"
