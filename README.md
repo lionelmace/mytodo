@@ -14,22 +14,25 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
     ![Cluster](./images/iks-free-cluster.jpg)
 
 
-1. [Optional] Provision a **Key Protect** Service by clicking [Key Protect](https://cloud.ibm.com/catalog/services/key-protect). Give it a **Name**, select a **Resource Group** and a **Network Policy**.
+1. [Optional] Provision a **Key Protect** Service by clicking [Key Protect](https://cloud.ibm.com/catalog/services/key-protect).
 
+    Give it a **Name**, select a **Resource Group** and a **Network Policy**.
     > 2 min provisioning time
 
     ![Key Protect](./images/key-protect.jpg)
 
     
 
-1. Deploy this app in a few clicks into your Kubernetes cluster using DevOps:
+1. Deploy this app in a few clicks into your Kubernetes cluster using the DevOps toolchain.
 
     > 6 min deployment time 
 
     <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](./images/createtoolchain.png)</a>
 
 
-![Delivery Pipeline](./images/deliverypipeline.png)
+1. Delivery Pipeline
+
+    ![Delivery Pipeline](./images/deliverypipeline.png)
 
 
 # Step by step Deployment
