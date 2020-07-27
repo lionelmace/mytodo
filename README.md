@@ -9,13 +9,15 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 
 1. If you don't already have a Kubernetes, create a **Free** one from IBM Cloud Catalog by clicking [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create). Give it a **Name** and select a **Resource Group**.
 
-    > Provisioning time: 20mins 
+    > Provisioning time: 20mins
+
     ![Cluster](./images/iks-free-cluster.jpg)
 
 
 1. [Optional] Provision a **Key Protect** Service by clicking [Key Protect](https://cloud.ibm.com/catalog/services/key-protect). Give it a **Name**, select a **Resource Group** and a **Network Policy**.
 
     > Duration: 2mins
+
     ![Key Protect](./images/key-protect.jpg)
 
     
@@ -23,6 +25,7 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 1. Deploy this app in a few clicks into your Kubernetes cluster using DevOps:
 
     > Deployment time: 6 mins
+    
     <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](./images/createtoolchain.png)</a>
 
 
