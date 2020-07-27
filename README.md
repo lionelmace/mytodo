@@ -7,21 +7,30 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 
 # How to deploy this app?
 
-1. Create a free Kubernetes cluster from the catalog by clicking [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create)
+1. If you don't already have a Kubernetes, create a **Free** one from IBM Cloud Catalog by clicking [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create). Give it a **Name** and select a **Resource Group**.
 
-    ![Todo](./images/iks-free-cluster.jpg)
+    ![Cluster](./images/iks-free-cluster.jpg)
 
-1. Deploy this app in a few clicks on an existing Kubernetes cluster using DevOps:
+    > Provisioning time: 20mins 
 
-<a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](./images/createtoolchain.png)</a>
+1. [Optional] Provision a **Key Protect** Service by clicking [Key Protect](https://cloud.ibm.com/catalog/services/key-protect). Give it a **Name**, select a **Resource Group** and a **Network Policy**.
 
-> The overal deployment takes 15-20 mins.
+    ![Key Protect](./images/key-protect.jpg)
+
+    > Duration: 2mins
+
+1. Deploy this app in a few clicks into your Kubernetes cluster using DevOps:
+
+    <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](./images/createtoolchain.png)</a>
+
+    > Deployment time: 6 mins
 
 ![Delivery Pipeline](./images/deliverypipeline.png)
 
 
-# Step by step deployment
-Deploy this application step by step:
+# Step by step Deployment
+
+Those two tutorials will show you in details how to deploy this step by step:
 
 * With IKS (IBM Cloud Kubernetes Service), follow this [tutorial](https://lionelmace.github.io/iks-lab)
 
