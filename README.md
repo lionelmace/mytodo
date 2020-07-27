@@ -7,8 +7,9 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 
 # How to deploy this app?
 
-1. If you don't already have a Kubernetes, create a **Free** one from IBM Cloud Catalog by clicking [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create). Give it a **Name** and select a **Resource Group**.
+1. If you don't already have a Kubernetes, create a **Free** one from IBM Cloud Catalog by clicking [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create).
 
+    Give it a **Name** and select a **Resource Group**.
     > 20 min provisioning time
 
     ![Cluster](./images/iks-free-cluster.jpg)
