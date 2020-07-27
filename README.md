@@ -1,8 +1,17 @@
+# Introduction
+
 This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and Node.js) is ready to be deployed on ICP IBM Cloud Platform.
 
 ![Todo](./images/screenshot.png)
 
-Deploy this app in a few clicks on an existing Kubernetes cluster using DevOps:
+
+# How to deploy this app?
+
+1. Create a free Kubernetes cluster from the catalog by clicking [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create)
+
+    ![Todo](./images/iks-free-cluster.jpg)
+
+1. Deploy this app in a few clicks on an existing Kubernetes cluster using DevOps:
 
 <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](./images/createtoolchain.png)</a>
 
@@ -10,7 +19,9 @@ Deploy this app in a few clicks on an existing Kubernetes cluster using DevOps:
 
 ![Delivery Pipeline](./images/deliverypipeline.png)
 
-Deply this application step by step:
+
+# Step by step deployment
+Deploy this application step by step:
 
 * With IKS (IBM Cloud Kubernetes Service), follow this [tutorial](https://lionelmace.github.io/iks-lab)
 
