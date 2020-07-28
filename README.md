@@ -5,7 +5,7 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 ![Todo](./images/screenshot.png)
 
 
-Watch all the deployment steps below in a 6 mins video excluding the cluster provisionning on <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>YouTube</a>.
+Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>YouTube video</a> to understand all the deployment steps below. Note: this video excludes the cluster provisioning.
 
 
 # How to deploy this app in Kubernetes?
