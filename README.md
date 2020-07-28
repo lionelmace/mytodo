@@ -5,6 +5,9 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 ![Todo](./images/screenshot.png)
 
 
+Watch all the deployment steps below in a 6 mins video excluding the cluster provisionning on <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>YouTube</a>.
+
+
 # How to deploy this app in Kubernetes?
 
 1. If you don't already have a Kubernetes cluster, create one for **Free** from IBM Cloud Catalog by selecting the [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create).
