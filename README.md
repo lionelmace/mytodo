@@ -1,34 +1,31 @@
 # Introduction
 
-This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and Node.js) is ready to be deployed on ICP IBM Cloud Platform.
+This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and Node.js) is ready to be deployed on ICP (IBM Cloud Platform).
 
 ![Todo](./images/screenshot.png)
 
 
-# How to deploy this app?
+# How to deploy this app in Kubernetes?
 
-1. If you don't already have a Kubernetes, create a **Free** one from IBM Cloud Catalog by clicking [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create).
+1. If you don't already have a Kubernetes cluster, create one for **Free** from IBM Cloud Catalog by selecting the [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create).
 
     Give it a **Name** and select a **Resource Group**.
     > 20 min provisioning time
 
     ![Cluster](./images/iks-free-cluster.jpg)
 
-
-1. [Optional] Provision a **Key Protect** Service by clicking [Key Protect](https://cloud.ibm.com/catalog/services/key-protect).
+1. [Optional] If you want to securely store your API Key used in the Continuous Delivery later, you can provision a service [Key Protect](https://cloud.ibm.com/catalog/services/key-protect).
 
     Give it a **Name**, select a **Resource Group** and a **Network Policy**.
     > 2 min provisioning time
 
     ![Key Protect](./images/key-protect.jpg)
 
-    
-
-1. Deploy this app in a few clicks into your Kubernetes cluster using the DevOps toolchain.
+1. To automate the deployment of this app into your Kubernetes cluster, click the button **Deploy app with DevOps toolchain**.
 
     > 6 min deployment time 
 
-    <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master">![](./images/createtoolchain.png)</a>
+    <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master" target=”_blank”>![](./images/createtoolchain.png)</a>
 
 
 1. Delivery Pipeline
