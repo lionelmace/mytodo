@@ -21,16 +21,16 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 
     ![Key Protect](./images/key-protect.jpg)
 
-1. To automate the deployment of this app into your Kubernetes cluster, click the button **Deploy app with DevOps toolchain**.
+1. To automate the deployment of this app into your Kubernetes cluster, click the button below.
 
     <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master" target=”_blank”>![](./images/toolchain0-button.png)</a>
 
 
-1. Enter a toolchain **Name**, select the **Region** and a **Resource Group** where your cluster was created.
+1. Enter a **Toolchain Name**, select the **Region** and a **Resource Group** where your cluster was created.
 
     ![Toolchain](./images/toolchain1-create.jpg)
 
-1. Keep the default setting in the tab **Git Repos and Issue Tracking**.
+1. In the tab **Git Repos and Issue Tracking**, keep the default setting .
 
     ![Toolchain](./images/toolchain2-git.jpg)
 
@@ -42,9 +42,9 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 
     ![Toolchain](./images/toolchain4-secretkey.jpg)
 
-    > Keep this option unchecked if you don't have a service instance of Key Protect.
+    > Keep this option unchecked if you have decided not to use Key Protect.
 
-1. The toolchain will automatically try to fill out the remaining information. Control the Resource Group, the region and the cluster name, then, click **Create**. 
+1. The toolchain will fill out the remaining information. Control the Resource Group, the region and the cluster name, then click **Create**. 
 
     ![Toolchain](./images/toolchain5-final.jpg)
 
@@ -56,7 +56,7 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 
     ![Toolchain](./images/toolchain6-overview.jpg)
 
-1. Click **Delivery Pipeline** in the Overview. You will the pipeline in progress.
+1. Click **Delivery Pipeline** in the Overview. You will see the stages progressing in pipeline.
 
     > 6 min deployment time 
     ![Toolchain](./images/toolchain7-pipeline.jpg)
@@ -64,6 +64,8 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 1. Click the link **View logs and history** in the last stage **DEPLOY**. Scroll down to the bottom. You will find the link to your application.
 
     ![Toolchain](./images/toolchain8-applink.jpg)
+
+    > If you have a free cluster, the url will be using an IP address of a worker node. If you have a paid cluster, the url will be a domain name including *.appdomain.cloud.
 
 Congratulations! Your app is up and running in the cluter.
 
