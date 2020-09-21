@@ -14,7 +14,7 @@ try {
   vcapLocal = require('./vcap-local.json');
   console.log("Loaded local VCAP", vcapLocal);
 } catch (e) {
-  console.log('Cannot find module ./vcap-local.json');
+  //console.log('Cannot find module ./vcap-local.json');
 }
 
 const appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {}
@@ -25,7 +25,7 @@ const result = require('dotenv').config({
   path: __dirname + '/credentials.env'
 }); 
 if (result.error) {
-  console.log('Cannot find credentials.env');
+  //console.log('Cannot find credentials.env');
 } else {
   console.log('credentials.env =', result.parsed)
 }

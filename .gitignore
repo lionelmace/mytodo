@@ -1,3 +1,5 @@
+temp
+
 # Node.js
 node_modules
 
@@ -5,6 +7,9 @@ node_modules
 .cloud/terraform/provider.tf
 .cloud/terraform/.terraform
 .cloud/terraform/terraform.tfstate*
+.cloud/terraform/ibm-databases/terraform.tfstate
+.cloud/terraform/ibm-databases/terraform.tfstate.backup
+
 
 # Cloud Foundry
 vcap-local.json
@@ -15,10 +20,9 @@ vcap-local.json
 credentials.env
 .cloud/kubernetes/imagePullSecret.json
 .cloud/kubernetes/ingress-tls-rewrite.yaml
-.cloud/kubernetes/ingress-tls-deploy-vpc.yaml
+.cloud/kubernetes/mytodo.yaml
+.cloud/kubernetes/mytodo-community.yaml
 
 # Miscellaneous
 myreadme.txt
 .editorconfig
-.cloud/terraform/ibm-databases/terraform.tfstate
-.cloud/terraform/ibm-databases/terraform.tfstate.backup
