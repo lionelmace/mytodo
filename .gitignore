@@ -5,9 +5,9 @@ node_modules
 
 # Terraform
 **/*.tfstate
-**/*.tf
 **/*.tfvars
 **/*.backup
+cloud/terraform/09-import
 
 # Cloud Foundry
 vcap-local.json
