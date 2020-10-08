@@ -4,7 +4,7 @@ resource "ibm_database" "icd_postgres" {
   service           = "databases-for-postgresql"
   plan              = "standard"
   # If not provided it takes the default resource group.
-  # resource_group_id = "${data.ibm_resource_group.group.id}"
+  # resource_group_id = data.ibm_resource_group.group.id
 
   version = "10"
   # Total amount of memory to be shared between the DB members

@@ -5,7 +5,7 @@ resource "ibm_database" "icd_mongo" {
   plan     = "standard"
   version  = "4.0"
   # If not provided it takes the default resource group.
-  # resource_group_id = "${data.ibm_resource_group.group.id}"
+  # resource_group_id = data.ibm_resource_group.group.id
 
   # Total amount of memory to be shared between the DB members
   # Postgres has 2 members by default.

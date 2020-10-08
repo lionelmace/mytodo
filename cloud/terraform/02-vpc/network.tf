@@ -26,29 +26,24 @@ resource ibm_is_network_acl multizone_acl {
 # Create Default Security Groups
 ##############################################################################
 
-resource ibm_is_security_group default_sg {
+# resource ibm_is_security_group default_sg {
   
-  name       = "${var.unique_id}-sg"
-  vpc        = ibm_is_vpc.vpc.id
-}
+#   name       = "${var.unique_id}-sg"
+#   vpc        = ibm_is_vpc.vpc.id
+# }
 
 ##############################################################################
-# Create Security Groups used by all resources in VPC
+# Modify default Security Groups to add IKS Rules
 ##############################################################################
 
 resource ibm_is_security_group_rule default_iks {
 
-  group     = ibm_is_security_group.default_sg.id
+  # group     = ibm_is_security_group.default_sg.id
+  group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
   remote    = "0.0.0.0/0"
-  udp {
+  tcp {
     port_min = 30000
     port_max = 32767
   }
-}
-
-resource "ibm_is_security_group_rule" "default_egress_all" {
-  group     = ibm_is_security_group.default_sg.id
-  direction = "outbound"
-  remote    = "0.0.0.0/0"
 }

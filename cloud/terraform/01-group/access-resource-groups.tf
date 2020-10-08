@@ -71,9 +71,9 @@ resource ibm_iam_service_id service_id {
 
   
 resource "ibm_iam_access_group_policy" "labuser_viewer_policy" {
-  access_group_id = "${ibm_iam_access_group.labuser.id}"
+  access_group_id = ibm_iam_access_group.labuser.id
   roles        = ["Reader", "Viewer"]
   resources  {
-    resource_group_id = "${data.ibm_resource_group.lab_rg.id}"
+    resource_group_id = data.ibm_resource_group.lab_rg.id
   }
 }
