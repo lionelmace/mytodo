@@ -2,7 +2,7 @@ applications:
 - path: .
   memory: 256M
   instances: 2
-  name: mytodos
+  name: mytodo
   disk_quota: 1024M
   buildpacks:
   - sdk-for-nodejs

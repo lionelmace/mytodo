@@ -16,7 +16,7 @@ vcap-local.json
 **/*.pem
 **/.terraform/*
 cloud/certificate
-cloud/chart/mytodos/local-values.yaml
+cloud/chart/mytodo/local-values.yaml
 credentials.env
 cloud/kubernetes/imagePullSecret.json
 cloud/kubernetes/ingress-tls-rewrite.yaml

@@ -9,7 +9,7 @@
 # source: https://raw.githubusercontent.com/open-toolchain/commons/master/scripts/deploy_helm.sh
 # Input env variables (can be received via a pipeline environment properties.file.
 
-CHART_PATH="chart/mytodos"
+CHART_PATH="chart/mytodo"
 echo "CHART_PATH=${CHART_PATH}"
 echo "IMAGE_NAME=${IMAGE_NAME}"
 echo "IMAGE_TAG=${IMAGE_TAG}"

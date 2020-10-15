@@ -3,21 +3,21 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mytodos
+  name: mytodo
 spec:
   replicas: 2 # tells deployment to run 2 pods matching the template
   selector:
     matchLabels:
-      app: mytodos
+      app: mytodo
   template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: mytodos
+        app: mytodo
         tier: frontend
     spec:
       containers:
-      - name: mytodos
-        image: <region>.icr.io/<namespace>/mytodos:1.0
+      - name: mytodo
+        image: <region>.icr.io/<namespace>/mytodo:1.0
         imagePullPolicy: Always
         ports: #istio
         - containerPort: 8080 #istio
@@ -41,9 +41,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mytodos
+  name: mytodo
   labels:
-    app: mytodos
+    app: mytodo
     tier: frontend
 spec:
   # if your cluster supports it, uncomment the following to automatically create
@@ -55,7 +55,7 @@ spec:
     name: http #istio
     #nodePort: 31513
   selector:
-    app: mytodos
+    app: mytodo
     tier: frontend
 
 ---
@@ -71,5 +71,5 @@ spec:
       paths:
       - path: /.*
         backend:
-          serviceName: mytodos
+          serviceName: mytodo
           servicePort: 8080

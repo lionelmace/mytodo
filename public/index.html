@@ -26,12 +26,12 @@
   </header>
 
   <section ng-controller="todoCtrl">
-    <form id="todo-form" ng-submit="addTodo()">
+    <form id="mytodo-form" ng-submit="addTodo()">
       <input id="new-todo" placeholder="Type a new todo" ng-model="newTodo.text" />
     </form>
 
     <article ng-show="todos.length">
-      <ul id="todo-list">
+      <ul id="mytodo-list">
         <li ng-repeat="todo in todos" ng-class="{completed: todo.completed}">
           <div class="view">
             <input class="mark" type="checkbox" ng-model="todo.completed" />

@@ -15,12 +15,12 @@ resource ibm_container_vpc_cluster cluster {
 
   zones {
     # subnet_id = element(data.ibm_schematics_output.vpc_workspace.output_values.subnet_ids, 0)
-    subnet_id = "02b7-c2387bd7-6c11-4878-a732-18ef85e10bb8"
+    subnet_id = "02b7-810e14e9-767a-4a5d-9f1b-487e5c7150a4"
     name      = "${var.ibm_region}-1"
   }
   zones {
     # subnet_id = element(data.ibm_schematics_output.vpc_workspace.output_values.subnet_ids, 1)
-    subnet_id = "02c7-621f65e1-c8b1-468b-ad37-ff0df8b7f843"
+    subnet_id = "02c7-c60eba3b-6cfb-4256-bd4a-d5c3bb90ad71"
     name      = "${var.ibm_region}-2"
   }
   # zones {
@@ -46,7 +46,7 @@ resource ibm_container_vpc_alb alb {
   enable = "${
     var.enable_albs && !var.only_private_albs 
     ? true
-    : var.only_private_albs && "${element(ibm_container_vpc_cluster.cluster.albs.*.alb_type, count.index)}" != "public" 
+    : var.only_private_albs && element(ibm_container_vpc_cluster.cluster.albs.*.alb_type, count.index) != "public" 
       ? true
       : false
   }"

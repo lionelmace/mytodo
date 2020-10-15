@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "mytodos.fullname" . }}
+  name: {{ include "mytodo.fullname" . }}
   labels:
-    app: {{ include "mytodos.name" . }}
-    chart: {{ include "mytodos.chart" . }}
+    app: {{ include "mytodo.name" . }}
+    chart: {{ include "mytodo.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
@@ -15,5 +15,5 @@ spec:
       protocol: TCP
       # name: http
   selector:
-    app: {{ include "mytodos.name" . }}
+    app: {{ include "mytodo.name" . }}
     release: {{ .Release.Name }}

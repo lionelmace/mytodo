@@ -3,21 +3,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mytodos
+  name: mytodo
 spec:
   replicas: 2 # tells deployment to run 2 pods
   selector:
     matchLabels:
-      app: mytodos
+      app: mytodo
   template:   # create pods using pod definition in this template
     metadata:
       labels:
-        app: mytodos
+        app: mytodo
         tier: frontend
     spec:
       containers:
-      - name: mytodos
-        image: <registry-region>.icr.io/<namespace>/todo-<lastname>:1.0
+      - name: mytodo
+        image: <registry-region>.icr.io/<namespace>/mytodo-<lastname>:1.0
         imagePullPolicy: Always
         resources:
           requests:
@@ -34,7 +34,7 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: mytodos-ingress
+  name: mytodo-ingress
   annotations:
     # Force the use of https if the request is http
     ingress.bluemix.net/redirect-to-https: "True"
@@ -49,21 +49,21 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: mytodos
+          serviceName: mytodo
           servicePort: 8080
 ---
 # Service to expose frontend
 apiVersion: v1
 kind: Service
 metadata:
-  name: mytodos
+  name: mytodo
   labels:
-    app: mytodos
+    app: mytodo
     tier: frontend
 spec:
   ports:
   - protocol: TCP
     port: 8080
   selector:
-    app: mytodos
+    app: mytodo
     tier: frontend

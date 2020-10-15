@@ -3,20 +3,20 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mytodos
+  name: mytodo
 spec:
   replicas: 3 # tells deployment to run 3 pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: mytodos
+        app: mytodo
         tier: frontend
     spec:
       # imagePullSecrets:
       # - name: private-registry-secret
       containers:
-      - name: mytodos
-        image: <region>.icr.io/<namespace>/mytodos:1.0
+      - name: mytodo
+        image: <region>.icr.io/<namespace>/mytodo:1.0
         imagePullPolicy: Always
         resources:
           requests:
@@ -32,15 +32,15 @@ spec:
         - name: service-bind-volume
           secret:
             defaultMode: 420
-            secretName: binding-todo-cloudant
+            secretName: binding-mytodo-cloudant
 ---
 # Service to expose frontend
 apiVersion: v1
 kind: Service
 metadata:
-  name: mytodos
+  name: mytodo
   labels:
-    app: mytodos
+    app: mytodo
     tier: frontend
 spec:
   type: NodePort
@@ -48,5 +48,5 @@ spec:
   - port: 8080 # Internal Port
     nodePort: 31513
   selector:
-    app: mytodos
+    app: mytodo
     tier: frontend

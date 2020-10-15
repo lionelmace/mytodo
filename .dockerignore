@@ -4,6 +4,6 @@ npm-debug.log
 vcap-local.json
 
 .cloud/certificate
-.cloud/chart/mytodos/local-values.yaml
+.cloud/chart/mytodo/local-values.yaml
 .cloud/kubernetes/imagePullSecret.json
 .cloud/kubernetes/ingress-tls-mydeploy.yaml

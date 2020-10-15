@@ -1,16 +1,16 @@
-# Default values for mytodo.
+# Default values for mytodos.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 3
 
 image:
-  repository: <region>.icr.io/<namespace>/mytodo-<lastname>
+  repository: us.icr.io/bred-registry/mytodo-bred
   tag: "1.0"
   pullPolicy: Always
 
-# secret:
-#   database: database-credentials
+secret:
+  database: database-credentials
 
 nameOverride: ""
 fullnameOverride: ""
@@ -26,14 +26,14 @@ ingress:
     ingress.bluemix.net/redirect-to-https: "True"
     # Activate App ID for Authentication
     # Requires the existence of an App Id service bound to the cluster
-    # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodo"
+    # ingress.bluemix.net/appid-auth: "bindSecret=binding-app-id-20180705 namespace=default requestType=web serviceName=mytodos"
   path: /
   hosts:
-    - todo.<cluster-name>.eu-de.containers.appdomain.cloud
+    - iks-gen2-797573-2ea0912af48ca0522f7bfe33cc27b00b-0000.us-south.containers.appdomain.cloud
   tls:
-    - secretName: <cluster-name>
+    - secretName: iks-gen2-797573-2ea0912af48ca0522f7bfe33cc27b00b-0000
       hosts:
-        - todo.<cluster-name>.eu-de.containers.appdomain.cloud
+        - iks-gen2-797573-2ea0912af48ca0522f7bfe33cc27b00b-0000.us-south.containers.appdomain.cloud
 
 resources:
   # We usually recommend not to specify default resources and to leave this as a conscious

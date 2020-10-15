@@ -1549,12 +1549,12 @@ input[type="checkbox"] {
   z-index: 2;
   box-shadow: none;
 }
-#todo-list {
+#mytodo-list {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-#todo-list li {
+#mytodo-list li {
   position: relative;
   font-size: 24px;
   border-bottom: 1px dotted #ccc;
@@ -1564,16 +1564,16 @@ input[type="checkbox"] {
   font-style: italic;
   color: #AAA;
 }
-#todo-list li:last-child {
+#mytodo-list li:last-child {
   border-bottom: none;
 }
-#todo-list li .close {
+#mytodo-list li .close {
   float: right;
   margin-right: 30px;
   margin-top: 5px;
   color: #AAA;
 }
-#todo-list li .close:hover {
+#mytodo-list li .close:hover {
   cursor: pointer;
   color: #444;
 }

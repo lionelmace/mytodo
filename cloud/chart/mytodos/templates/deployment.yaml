@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "mytodos.fullname" . }}
+  name: {{ include "mytodo.fullname" . }}
   labels:
-    app: {{ include "mytodos.name" . }}
-    chart: {{ include "mytodos.chart" . }}
+    app: {{ include "mytodo.name" . }}
+    chart: {{ include "mytodo.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "mytodos.name" . }}
+      app: {{ include "mytodo.name" . }}
       release: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app: {{ include "mytodos.name" . }}
+        app: {{ include "mytodo.name" . }}
         release: {{ .Release.Name }}
     spec:
       containers:
