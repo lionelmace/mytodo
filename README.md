@@ -42,14 +42,10 @@ Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>You
     ![Toolchain](./images/toolchain3-newkey.jpg)
 
 1. A panel will open, check the option **Save this key in a secrets store for resuse** if you have created an instance of the service Key Protect.
-
+    > Keep this option unchecked if you have decided not to use Key Protect.
+    
     ![Toolchain](./images/toolchain4-secretkey.jpg)
 
-    > Keep this option unchecked if you have decided not to use Key Protect.
-
-1. The toolchain will fill out the remaining information. Control the Resource Group, the region and the cluster name, then click **Create**. 
-
-    ![Toolchain](./images/toolchain5-final.jpg)
 
 1. The toolchain will automatically try to fill out the remaining information. Control the Resource Group, the region and the cluster name, then, click **Create**. 
 
