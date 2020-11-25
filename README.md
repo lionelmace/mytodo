@@ -43,7 +43,7 @@ Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>You
 
 1. A panel will open, check the option **Save this key in a secrets store for resuse** if you have created an instance of the service Key Protect.
     > Keep this option unchecked if you have decided not to use Key Protect.
-    
+
     ![Toolchain](./images/toolchain4-secretkey.jpg)
 
 
@@ -64,9 +64,10 @@ Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>You
 
     ![Toolchain](./images/toolchain8-applink.jpg)
 
-    > If you have a free cluster, the url will be using an IP address of a worker node. If you have a paid cluster, the url will be a domain name including *.appdomain.cloud.
+    > If you have a free cluster, the url will be using the IP address of a worker node.
+    > If you have a paid cluster, the url will be a domain name finishing with *.appdomain.cloud.
 
-Congratulations! Your app is up and running in the cluter.
+Congratulations! Your app is up and running in the cluster.
 
 
 # Step by step Deployment
