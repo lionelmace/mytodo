@@ -60,7 +60,7 @@ ibmcloud cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 
 echo -e "\\n=========================================================="
 echo "CHECKING HELM CHART"
-CHART_ROOT="./.cloud/chart"
+CHART_ROOT="./cloud/chart"
 if [ -d ${CHART_ROOT} ]; then
   CHART_NAME=$(find ${CHART_ROOT}/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
   CHART_PATH=${CHART_ROOT}/${CHART_NAME}
