@@ -15,10 +15,6 @@ echo "BUILD_NUMBER=${BUILD_NUMBER}"
 echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
 echo "GIT_COMMIT=${GIT_COMMIT}"
 
-# also run 'env' command to find all available env variables
-# or learn more about the available environment variables at:
-# https://console.bluemix.net/docs/services/ContinuousDelivery/pipeline_deploy_var.html#deliverypipeline_environment
-
 # To review or change build options use:
 # ibmcloud cr build --help
 
@@ -60,7 +56,7 @@ ibmcloud cr images --restrict ${REGISTRY_NAMESPACE}/${IMAGE_NAME}
 
 echo -e "\\n=========================================================="
 echo "CHECKING HELM CHART"
-CHART_ROOT="./.cloud/chart"
+CHART_ROOT="./cloud/chart"
 if [ -d ${CHART_ROOT} ]; then
   CHART_NAME=$(find ${CHART_ROOT}/. -maxdepth 2 -type d -name '[^.]?*' -printf %f -quit)
   CHART_PATH=${CHART_ROOT}/${CHART_NAME}
