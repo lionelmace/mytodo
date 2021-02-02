@@ -1,17 +1,9 @@
 ---
-# Create a Kubernetes namespace
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: mytodo
-
----
 # Application to deploy
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mytodo
-  namespace: mytodo
 spec:
   replicas: 2 # tells deployment to run 2 pods
   selector:
@@ -43,7 +35,6 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: mytodo-ingress
-  namespace: mytodo
   annotations:
     kubernetes.io/ingress.class: "public-iks-k8s-nginx"
 spec:
@@ -65,7 +56,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mytodo
-  namespace: mytodo
   labels:
     app: mytodo
     tier: frontend
