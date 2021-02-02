@@ -49,10 +49,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - mytodo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
-    secretName: <cluster-name>
+    - mytodo.<ingress-subdomain>
+    secretName: <ingress-secret>
   rules:
-  - host: mytodo.<cluster-name>.<cloud-region>.containers.appdomain.cloud
+  - host: mytodo.<ingress-subdomain>
     http:
       paths:
       - path: /
