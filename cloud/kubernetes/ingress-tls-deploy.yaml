@@ -26,10 +26,10 @@ spec:
           limits:
             cpu: 500m
             memory: 384Mi
-        envFrom:
-        - secretRef:
-            name: database-credentials
-            optional: true
+        # envFrom:
+        # - secretRef:
+        #     name: database-credentials
+        #     optional: true
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
