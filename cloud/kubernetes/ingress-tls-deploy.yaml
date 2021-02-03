@@ -40,10 +40,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - mytodo.<ingress-subdomain>
+    - <ingress-subdomain>
     secretName: <ingress-secret>
   rules:
-  - host: mytodo.<ingress-subdomain>
+  - host: <ingress-subdomain>
     http:
       paths:
       - path: /

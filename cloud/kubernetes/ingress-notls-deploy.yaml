@@ -40,7 +40,7 @@ metadata:
     kubernetes.io/ingress.class: "public-iks-k8s-nginx"
 spec:
   rules:
-  - host: mytodo.<ingress-subdomain>
+  - host: <ingress-subdomain>
     http:
       paths:
       - path: /
