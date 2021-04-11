@@ -38,6 +38,7 @@ metadata:
   name: mytodo-ingress
   annotations:
     kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+    #kubernetes.io/ingress.class: "private-iks-k8s-nginx"
 spec:
   rules:
   - host: <ingress-subdomain>

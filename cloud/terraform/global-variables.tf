@@ -15,5 +15,5 @@ variable "ibmcloud_az3" {
 }
 
 data "ibm_resource_group" "group" {
-  name = "demo"
+  name = "tf-demo"
 }
