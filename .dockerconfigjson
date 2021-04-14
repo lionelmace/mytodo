@@ -1,0 +1,10 @@
+{
+    "auths": {
+        "https://registry.gitlab.com":{
+            "username":"REGISTRY_USERNAME",
+            "password":"REGISTRY_PASSWORD",
+            "email":"REGISTRY_EMAIL",
+            "auth":"BASE_64_BASIC_AUTH_CREDENTIALS"
+    	}
+    }
+}
