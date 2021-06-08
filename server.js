@@ -169,6 +169,7 @@ app.listen(appEnv.port, function () {
 // Try to reconnect to the DB after 5sec
 function initDb() {
   db.init().catch((err) => {
+    console.log('Init failed with error, will retry...', err);
     setTimeout(initDb, 5000);
   })
 }
