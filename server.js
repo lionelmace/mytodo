@@ -45,7 +45,7 @@ if (result.error) {
 //       console.log('Service name=' + svc.name + ', Label=' + svc.label);
 //       if (svc.label == "cloudantNoSQLDB") {
 //         cloudantCreds =  svc.credentials;
-//         process.env.CLOUDANT_USERNAME=cloudantCreds.username;
+//         process.env.CLOUDANT_URL=cloudantCreds.url;
 //         process.env.CLOUDANT_APIKEY=cloudantCreds.apikey;
 //       }
 //     }
@@ -54,7 +54,7 @@ if (result.error) {
 
 // Database ----------------------------------------------------------------
 let db;
-if (process.env.CLOUDANT_USERNAME !== undefined)  {
+if (process.env.CLOUDANT_URL !== undefined)  {
   db = require('./lib/db-cloudant')(process.env);
 } else if (process.env.MONGO_USERNAME !== undefined) {
   db = require('./lib/db-mongo')(process.env);
@@ -169,6 +169,7 @@ app.listen(appEnv.port, function () {
 // Try to reconnect to the DB after 5sec
 function initDb() {
   db.init().catch((err) => {
+    console.log('Init failed with error, will retry...', err);
     setTimeout(initDb, 5000);
   })
 }
