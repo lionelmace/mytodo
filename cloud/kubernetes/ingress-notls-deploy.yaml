@@ -31,8 +31,9 @@ spec:
           secret:
             defaultMode: 420
             secretName: binding-mytodo-cloudant
+
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: mytodo-ingress
@@ -45,16 +46,23 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: mytodo
-          servicePort: 8080
+          service:
+            name: mytodo
+            port:
+              number: 8080
   # - host: www.mycustomdomain.com
   #   http:
   #     paths:
   #     - path: /
+  #       pathType: Prefix
   #       backend:
-  #         serviceName: mytodo
-  #         servicePort: 3000
+  #         service:
+  #           name: mytodo
+  #           port: 
+  #             number: 3000
+
 ---
 # Service to expose frontend
 apiVersion: v1
