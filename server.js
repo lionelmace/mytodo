@@ -3,7 +3,8 @@ const express = require('express');
 const cfenv = require('cfenv');
 const favicon = require('serve-favicon');
 const app = express();
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const os = require('os');
 
 // Set up Port variable (required for Kubernetes)
 if (!process.env.PORT) process.env.PORT = 8080;
@@ -92,6 +93,8 @@ app.use (function (req, res, next) {
 
 app.use(express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/icons/favicon-check.ico'));
+
+console.log('Number of cores: ', os.cpus().length);
 
 // Healthcheck use for LivenessProbe ---------------------------------------
 app.get('/healthcheck',(req,res)=> {
