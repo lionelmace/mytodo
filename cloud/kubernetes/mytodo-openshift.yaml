@@ -62,26 +62,48 @@ spec:
     tier: frontend
     # deploymentconfig: nodejs-sample
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+kind: Route
+apiVersion: route.openshift.io/v1
 metadata:
-  name: mytodo-ingress
+  name: mytodo-service
   namespace: default
-  annotations:
-    kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+  labels:
+    app: mytodo
+    tier: frontend
 spec:
+  host: >-
+    mytodo-service-default.iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  to:
+    kind: Service
+    name: mytodo-service
+    weight: 100
+  port:
+    targetPort: 8080-tcp
   tls:
-  - hosts:
-    - iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-    secretName: iro-483cccd2f0d38128dd40d2b711142ba9-0000
-  rules:
-  - host: iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: mytodo
-            port:
-              number: 8080
+    termination: edge
+  wildcardPolicy: None
+
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: mytodo-ingress
+#   namespace: default
+#   annotations:
+#     kubernetes.io/ingress.class: "public-iks-k8s-nginx"
+# spec:
+#   tls:
+#   - hosts:
+#     - iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+#     secretName: iro-483cccd2f0d38128dd40d2b711142ba9-0000
+#   rules:
+#   - host: iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+#     http:
+#       paths:
+#       - path: /
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: mytodo
+#             port:
+#               number: 8080
