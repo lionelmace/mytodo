@@ -29,4 +29,4 @@ cloud/kubernetes/mytodo-ns.yaml
 myreadme.txt
 .editorconfig
 
-cloud/terraform_old
+cloud/terraform-old
