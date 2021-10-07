@@ -20,7 +20,7 @@ variable ibm_region {
 
 variable resource_group {
   description = "Name of resource group to provision resources"
-  default     = "wireguard"
+  default     = "demo"
 }
 
 ##############################################################################
@@ -36,10 +36,13 @@ variable generation {
 }
 
 variable vpc_name {
-  description = "ID of VPC where cluster is to be created"
-  default     = "wireguard-vpc"
+  description = "ID of VPC where cluster is hosted"
+  default     = "vpc-eu-de-iks"
 }
-
+variable vpc_id {
+  description = "vpc id"
+  default     = "r010-68dfdcd1-a8ca-4302-83a1-a14d7408ab7c" #TBC
+}
 
 ##############################################################################
 # Cluster Variables
@@ -49,6 +52,36 @@ variable cluster_name {
   description = "name for the iks cluster"
   default     = "wireguard-cluster"
 }
+
+variable  worker_pool_flavor {
+  description = "worker node flavor"
+  default     = "cx2.2x4" #TBC
+}
+
+# variable worker_zones {
+#   description = "worker zones"
+#   default     = "eu-de-1" #TBC
+# }
+
+# Required: No
+# variable resource_group_id {}
+# variable worker_nodes_per_zone {}
+
+# variable kube_version {}
+# variable update_all_workers {}
+# variable service_subnet {}
+# variable pod_subnet {}
+# variable worker_labels {}
+# variable wait_till {}
+# variable disable_public_service_endpoint {}
+# variable tags {}
+# variable cos_instance_crn {}
+# variable force_delete_storage {}
+# variable kms_config {}
+# variable create_timeout {}
+# variable update_timeout {}
+# variable delete_timeout {}
+
 
 variable machine_type {
   description = "Machine type for the IKS Cluster"
