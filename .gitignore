@@ -24,9 +24,8 @@ cloud/kubernetes/ingress-tls-rewrite.yaml
 cloud/kubernetes/mytodo.yaml
 cloud/kubernetes/mytodo-ocp.yaml
 cloud/kubernetes/mytodo-ns.yaml
+cloud/terraform-old
 
 # Miscellaneous
 myreadme.txt
 .editorconfig
-
-cloud/terraform-old
