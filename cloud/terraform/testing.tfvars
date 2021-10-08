@@ -6,7 +6,7 @@
 # Best is to set the variable export TF_VAR_ibmcloud_api_key=
 #ibmcloud_api_key=""
 prefix = "tf"
-region = "us-south"
+region = "eu-de"
 resource_group = "mytodo"
 tags = [ "tf", "mytodo" ]
 
@@ -18,17 +18,15 @@ tags = [ "tf", "mytodo" ]
 
 
 ##############################################################################
-## VPC
+## VPC Version 1.1.1
 ##############################################################################
 vpc_name = "mytodo-vpc"
 classic_access = false
-default_address_prefix = "manual"
-address_prefixes = [
-    {
-        name     = "prefix-1"
-        location = "us-south-1"
-        ip_range = "10.0.120.0/18"
-    },
+default_address_prefix = "auto"
+# After version 1.1.1, you can use manual to create custom address prefixes 
+# and add subnets to it
+# default_address_prefix = "manual"
+# address_prefixes = [
     # {
     #   name     = "prefix-1"
     #   location = "eu-de-1"
@@ -44,12 +42,17 @@ address_prefixes = [
     #   location = "eu-de-3"
     #   ip_range = "10.60.0.0/18"
     # }
-]
-# locations = [ "eu-de-1", "eu-de-2", "eu-de-3" ]
-locations = ["us-south-1", "us-south-2", "us-south-3"]
+# ]
+locations = [ "eu-de-1", "eu-de-2", "eu-de-3" ]
 subnet_name = "mytodo"
 number_of_addresses = 256
 create_gateway = false
+# Something with those values for next release
+# subnets = {
+#     zone-1 = [ { name = "subnet-a" cidr = "10.10.10.0/24" public_gateway = true } ],
+#     zone-2 = [ { name = "subnet-b" cidr = "10.20.10.0/24" public_gateway = true } ],
+#     zone-3 = [ { name = "subnet-c" cidr = "10.30.10.0/24" public_gateway = true } ] 
+# }
 
 
 ##############################################################################
@@ -58,17 +61,6 @@ create_gateway = false
 cluster_name="mytodo-cluster"
 worker_pool_flavor="bx2.4x16"
 worker_nodes_per_zone=1
-# worker_zones = {
-#     "eu-de-1" = {
-#         subnet_id = "02b7-b2c7c714-2376-4f55-ba65-fd905eda89ec"
-#     },
-#     "${var.region}-2" = {
-#         subnet_id = "02c7-7fb23b6d-d24c-4150-ba34-98d1810b4821"
-#     },
-#     "${var.region}-3" = {
-#         subnet_id = "02d7-f87a9609-4dd0-4d83-bfc7-2d41f4c4cdc5"
-#     }
-# }
 entitlement="cloud_pak"
 kube_version="1.22.2"
 wait_till="IngressReady"
