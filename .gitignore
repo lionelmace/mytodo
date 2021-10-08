@@ -40,4 +40,4 @@ myreadme.txt
 # control as they are data points which are potentially sensitive and subject
 # to change depending on the environment.
 #
-*.tfvars
+# *.tfvars
