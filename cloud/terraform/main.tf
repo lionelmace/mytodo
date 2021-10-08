@@ -49,13 +49,14 @@ module vpc {
 
 module "vpc_kubernetes_cluster" {
   source = "terraform-ibm-modules/cluster/ibm//modules/vpc-kubernetes"
+  
   cluster_name                    = var.cluster_name
-  vpc_id                          = "module.vpc.vpc_id"
+  vpc_id                          = module.vpc.vpc_id[0]
   worker_pool_flavor              = var.worker_pool_flavor
   worker_zones = {
-    "${var.region}-1" = { subnet_id = "module.vpc.ibm_is_subnet.subnets[0].id" },
-    "${var.region}-2" = { subnet_id = "module.vpc.ibm_is_subnet.subnets[1].id" },
-    "${var.region}-3" = { subnet_id = "module.vpc.ibm_is_subnet.subnets[2].id" }
+    "${var.region}-1" = { subnet_id = module.vpc.subnet_ids[0] },
+    "${var.region}-2" = { subnet_id = module.vpc.subnet_ids[1] },
+    "${var.region}-3" = { subnet_id = module.vpc.subnet_ids[2] }
   }
   worker_nodes_per_zone           = var.worker_nodes_per_zone
   resource_group_id               = ibm_resource_group.resource_group.id
@@ -67,8 +68,4 @@ module "vpc_kubernetes_cluster" {
   # cos_instance_crn                = var.cos_instance_crn
   # force_delete_storage            = var.force_delete_storage
   # kms_config                      = var.kms_config
-
-  depends_on = [
-    module.vpc,
-  ]
 }

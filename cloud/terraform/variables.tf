@@ -2,7 +2,6 @@
 # Account Variables
 ##############################################################################
 
-
 variable ibmcloud_api_key {
   description = "The IBM Cloud platform API key needed to deploy IAM enabled resources"
 }
@@ -171,7 +170,6 @@ variable "worker_zones" {
   default = {}
 }
 
-
 variable worker_nodes_per_zone {
   description = "Number of workers to provision in each subnet"
   type        = number
@@ -210,33 +208,3 @@ variable wait_till {
 # variable cos_instance_crn {}
 # variable force_delete_storage {}
 # variable kms_config {}
-
-### OLD
-
-# variable machine_type {
-#   description = "Machine type for the IKS Cluster"
-#   default     = "cx2.2x4"
-# }
-
-
-# variable worker_count {
-#   description = "Number of workers per zone"
-#   default     = 1
-# }
-
-# variable disable_pse {
-#   description = "Disable public service endpoint for cluster. True or false"
-#   default     = false
-# }
-
-# variable enable_albs {
-#   description = "Enable ALBs for cluster"
-#   default     = true
-# }
-
-# variable only_private_albs {
-#   description = "enable only private albs"
-#   default     = false
-# }
-
-##############################################################################
