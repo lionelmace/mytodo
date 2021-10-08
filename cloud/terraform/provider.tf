@@ -8,16 +8,16 @@ terraform {
   required_providers {
     ibm = {
       source = "IBM-Cloud/ibm"
-      version = "1.33.1"
+      version = "~>1.31.0"
     }
   }
+  # experiments = [module_variable_optional_attrs]
 }
 
 provider ibm {
-  ibmcloud_api_key      = var.ibmcloud_api_key
-  region                = var.ibm_region
-  # generation            = var.generation
-  ibmcloud_timeout      = 60
+  ibmcloud_api_key = var.ibmcloud_api_key
+  region           = var.region
+  ibmcloud_timeout = 60
 }
 
 ##############################################################################

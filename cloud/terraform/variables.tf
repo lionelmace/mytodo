@@ -1,32 +1,42 @@
 ##############################################################################
-# Sensitive Account Variables
+# Account Variables
 ##############################################################################
+
 
 variable ibmcloud_api_key {
   description = "The IBM Cloud platform API key needed to deploy IAM enabled resources"
 }
 
-##############################################################################
+variable prefix {
+    description = "A unique identifier need to provision resources. Must begin with a letter"
+    type        = string
+    default     = "tf"
 
+    validation  {
+      error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
+      condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.prefix))
+    }
+}
 
-##############################################################################
-# Account Variables
-##############################################################################
-
-variable ibm_region {
-  description = "IBM Cloud region where all resources will be deployed"
-  default     = "eu-de"
+variable region {
+  description = "IBM Cloud region where all resources will be provisioned"
+  default     = ""
 }
 
 variable resource_group {
-  description = "Name of resource group to provision resources"
-  default     = "mytodo"
+  description = "Name of resource group where all infrastructure will be provisioned"
+  default     = ""
+
+  validation  {
+      error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
+      condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.resource_group))
+    }
 }
 
 variable "tags" {
   description = "List of Tags"
   type        = list(string)
-  default     = [ "tf" ]
+  default     = ["tf","mytodo"]
 }
 
 ##############################################################################
@@ -39,17 +49,15 @@ variable "tags" {
 variable "create_vpc" {
   description = "True to create new VPC. False if VPC is already existing and subnets or address prefixies are to be added"
   type        = bool
-  default     = "true"
+  default     = true
 }
+
+#####################################################
+# Optional Parameters
+#####################################################
 
 variable "vpc_name" {
   description = "Name of the vpc"
-  type        = string
-  default     = "vpc-mytodo"
-}
-
-variable "resource_group_id" {
-  description = "ID of resource group."
   type        = string
   default     = null
 }
@@ -91,35 +99,19 @@ variable "address_prefixes" {
     location = string
     ip_range = string
   }))
-  default = [
-    {
-      name     = "add-pref-1"
-      location = "eu-de-1"
-      ip_range = "10.10.10.0/24"
-    },
-    {
-      name     = "add-pref-2"
-      location = "eu-de-2"
-      ip_range = "10.20.10.0/24"
-    },
-    {
-      name     = "add-pref-3"
-      location = "eu-de-3"
-      ip_range = "10.30.10.0/24"
-    }
-  ]
+  default = []
 }
 
 variable "locations" {
   description = "zones per region"
   type        = list(string)
-  default     = [ "eu-de-1", "eu-de-2", "eu-de-3"]
+  default     = []
 }
 
-variable "subnet_name_prefix" {
-  description = "Prefix to the names of subnets"
+variable "subnet_name" {
+  description = "Name of the subnet"
   type        = string
-  default     = "subnet"
+  default     = null
 }
 
 variable "number_of_addresses" {
@@ -129,19 +121,31 @@ variable "number_of_addresses" {
 }
 
 variable "vpc" {
-  description = "Name of the Existing VPC to which subnets, gateways are to be attached"
+  description = "ID of the Existing VPC to which subnets, gateways are to be attached"
   type        = string
-  default     = ""
+  default     = null
+}
+
+variable "subnet_access_control_list" {
+  description = "Network ACL ID"
+  type        = string
+  default     = null
+}
+
+variable "routing_table" {
+  description = "Routing Table ID"
+  type        = string
+  default     = null
 }
 
 variable "create_gateway" {
   description = "True to create new Gateway"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "public_gateway_name_prefix" {
-  description = "Prefix to the names of the Public Gateways"
+  description = "Prefix to the names of Public Gateways"
   type        = string
   default     = null
 }
@@ -154,12 +158,12 @@ variable "floating_ip" {
 
 
 ##############################################################################
-# Cluster Variables
+# Cluster
 ##############################################################################
 
 variable cluster_name {
   description = "name for the iks cluster"
-  default     = "wireguard-cluster"
+  default     = ""
 }
 
 variable  worker_pool_flavor {
@@ -168,53 +172,44 @@ variable  worker_pool_flavor {
     default     = "bx2.4x16"
 }
 
-  # variable worker_zones { [
-  #   "${var.ibm_region}-1" = {
-  #     subnet_id = "02b7-b2c7c714-2376-4f55-ba65-fd905eda89ec"
-  #   },
-  #   "${var.ibm_region}-2" = {
-  #     subnet_id = "02c7-7fb23b6d-d24c-4150-ba34-98d1810b4821"
-  #   },
-  #   "${var.ibm_region}-3" = {
-  #     subnet_id = "02d7-f87a9609-4dd0-4d83-bfc7-2d41f4c4cdc5"
-  #   }]
-  # }
+variable "worker_zones" {
+  type    = map
+  default = {}
+}
 
 
-# variable resource_group_id {}
+variable worker_nodes_per_zone {
+  description = "Number of workers to provision in each subnet"
+  type        = number
+  default     = 1
+}
 
-  variable worker_nodes_per_zone {
-    description = "Number of workers to provision in each subnet"
-    type        = number
-    default     = 1
-  }
-
-  variable entitlement {
-      description = "If you purchased an IBM Cloud Cloud Pak that includes an entitlement to run worker nodes that are installed with OpenShift Container Platform, enter entitlement to create your cluster with that entitlement so that you are not charged twice for the OpenShift license. Note that this option can be set only when you create the cluster. After the cluster is created, the cost for the OpenShift license occurred and you cannot disable this charge."
-      type        = string
-      default     = "cloud_pak"
-  }
-
-  variable kube_version {
-    description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
+variable entitlement {
+    description = "If you purchased an IBM Cloud Cloud Pak that includes an entitlement to run worker nodes that are installed with OpenShift Container Platform, enter entitlement to create your cluster with that entitlement so that you are not charged twice for the OpenShift license. Note that this option can be set only when you create the cluster. After the cluster is created, the cost for the OpenShift license occurred and you cannot disable this charge."
     type        = string
-    default     = "1.22.2"
-  }
+    default     = "cloud_pak"
+}
 
-  variable wait_till {
-    description = "To avoid long wait times when you run your Terraform code, you can specify the stage when you want Terraform to mark the cluster resource creation as completed. Depending on what stage you choose, the cluster creation might not be fully completed and continues to run in the background. However, your Terraform code can continue to run without waiting for the cluster to be fully created. Supported args are `MasterNodeReady`, `OneWorkerNodeReady`, and `IngressReady`"
-    type        = string
-    default     = "IngressReady"
+variable kube_version {
+  description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
+  type        = string
+  default     = "1.22.2"
+}
 
-    validation {
-      error_message = "`wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
-      condition     = contains([
-          "MasterNodeReady",
-          "OneWorkerNodeReady",
-          "IngressReady"
-      ], var.wait_till)
-    }
+variable wait_till {
+  description = "To avoid long wait times when you run your Terraform code, you can specify the stage when you want Terraform to mark the cluster resource creation as completed. Depending on what stage you choose, the cluster creation might not be fully completed and continues to run in the background. However, your Terraform code can continue to run without waiting for the cluster to be fully created. Supported args are `MasterNodeReady`, `OneWorkerNodeReady`, and `IngressReady`"
+  type        = string
+  default     = "IngressReady"
+
+  validation {
+    error_message = "`wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
+    condition     = contains([
+        "MasterNodeReady",
+        "OneWorkerNodeReady",
+        "IngressReady"
+    ], var.wait_till)
   }
+}
 
 # variable disable_public_service_endpoint {}
 # variable tags {}
