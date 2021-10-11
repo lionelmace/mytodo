@@ -12,7 +12,7 @@ tags = [ "tf", "mytodo" ]
 
 
 ##############################################################################
-## VPC Version 1.1.1
+## VPC
 ##############################################################################
 vpc_name = "mytodo-vpc"
 classic_access = false
@@ -40,7 +40,8 @@ default_address_prefix = "auto"
 locations = [ "eu-de-1", "eu-de-2", "eu-de-3" ]
 subnet_name = "mytodo"
 number_of_addresses = 256
-create_gateway = false
+create_gateway = true
+public_gateway_name = "pgw"
 # Something with those values for next release
 # subnets = {
 #     zone-1 = [ { name = "subnet-a" cidr = "10.10.10.0/24" public_gateway = true } ],
@@ -91,8 +92,8 @@ sysdig_plan         = "graduated-tier-sysdig-secure-plus-monitor"
 ##############################################################################
 icd_mongo_name              = "mytodo-mongo"
 icd_mongo_plan              = "standard"
-# expected length of adminpassword to be in the range (10 - 32)
-icd_mongo_adminpassword     = "P@ssw0rd01"
+# expected length in the range (10 - 32) - must not contain special characters
+icd_mongo_adminpassword     = "Passw0rd01"
 icd_mongo_db_version        = "4.2"
 icd_mongo_service_endpoints = "public"
 icd_mongo_users = [{

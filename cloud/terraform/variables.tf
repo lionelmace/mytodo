@@ -137,10 +137,10 @@ variable "create_gateway" {
   default     = true
 }
 
-variable "public_gateway_name_prefix" {
+variable "public_gateway_name" {
   description = "Prefix to the names of Public Gateways"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "floating_ip" {

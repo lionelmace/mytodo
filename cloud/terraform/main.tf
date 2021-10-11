@@ -36,8 +36,9 @@ module vpc {
   subnet_name                 = var.subnet_name
   number_of_addresses         = var.number_of_addresses
   vpc                         = var.vpc
+  # Public Gateway required to access the OpenShift Console
   create_gateway              = var.create_gateway
-  # public_gateway_name         = var.public_gateway_name
+  public_gateway_name         = var.public_gateway_name
   floating_ip                 = var.floating_ip
   gateway_tags                = var.tags
 }
@@ -109,17 +110,17 @@ module "vpc_openshift_cluster" {
 module "cos" {
   source = "terraform-ibm-modules/cos/ibm//modules/instance"
 
-  # bind_resource_key = var.bind_resource_key
-  service_name      = var.cos_service_name
   resource_group_id = ibm_resource_group.resource_group.id
+  service_name      = var.cos_service_name
   plan              = var.cos_plan
   region            = var.cos_region
+  tags              = var.tags
+  # key_tags          = var.tags
   # service_endpoints = var.service_endpoints
   # parameters        = var.parameters
-  # tags              = var.tags
   # resource_key_name = var.resource_key_name
   # role              = var.role
-  key_tags          = var.tags
+  # bind_resource_key = var.bind_resource_key
   # key_parameters    = var.key_parameters
 }
 
@@ -131,7 +132,6 @@ module "cos" {
 module "logdna_instance" {
   source  = "terraform-ibm-modules/observability/ibm//modules/logging-logdna"
 
-  # bind_resource_key   = var.bind_resource_key
   resource_group_id   = ibm_resource_group.resource_group.id
   service_name        = var.logdna_service_name
   service_endpoints   = var.logdna_service_endpoints
@@ -141,6 +141,7 @@ module "logdna_instance" {
   plan                = var.logdna_plan
   tags                = var.tags
   # resource_key_tags   = var.resource_key_tags
+  # bind_resource_key   = var.bind_resource_key
 }
 
 
@@ -159,8 +160,8 @@ module "sysdig_instance" {
   resource_key_name = var.sysdig_resource_key_name
   role              = var.sysdig_role
   region            = var.region
-  # parameters        = var.parameters
   tags              = var.tags
+  # parameters        = var.parameters
   # resource_key_tags = var.resource_key_tags
 }
 
@@ -178,6 +179,7 @@ module "database_mongo" {
   location                             = var.region
   adminpassword                        = var.icd_mongo_adminpassword
   database_version                     = var.icd_mongo_db_version
+  tags                                 = var.tags
   # memory_allocation                    = var.memory_allocation
   # disk_allocation                      = var.disk_allocation
   # cpu_allocation                       = var.cpu_allocation
@@ -187,7 +189,6 @@ module "database_mongo" {
   # kms_instance                         = var.kms_instance
   # disk_encryption_key                  = var.disk_encryption_key
   # backup_encryption_key                = var.backup_encryption_key
-  # tags                                 = var.tags
   # point_in_time_recovery_deployment_id = var.point_in_time_recovery_deployment_id
   # point_in_time_recovery_time          = var.point_in_time_recovery_time
   # users                                = var.users
