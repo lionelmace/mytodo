@@ -1,15 +1,33 @@
 ##############################################################################
-# IKS on VPC Outputs
+# Outputs
 ##############################################################################
 
-# output cluster_name {
-#     description = "Name of the IKS on VPC Cluster, only returns after cluster deploys"
-#     value       = vpc_kubernetes_cluster.cluster.name
-# }
+output "vpc_id" {
+  description = "The ID of the VPC"
+  value       = module.vpc.vpc_id
+}
 
-# output cluster_id {
-#     description = "ID of the IKS on VPC Cluster"
-#     value       = vpc_kubernetes_cluster.cluster.id
-# }
+output "kubernetes_cluster_id" {
+  description = "The ID of the Kubernetes cluster"
+  value       = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+}
 
-##############################################################################
+output "openshift_cluster_id" {
+  description = "The ID of the OpenShift cluster"
+  value       = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+}
+
+output "cos_instance_crn" {
+  description = "The CRN of the COS instance"
+  value       = module.cos.cos_instance_id
+}
+
+output "logdna_instance_id" {
+  description = "The ID of the Log Analysis"
+  value       = module.logdna_instance.logdna_instance_id
+}
+
+output "sysdig_instance_id" {
+  description = "The ID of the Cloud Monitoring instance"
+  value       = module.sysdig_instance.sysdig_id
+}
