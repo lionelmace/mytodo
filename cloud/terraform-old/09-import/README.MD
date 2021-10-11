@@ -1,1 +1,0 @@
-terraform import ibm_is_security_group.scurvy-staring-candied-distincted r010-7583779d-560c-4826-92e0-4b341375dc9e
