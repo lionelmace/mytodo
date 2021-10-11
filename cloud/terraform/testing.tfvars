@@ -12,12 +12,6 @@ tags = [ "tf", "mytodo" ]
 
 
 ##############################################################################
-## IAM
-##############################################################################
-# access_groups=[ { name = "admin" description = "An example admin group" policies = [ { name = "admin_all" resources = { resource_group = "gcat-landing-zone-dev" } roles = ["Administrator","Manager"] } ] dynamic_policies = [] invite_users = [ "test@test.test" ] }, { name = "dev" description = "A developer access group" policies = [ { name = "dev_view_vpc" resources = { resource_group = "gcat-landing-zone-dev" service = "id" } roles = ["Viewer"] } ] invite_users = ["test@test.test"] } ]
-
-
-##############################################################################
 ## VPC Version 1.1.1
 ##############################################################################
 vpc_name = "mytodo-vpc"
@@ -56,16 +50,59 @@ create_gateway = false
 
 
 ##############################################################################
-## Cluster
+## Cluster Kubernetes
 ##############################################################################
-cluster_name="mytodo-cluster"
-worker_pool_flavor="bx2.4x16"
-worker_nodes_per_zone=1
-entitlement="cloud_pak"
-kube_version="1.22.2"
-wait_till="IngressReady"
-# worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 }, { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
+kubernetes_cluster_name          = "mytodo-cluster"
+kubernetes_worker_pool_flavor    = "bx2.4x16"
+kubernetes_worker_nodes_per_zone = 1
+kubernetes_version               = "1.22.2"
+kubernetes_wait_till             = "IngressReady"
+# worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },
+#                { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
 
+
+##############################################################################
+## Cluster OpenShift
+##############################################################################
+openshift_cluster_name       = "mytodo-iro"
+openshift_worker_pool_flavor = "bx2.4x16"
+openshift_version            = "4.8.11_openshift"
+
+
+##############################################################################
+## COS
+##############################################################################
+cos_service_name = "mytoro-iro-registry"
+cos_plan = "standard"
+cos_region = "global"
+
+
+##############################################################################
+## Observability
+##############################################################################
+logdna_service_name = "mytodo-logs"
+logdna_plan         = "30-day"
+sysdig_service_name = "mytodo-monitoring"
+sysdig_plan         = "graduated-tier-sysdig-secure-plus-monitor"
+
+
+##############################################################################
+## ICD Mongo
+##############################################################################
+icd_mongo_name              = "mytodo-mongo"
+icd_mongo_plan              = "standard"
+# expected length of adminpassword to be in the range (10 - 32)
+icd_mongo_adminpassword     = "P@ssw0rd01"
+icd_mongo_db_version        = "4.2"
+icd_mongo_service_endpoints = "public"
+icd_mongo_users = [{
+  name     = "user123"
+  password = "password12"
+}]
+icd_mongo_whitelist = [{
+  address     = "172.168.1.1/32"
+  description = "desc"
+}]
 
 ## Multizone VPC
 # classic_access=false

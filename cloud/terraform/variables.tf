@@ -35,7 +35,7 @@ variable resource_group {
 variable "tags" {
   description = "List of Tags"
   type        = list(string)
-  default     = ["tf","mytodo"]
+  default     = [ "tf", "mytodo" ]
 }
 
 
@@ -151,60 +151,289 @@ variable "floating_ip" {
 
 
 ##############################################################################
-# Cluster
+# Kubernetes Cluster
 ##############################################################################
 
-variable cluster_name {
+variable kubernetes_cluster_name {
   description = "name for the iks cluster"
   default     = ""
 }
 
-variable  worker_pool_flavor {
+variable  kubernetes_worker_pool_flavor {
     description = "The flavor of VPC worker node to use for your cluster. Use `ibmcloud ks flavors` to find flavors for a region."
     type        = string
     default     = "bx2.4x16"
 }
 
-variable "worker_zones" {
-  type    = map
-  default = {}
-}
+# variable "kubernetes_worker_zones" {
+#   type    = map
+#   default = {}
+# }
 
-variable worker_nodes_per_zone {
+variable kubernetes_worker_nodes_per_zone {
   description = "Number of workers to provision in each subnet"
   type        = number
   default     = 1
 }
 
-variable entitlement {
-    description = "If you purchased an IBM Cloud Cloud Pak that includes an entitlement to run worker nodes that are installed with OpenShift Container Platform, enter entitlement to create your cluster with that entitlement so that you are not charged twice for the OpenShift license. Note that this option can be set only when you create the cluster. After the cluster is created, the cost for the OpenShift license occurred and you cannot disable this charge."
-    type        = string
-    default     = "cloud_pak"
-}
-
-variable kube_version {
+variable kubernetes_version {
   description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
   type        = string
   default     = "1.22.2"
 }
 
-variable wait_till {
+variable kubernetes_wait_till {
   description = "To avoid long wait times when you run your Terraform code, you can specify the stage when you want Terraform to mark the cluster resource creation as completed. Depending on what stage you choose, the cluster creation might not be fully completed and continues to run in the background. However, your Terraform code can continue to run without waiting for the cluster to be fully created. Supported args are `MasterNodeReady`, `OneWorkerNodeReady`, and `IngressReady`"
   type        = string
   default     = "IngressReady"
 
   validation {
-    error_message = "`wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
+    error_message = "`kubernetes_wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
     condition     = contains([
         "MasterNodeReady",
         "OneWorkerNodeReady",
         "IngressReady"
-    ], var.wait_till)
+    ], var.kubernetes_wait_till)
   }
 }
 
 # variable disable_public_service_endpoint {}
-# variable tags {}
-# variable cos_instance_crn {}
-# variable force_delete_storage {}
+variable "kubernetes_force_delete_storage" {
+  description = "force the removal of persistent storage associated with the cluster during cluster deletion."
+  type        = bool
+  default     = true
+}
+
 # variable kms_config {}
+
+
+##############################################################################
+# VPC OpenShift cluster provisioning
+##############################################################################
+
+variable "openshift_cluster_name" {
+  description = "Name of the cluster"
+  type        = string
+  default     = ""
+}
+
+variable "openshift_worker_pool_flavor" {
+  description = " The flavor of the VPC worker node that you want to use."
+  type        = string
+  default     = "bx2.4x16"
+}
+
+variable "openshift_version" {
+  description = "The OpenShift version that you want to set up in your cluster."
+  type        = string
+  default     = ""
+}
+
+# variable "update_all_workers" {
+#   description = "set to true, the Kubernetes version of the worker nodes is updated along with the Kubernetes version of the cluster that you specify in kube_version."
+#   type        = bool
+#   default     = false
+# }
+
+# variable "service_subnet" {
+#   description = "Specify a custom subnet CIDR to provide private IP addresses for services."
+#   type        = string
+#   default     = null
+# }
+
+# variable "pod_subnet" {
+#   description = "Specify a custom subnet CIDR to provide private IP addresses for pods."
+#   type        = string
+#   default     = null
+# }
+
+variable "openshift_worker_nodes_per_zone" {
+  description = "The number of worker nodes per zone in the default worker pool."
+  type        = number
+  default     = 1
+}
+
+variable "worker_labels" {
+  description = "Labels on all the workers in the default worker pool."
+  type        = map
+  default     = null
+}
+
+variable "openshift_wait_till" {
+  description = "specify the stage when Terraform to mark the cluster creation as completed."
+  type        = string
+  default     = "OneWorkerNodeReady"
+
+  validation {
+    error_message = "`openshift_wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
+    condition     = contains([
+        "MasterNodeReady",
+        "OneWorkerNodeReady",
+        "IngressReady"
+    ], var.openshift_wait_till)
+  }
+}
+
+variable "disable_public_service_endpoint" {
+  description = "Boolean value true if Public service endpoint to be disabled."
+  type        = bool
+  default     = false
+}
+
+# variable "cos_instance_crn" {
+#   description = "Enable openshift entitlement during cluster creation ."
+#   type        = string
+#   default     = null
+# }
+
+variable "openshift_force_delete_storage" {
+  description = "force the removal of persistent storage associated with the cluster during cluster deletion."
+  type        = bool
+  default     = true
+}
+
+variable "kms_config" {
+  type    = list(map(string))
+  default = []
+}
+
+variable "entitlement" {
+  description = "Enable openshift entitlement during cluster creation ."
+  type        = string
+  default     = "cloud_pak"
+}
+
+
+##############################################################################
+# COS Service
+##############################################################################
+
+variable "cos_service_name" {
+  description = "Name of the COS instance"
+  type        = string
+}
+
+variable "cos_plan" {
+  description = "COS plan type"
+  type        = string
+}
+
+variable "cos_region" {
+  description = " Enter Region for provisioning"
+  type        = string
+}
+
+
+##############################################################################
+# Log Services
+##############################################################################
+
+variable "logdna_service_name" {
+  description = "Name of the log instance"
+  type        = string
+}
+
+variable "logdna_plan" {
+  description = "plan type (14-day, 30-day, 7-day, hipaa-30-day and lite)"
+  type        = string
+}
+
+variable "logdna_service_endpoints" {
+  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
+  type        = string
+  default     = "private"
+}
+
+variable "logdna_role" {
+  description = "Type of role"
+  type        = string
+  default     = ""
+}
+
+variable "logdna_resource_key_name" {
+  description = "Name of the instance key"
+  type        = string
+  default     = ""
+}
+
+##############################################################################
+# Monitoring Services
+##############################################################################
+variable "bind_resource_key" {
+  description = "Enable this to bind key to logdna instance (true/false)"
+  type        = bool
+  default     = false
+}
+variable "sysdig_service_name" {
+  description = "Name of the instance"
+  type        = string
+}
+variable "sysdig_plan" {
+  description = "plan type"
+  type        = string
+}
+# variable "parameters" {
+#   type        = map(string)
+#   description = "Arbitrary parameters to pass"
+#   default     = null
+# }
+variable "sysdig_service_endpoints" {
+  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
+  type        = string
+  default     = "private"
+}
+variable "sysdig_resource_key_name" {
+  description = "Name of the instance key"
+  type        = string
+  default     = ""
+}
+variable "sysdig_role" {
+  description = "plan type"
+  type        = string
+  default     = ""
+}
+
+# variable "resource_key_tags" {
+#   type        = list(string)
+#   description = "Tags that should be applied to the service"
+#   default     = null
+# }
+
+
+##############################################################################
+# ICD Mongo Services
+##############################################################################
+
+variable "icd_mongo_name" {
+  type        = string
+  description = "Resource instance name for example, my Database instance"
+}
+variable "icd_mongo_plan" {
+  type        = string
+  description = "The plan type of the Database instance"
+}
+variable "icd_mongo_adminpassword" {
+  default     = null
+  type        = string
+  description = "The admin user password for the instance"
+}
+variable "icd_mongo_db_version" {
+  default     = null
+  type        = string
+  description = "The database version to provision if specified"
+}
+variable "icd_mongo_users" {
+  default     = null
+  type        = set(map(string))
+  description = "Database Users. It is set of username and passwords"
+}
+variable "icd_mongo_whitelist" {
+  default     = null
+  type        = set(map(string))
+  description = "Database Whitelist It is set of IP Address and description"
+}
+variable "icd_mongo_service_endpoints" {
+  default     = null
+  type        = string
+  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
+}
