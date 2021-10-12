@@ -53,7 +53,7 @@ public_gateway_name = "pgw"
 ##############################################################################
 ## Cluster Kubernetes
 ##############################################################################
-kubernetes_cluster_name          = "mytodo-cluster"
+kubernetes_cluster_name          = "mytodo-iks"
 kubernetes_worker_pool_flavor    = "bx2.4x16"
 kubernetes_worker_nodes_per_zone = 1
 kubernetes_version               = "1.22.2"

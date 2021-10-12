@@ -23,7 +23,7 @@ output "cos_instance_crn" {
 }
 
 output "logdna_instance_id" {
-  description = "The ID of the Log Analysis"
+  description = "The ID of the Log Analysis instance"
   value       = module.logdna_instance.logdna_instance_id
 }
 
