@@ -53,7 +53,7 @@ public_gateway_name = "pgw"
 ##############################################################################
 ## Cluster Kubernetes
 ##############################################################################
-kubernetes_cluster_name          = "mytodo-iks"
+kubernetes_cluster_name          = "iks"
 kubernetes_worker_pool_flavor    = "bx2.4x16"
 kubernetes_worker_nodes_per_zone = 1
 kubernetes_version               = "1.22.2"
@@ -65,7 +65,7 @@ kubernetes_wait_till             = "IngressReady"
 ##############################################################################
 ## Cluster OpenShift
 ##############################################################################
-openshift_cluster_name       = "mytodo-iro"
+openshift_cluster_name       = "iro"
 openshift_worker_pool_flavor = "bx2.4x16"
 openshift_version            = "4.8.11_openshift"
 
@@ -74,15 +74,16 @@ openshift_version            = "4.8.11_openshift"
 ## COS
 ##############################################################################
 cos_service_name = "mytoro-iro-registry"
-cos_plan = "standard"
-cos_region = "global"
+cos_plan         = "standard"
+cos_region       = "global"
 
 
 ##############################################################################
-## Observability
+## Observability: LogDNA & Sysdig
 ##############################################################################
 logdna_service_name = "mytodo-logs"
 logdna_plan         = "30-day"
+
 sysdig_service_name = "mytodo-monitoring"
 sysdig_plan         = "graduated-tier-sysdig-secure-plus-monitor"
 
@@ -104,51 +105,3 @@ icd_mongo_whitelist = [{
   address     = "172.168.1.1/32"
   description = "desc"
 }]
-
-## Multizone VPC
-# classic_access=false
-# subnets={ 
-#     zone-1 = [{ name = "subnet-a", cidr = "10.10.10.0/24", public_gateway = true }], 
-#     zone-2 = [{ name = "subnet-b", cidr = "10.20.10.0/24", public_gateway = true }], 
-#     zone-3 = [{ name = "subnet-c", cidr = "10.30.10.0/24", public_gateway = true }] 
-# }
-# use_public_gateways={ 
-#     zone-1 = true 
-#     zone-2 = true 
-#     zone-3 = true 
-# }
-# acl_rules=[
-#     {
-#       name        = "allow-all-inbound"
-#       action      = "allow"
-#       direction   = "inbound"
-#       destination = "0.0.0.0/0"
-#       source      = "0.0.0.0/0"
-#     },
-#     {
-#       name        = "allow-all-outbound"
-#       action      = "allow"
-#       direction   = "outbound"
-#       destination = "0.0.0.0/0"
-#       source      = "0.0.0.0/0"
-#     }
-#   ]
-# security_group_rules=[
-#     {
-#       name      = "allow-inbound-ping"
-#       direction = "inbound"
-#       remote    = "0.0.0.0/0"
-#       icmp      = {
-#         type = 8
-#       }
-#     },
-#     {
-#       name      = "allow-inbound-ssh"
-#       direction = "inbound"
-#       remote    = "0.0.0.0/0"
-#       tcp       = {
-#         port_min = 22
-#         port_max = 22
-#       }
-#     },
-#   ]

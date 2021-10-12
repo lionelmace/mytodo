@@ -115,9 +115,8 @@ module "cos" {
   plan              = var.cos_plan
   region            = var.cos_region
   tags              = var.tags
-  # key_tags          = var.tags
+  key_tags          = var.tags
   # service_endpoints = var.service_endpoints
-  # parameters        = var.parameters
   # resource_key_name = var.resource_key_name
   # role              = var.role
   # bind_resource_key = var.bind_resource_key
@@ -135,14 +134,37 @@ module "logdna_instance" {
   resource_group_id   = ibm_resource_group.resource_group.id
   service_name        = var.logdna_service_name
   service_endpoints   = var.logdna_service_endpoints
+  bind_resource_key   = var.logdna_bind_resource_key
   resource_key_name   = var.logdna_resource_key_name
   role                = var.logdna_role
-  region              = var.region
   plan                = var.logdna_plan
+  region              = var.region
   tags                = var.tags
-  # resource_key_tags   = var.resource_key_tags
-  # bind_resource_key   = var.bind_resource_key
+  resource_key_tags   = var.tags
 }
+
+
+##############################################################################
+# Configure Log Analysis Services to an existing cluster
+##############################################################################
+# Attach to Kubernetes Cluster
+module "kubernetes_logdna_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
+
+  cluster              = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+  logdna_instance_id   = module.logdna_instance.logdna_instance_guid
+  private_endpoint     = var.logdna_private_endpoint
+}
+
+# Attach to OpenShift Cluster
+module "openshift_logdna_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
+
+  cluster              = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+  logdna_instance_id   = module.logdna_instance.logdna_instance_guid
+  private_endpoint     = var.logdna_private_endpoint
+}
+
 
 
 ##############################################################################
@@ -153,16 +175,37 @@ module "sysdig_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/monitoring-sysdig"
 
   resource_group_id = ibm_resource_group.resource_group.id
-  bind_resource_key = var.bind_resource_key
   service_name      = var.sysdig_service_name
   plan              = var.sysdig_plan
   service_endpoints = var.sysdig_service_endpoints
+  bind_resource_key = var.sysdig_bind_resource_key
   resource_key_name = var.sysdig_resource_key_name
   role              = var.sysdig_role
   region            = var.region
   tags              = var.tags
-  # parameters        = var.parameters
-  # resource_key_tags = var.resource_key_tags
+  resource_key_tags = var.tags
+}
+
+
+##############################################################################
+# Configure Log Analysis Services to an existing cluster
+##############################################################################
+# Attach to Kubernetes Cluster
+module "kubernetes_sysdig_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
+
+  cluster            = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+  sysdig_instance_id = module.sysdig_instance.sysdig_guid
+  private_endpoint   = var.sysdig_private_endpoint
+}
+
+# Attach to OpenShift Cluster
+module "openshift_sysdig_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
+
+  cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+  sysdig_instance_id = module.sysdig_instance.sysdig_guid
+  private_endpoint   = var.sysdig_private_endpoint
 }
 
 

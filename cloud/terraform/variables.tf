@@ -185,7 +185,7 @@ variable kubernetes_version {
 variable kubernetes_wait_till {
   description = "To avoid long wait times when you run your Terraform code, you can specify the stage when you want Terraform to mark the cluster resource creation as completed. Depending on what stage you choose, the cluster creation might not be fully completed and continues to run in the background. However, your Terraform code can continue to run without waiting for the cluster to be fully created. Supported args are `MasterNodeReady`, `OneWorkerNodeReady`, and `IngressReady`"
   type        = string
-  default     = "IngressReady"
+  default     = "MasterNodeReady"
 
   validation {
     error_message = "`kubernetes_wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
@@ -262,7 +262,7 @@ variable "worker_labels" {
 variable "openshift_wait_till" {
   description = "specify the stage when Terraform to mark the cluster creation as completed."
   type        = string
-  default     = "OneWorkerNodeReady"
+  default     = "MasterNodeReady"
 
   validation {
     error_message = "`openshift_wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
@@ -325,7 +325,7 @@ variable "cos_region" {
 
 
 ##############################################################################
-# Log Services
+# Module: Log Services
 ##############################################################################
 
 variable "logdna_service_name" {
@@ -347,23 +347,34 @@ variable "logdna_service_endpoints" {
 variable "logdna_role" {
   description = "Type of role"
   type        = string
-  default     = ""
+  default     = "Administrator"
+}
+
+variable "logdna_bind_resource_key" {
+  description = "Flag indicating that key should be bind to logdna instance"
+  type        = bool
+  default     = true
 }
 
 variable "logdna_resource_key_name" {
   description = "Name of the instance key"
   type        = string
-  default     = ""
+  default     = "log-ingestion-key"
 }
+
+##############################################################################
+# Module: Configure Log Services
+##############################################################################
+variable "logdna_private_endpoint" {
+  description = "Add this option to connect to your LogDNA service instance through the private service endpoint"
+  type        = bool
+  default     = true
+}
+
 
 ##############################################################################
 # Monitoring Services
 ##############################################################################
-variable "bind_resource_key" {
-  description = "Enable this to bind key to logdna instance (true/false)"
-  type        = bool
-  default     = false
-}
 variable "sysdig_service_name" {
   description = "Name of the instance"
   type        = string
@@ -382,22 +393,33 @@ variable "sysdig_service_endpoints" {
   type        = string
   default     = "private"
 }
+
+variable "sysdig_bind_resource_key" {
+  description = "Enable this to bind key to logdna instance (true/false)"
+  type        = bool
+  default     = true
+}
+
 variable "sysdig_resource_key_name" {
   description = "Name of the instance key"
   type        = string
-  default     = ""
+  default     = "sysdig-ingestion-key"
 }
 variable "sysdig_role" {
   description = "plan type"
   type        = string
-  default     = ""
+  default     = "Administrator"
 }
 
-# variable "resource_key_tags" {
-#   type        = list(string)
-#   description = "Tags that should be applied to the service"
-#   default     = null
-# }
+
+##############################################################################
+# Module: Configure Log Services
+##############################################################################
+variable "sysdig_private_endpoint" {
+  description = "Add this option to connect to your Sysdig service instance through the private service endpoint"
+  type        = bool
+  default     = true
+}
 
 
 ##############################################################################
