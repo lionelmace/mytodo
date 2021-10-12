@@ -73,7 +73,7 @@ openshift_version            = "4.8.11_openshift"
 ##############################################################################
 ## COS
 ##############################################################################
-cos_service_name = "mytoro-iro-registry"
+cos_service_name = "mytodo-iro-registry"
 cos_plan         = "standard"
 cos_region       = "global"
 
