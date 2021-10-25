@@ -188,7 +188,7 @@ module "sysdig_instance" {
 
 
 ##############################################################################
-# Configure Log Analysis Services to an existing cluster
+# Configure Sysdic Cloud Monitoring Services to an existing cluster
 ##############################################################################
 # Attach to Kubernetes Cluster
 module "kubernetes_sysdig_attach" {
@@ -257,3 +257,22 @@ module "database_mongo" {
   # memory_rate_period_seconds           = var.memory_rate_period_seconds
   # memory_rate_units                    = var.memory_rate_units
 }
+
+##############################################################################
+## Key Protect
+##############################################################################
+/*
+resource "ibm_resource_instance" "kp_instance" {
+  resource_group_id = ibm_resource_group.resource_group.id
+  name              = "key-protect"
+  service           = "kms"
+  plan              = "tiered-pricing"
+  location          = var.region
+  tags              = var.tags
+}
+
+resource "ibm_kp_key" "my_kp_key" {
+  key_protect_id  = ibm_resource_instance.kp_instance.guid
+  key_name     = "my-key-name"
+  standard_key = false
+}*/
