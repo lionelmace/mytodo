@@ -1,0 +1,85 @@
+---
+# Application to deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mytodo
+  namespace: default
+spec:
+  replicas: 3 # tells deployment to run Xs pods
+  selector:
+    matchLabels:
+      app: mytodo
+  template:
+    metadata:
+      labels:
+        app: mytodo
+        tier: frontend
+    spec:
+      containers:
+      - name: mytodo
+        # Example: de.icr.io/mynamespace/mytodo:1.0
+        image: <registry-region>.icr.io/<namespace>/<docker-img-name>:<docker-img-tag>
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 250m     # 250 millicores = 1/4 core
+            memory: 128Mi # 128 MB
+          limits:
+            cpu: 500m
+            memory: 384Mi
+        livenessProbe:
+          httpGet:
+            path: /healthcheck/
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          failureThreshold: 2        
+        # envFrom:
+        # - secretRef:
+        #     name: database-credentials
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ annotations:
+  # service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public
+  # service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private
+ labels:
+  app: mytodo
+  tier: frontend
+ name: mytodo-service
+ namespace: default
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: mytodo
+    tier: frontend
+    # deploymentconfig: nodejs-sample
+---
+# Command line: oc create route edge --service=mytodo-service
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: mytodo-service
+  namespace: default
+  labels:
+    app: mytodo
+    tier: frontend
+spec:
+  host: >-
+    <ingress-subdomain>
+  to:
+    kind: Service
+    name: mytodo-service
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+  wildcardPolicy: None

@@ -6,7 +6,7 @@ metadata:
   name: mytodo
   namespace: default
 spec:
-  replicas: 3 # tells deployment to run Xs pods
+  replicas: 3
   selector:
     matchLabels:
       app: mytodo
@@ -18,8 +18,7 @@ spec:
     spec:
       containers:
       - name: mytodo
-        # Example: de.icr.io/mynamespace/mytodo:1.0
-        image: <registry-region>.icr.io/<namespace>/<docker-img-name>:<docker-img-tag>
+        image: de.icr.io/mace/mytodo:lts-alpine3.14
         imagePullPolicy: Always
         resources:
           requests:
@@ -73,7 +72,7 @@ metadata:
     tier: frontend
 spec:
   host: >-
-    <ingress-subdomain>
+    iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
   to:
     kind: Service
     name: mytodo-service

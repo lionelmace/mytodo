@@ -4,11 +4,19 @@ This web app built with a CLEAN stack (CLoudant NoSQL DB, Express, Angular and N
 
 ![Todo](./images/screenshot.png)
 
+Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>YouTube video</a> to understand all the deployment steps below.
 
-Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>YouTube video</a> to understand all the deployment steps below. Note: this video excludes the cluster provisioning.
+> Note: this video excludes the cluster provisioning.
 
+## How to provision the underlying infrastructure with Terraform?
 
-# How to deploy this app in Kubernetes?
+All the cloud services shown in the architecture below can be provisioned through the use of Terraform.
+
+![Architeture](./images/ibmcloud-mytodo-tf.drawio.png)
+
+The terraform scripts can be found in the folder `cloud/terraform`.
+
+## How to deploy this app in Kubernetes?
 
 1. If you don't already have a Kubernetes cluster, create one for **Free** from IBM Cloud Catalog by selecting the [Kubernetes Service](https://cloud.ibm.com/kubernetes/catalog/create).
 
@@ -26,8 +34,7 @@ Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>You
 
 1. To automate the deployment of this app into your Kubernetes cluster, click the button below.
 
-    <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master" target=”_blank”>![](./images/toolchain0-button.png)</a>
-
+    <a href="https://cloud.ibm.com/devops/setup/deploy?repository=https://github.com/lionelmace/mytodo&branch=master" target=”_blank”>![DevOps](./images/toolchain0-button.png)</a>
 
 1. Enter a **Toolchain Name**, select the **Region** and a **Resource Group** where your cluster was created.
 
@@ -46,18 +53,17 @@ Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>You
 
     ![Toolchain](./images/toolchain4-secretkey.jpg)
 
-
-1. The toolchain will automatically try to fill out the remaining information. Control the Resource Group, the region and the cluster name, then, click **Create**. 
+1. The toolchain will automatically try to fill out the remaining information. Control the Resource Group, the region and the cluster name, then, click **Create**.
 
     ![Toolchain](./images/toolchain5-final.jpg)
 
-1. The toolchain is being created. That includes a Github repo to clone the source code of the app. 
+1. The toolchain is being created. That includes a Github repo to clone the source code of the app.
 
     ![Toolchain](./images/toolchain6-overview.jpg)
 
 1. Click **Delivery Pipeline** in the Overview. You will see the stages progressing in pipeline.
 
-    > 6 min deployment time 
+    > 6 min deployment time
     ![Toolchain](./images/toolchain7-pipeline.jpg)
 
 1. Click the link **View logs and history** in the last stage **DEPLOY**. Scroll down to the bottom. You will find the link to your application.
@@ -69,8 +75,7 @@ Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>You
 
 Congratulations! Your app is up and running in the cluster.
 
-
-# Step by step Deployment
+## Step by step Deployment
 
 Those two tutorials will show you in details how to deploy this step by step:
 
