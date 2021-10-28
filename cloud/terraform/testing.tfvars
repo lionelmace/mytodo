@@ -5,7 +5,7 @@
 ##############################################################################
 # Best is to set the variable export TF_VAR_ibmcloud_api_key=
 #ibmcloud_api_key=""
-prefix = "tf"
+prefix = "mytodo-"
 region = "eu-de"
 resource_group = "mytodo"
 tags = [ "tf", "mytodo" ]
@@ -14,7 +14,6 @@ tags = [ "tf", "mytodo" ]
 ##############################################################################
 ## VPC
 ##############################################################################
-vpc_name = "mytodo-vpc"
 classic_access = false
 default_address_prefix = "auto"
 # After version 1.1.1, you can use manual to create custom address prefixes 
@@ -38,7 +37,6 @@ default_address_prefix = "auto"
     # }
 # ]
 locations = [ "eu-de-1", "eu-de-2", "eu-de-3" ]
-subnet_name = "mytodo"
 number_of_addresses = 256
 create_gateway = true
 public_gateway_name = "pgw"
@@ -73,7 +71,6 @@ openshift_version            = "4.8.11_openshift"
 ##############################################################################
 ## COS
 ##############################################################################
-cos_service_name = "mytodo-iro-registry"
 cos_plan         = "standard"
 cos_region       = "global"
 
@@ -81,17 +78,13 @@ cos_region       = "global"
 ##############################################################################
 ## Observability: LogDNA & Sysdig
 ##############################################################################
-logdna_service_name = "mytodo-logs"
 logdna_plan         = "30-day"
-
-sysdig_service_name = "mytodo-monitoring"
 sysdig_plan         = "graduated-tier-sysdig-secure-plus-monitor"
 
 
 ##############################################################################
 ## ICD Mongo
 ##############################################################################
-icd_mongo_name              = "mytodo-mongo"
 icd_mongo_plan              = "standard"
 # expected length in the range (10 - 32) - must not contain special characters
 icd_mongo_adminpassword     = "Passw0rd01"

@@ -9,12 +9,7 @@ variable ibmcloud_api_key {
 variable prefix {
     description = "A unique identifier need to provision resources. Must begin with a letter"
     type        = string
-    default     = "tf"
-
-    validation  {
-      error_message = "Unique ID must begin and end with a letter and contain only letters, numbers, and - characters."
-      condition     = can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.prefix))
-    }
+    default     = ""
 }
 
 variable region {
@@ -47,12 +42,6 @@ variable "create_vpc" {
   description = "True to create new VPC. False if VPC is already existing and subnets or address prefixies are to be added"
   type        = bool
   default     = true
-}
-
-variable "vpc_name" {
-  description = "Name of the vpc"
-  type        = string
-  default     = null
 }
 
 variable "classic_access" {
@@ -99,12 +88,6 @@ variable "locations" {
   description = "zones per region"
   type        = list(string)
   default     = []
-}
-
-variable "subnet_name" {
-  description = "Name of the subnet"
-  type        = string
-  default     = null
 }
 
 variable "number_of_addresses" {
@@ -307,12 +290,6 @@ variable "entitlement" {
 ##############################################################################
 # COS Service
 ##############################################################################
-
-variable "cos_service_name" {
-  description = "Name of the COS instance"
-  type        = string
-}
-
 variable "cos_plan" {
   description = "COS plan type"
   type        = string
@@ -327,12 +304,6 @@ variable "cos_region" {
 ##############################################################################
 # Module: Log Services
 ##############################################################################
-
-variable "logdna_service_name" {
-  description = "Name of the log instance"
-  type        = string
-}
-
 variable "logdna_plan" {
   description = "plan type (14-day, 30-day, 7-day, hipaa-30-day and lite)"
   type        = string
@@ -375,10 +346,6 @@ variable "logdna_private_endpoint" {
 ##############################################################################
 # Monitoring Services
 ##############################################################################
-variable "sysdig_service_name" {
-  description = "Name of the instance"
-  type        = string
-}
 variable "sysdig_plan" {
   description = "plan type"
   type        = string
@@ -425,11 +392,6 @@ variable "sysdig_private_endpoint" {
 ##############################################################################
 # ICD Mongo Services
 ##############################################################################
-
-variable "icd_mongo_name" {
-  type        = string
-  description = "Resource instance name for example, my Database instance"
-}
 variable "icd_mongo_plan" {
   type        = string
   description = "The plan type of the Database instance"

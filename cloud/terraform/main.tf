@@ -23,7 +23,7 @@ module vpc {
   source = "terraform-ibm-modules/vpc/ibm//modules/vpc"
 
   create_vpc                  = var.create_vpc
-  vpc_name                    = var.vpc_name
+  vpc_name                    = "${var.prefix}vpc"
   resource_group_id           = ibm_resource_group.resource_group.id
   classic_access              = var.classic_access
   default_address_prefix      = var.default_address_prefix
@@ -33,7 +33,7 @@ module vpc {
   vpc_tags                    = var.tags
   # address_prefixes            = var.address_prefixes
   locations                   = var.locations
-  subnet_name                 = var.subnet_name
+  subnet_name                 = "${var.prefix}sn"
   number_of_addresses         = var.number_of_addresses
   vpc                         = var.vpc
   # Public Gateway required to access the OpenShift Console
@@ -65,7 +65,13 @@ module "vpc_kubernetes_cluster" {
   wait_till                       = var.kubernetes_wait_till
   force_delete_storage            = var.kubernetes_force_delete_storage
   tags                            = var.tags
-  # kms_config                      = var.kms_config
+  kms_config                      = [
+    {
+      instance_id      = ibm_resource_instance.kp_instance.guid,
+      crk_id           = ibm_kp_key.my_kp_key.id,
+      private_endpoint = true
+    }
+  ]
   # disable_public_service_endpoint = var.disable_public_service_endpoint
   # update_all_workers              = var.update_all_workers
 }
@@ -97,7 +103,13 @@ module "vpc_openshift_cluster" {
   disable_public_service_endpoint = var.disable_public_service_endpoint
   cos_instance_crn                = module.cos.cos_instance_id
   force_delete_storage            = var.openshift_force_delete_storage
-  # kms_config                      = var.kms_config
+  kms_config                      = [
+    {
+      instance_id      = ibm_resource_instance.kp_instance.guid,
+      crk_id           = ibm_kp_key.my_kp_key.id,
+      private_endpoint = true
+    }
+  ]
   entitlement                     = var.entitlement
   tags                            = var.tags
 }
@@ -111,7 +123,7 @@ module "cos" {
   source = "terraform-ibm-modules/cos/ibm//modules/instance"
 
   resource_group_id = ibm_resource_group.resource_group.id
-  service_name      = var.cos_service_name
+  service_name      = "${var.prefix}openshift-registry"
   plan              = var.cos_plan
   region            = var.cos_region
   tags              = var.tags
@@ -132,7 +144,7 @@ module "logdna_instance" {
   source  = "terraform-ibm-modules/observability/ibm//modules/logging-logdna"
 
   resource_group_id   = ibm_resource_group.resource_group.id
-  service_name        = var.logdna_service_name
+  service_name        = "${var.prefix}logs"
   service_endpoints   = var.logdna_service_endpoints
   bind_resource_key   = var.logdna_bind_resource_key
   resource_key_name   = var.logdna_resource_key_name
@@ -175,7 +187,7 @@ module "sysdig_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/monitoring-sysdig"
 
   resource_group_id = ibm_resource_group.resource_group.id
-  service_name      = var.sysdig_service_name
+  service_name      = "${var.prefix}monitoring"
   plan              = var.sysdig_plan
   service_endpoints = var.sysdig_service_endpoints
   bind_resource_key = var.sysdig_bind_resource_key
@@ -217,7 +229,7 @@ module "database_mongo" {
   source            = "terraform-ibm-modules/database/ibm//modules/mongo"
 
   resource_group_id                    = ibm_resource_group.resource_group.id
-  service_name                         = var.icd_mongo_name
+  service_name                         = "${var.prefix}mongo"
   plan                                 = var.icd_mongo_plan
   location                             = var.region
   adminpassword                        = var.icd_mongo_adminpassword
@@ -261,7 +273,6 @@ module "database_mongo" {
 ##############################################################################
 ## Key Protect
 ##############################################################################
-/*
 resource "ibm_resource_instance" "kp_instance" {
   resource_group_id = ibm_resource_group.resource_group.id
   name              = "key-protect"
@@ -273,6 +284,6 @@ resource "ibm_resource_instance" "kp_instance" {
 
 resource "ibm_kp_key" "my_kp_key" {
   key_protect_id  = ibm_resource_instance.kp_instance.guid
-  key_name     = "my-key-name"
-  standard_key = false
-}*/
+  key_name        = "my-key-name"
+  standard_key    = false
+}
