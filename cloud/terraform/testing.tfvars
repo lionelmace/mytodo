@@ -5,41 +5,23 @@
 ##############################################################################
 # Best is to set the variable export TF_VAR_ibmcloud_api_key=
 #ibmcloud_api_key=""
-prefix = "mytodo-"
-region = "eu-de"
+prefix         = "mytodo"
+region         = "eu-de"
 resource_group = "mytodo"
-tags = [ "tf", "mytodo" ]
+tags           = ["tf", "mytodo"]
 
 
 ##############################################################################
 ## VPC
 ##############################################################################
 classic_access = false
-default_address_prefix = "auto"
-# After version 1.1.1, you can use manual to create custom address prefixes 
-# and add subnets to it
-# default_address_prefix = "manual"
-# address_prefixes = [
-    # {
-    #   name     = "prefix-1"
-    #   location = "eu-de-1"
-    #   ip_range = "10.40.0.0/18"
-    # },
-    # {
-    #   name     = "prefix-2"
-    #   location = "eu-de-2"
-    #   ip_range = "10.50.0.0/18"
-    # },
-    # {
-    #   name     = "prefix-3"
-    #   location = "eu-de-3"
-    #   ip_range = "10.60.0.0/18"
-    # }
-# ]
-locations = [ "eu-de-1", "eu-de-2", "eu-de-3" ]
-number_of_addresses = 256
-create_gateway = true
-public_gateway_name = "pgw"
+# default_address_prefix = "manual" # use by vpc module
+address_prefix_management = "manual"
+enable_public_gateway     = true
+locations                 = ["eu-de-1", "eu-de-2", "eu-de-3"]
+number_of_addresses       = 256
+# create_gateway            = true # module-vpc
+# public_gateway_name       = "pgw" # module-vpc
 # Something with those values for next release
 # subnets = {
 #     zone-1 = [ { name = "subnet-a" cidr = "10.10.10.0/24" public_gateway = true } ],
@@ -65,27 +47,27 @@ kubernetes_wait_till             = "IngressReady"
 ##############################################################################
 openshift_cluster_name       = "iro"
 openshift_worker_pool_flavor = "bx2.4x16"
-openshift_version            = "4.8.11_openshift"
+openshift_version            = "4.8.14_openshift"
 
 
 ##############################################################################
 ## COS
 ##############################################################################
-cos_plan         = "standard"
-cos_region       = "global"
+cos_plan   = "standard"
+cos_region = "global"
 
 
 ##############################################################################
 ## Observability: LogDNA & Sysdig
 ##############################################################################
-logdna_plan         = "30-day"
-sysdig_plan         = "graduated-tier-sysdig-secure-plus-monitor"
+logdna_plan = "30-day"
+sysdig_plan = "graduated-tier-sysdig-secure-plus-monitor"
 
 
 ##############################################################################
 ## ICD Mongo
 ##############################################################################
-icd_mongo_plan              = "standard"
+icd_mongo_plan = "standard"
 # expected length in the range (10 - 32) - must not contain special characters
 icd_mongo_adminpassword     = "Passw0rd01"
 icd_mongo_db_version        = "4.2"

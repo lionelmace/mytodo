@@ -1,11 +1,29 @@
+
+# module-vpc
+# output "vpc_id" {
+#   description = "The ID of the VPC"
+#   value       = module.vpc.vpc_id
+# }
+
 ##############################################################################
-# Outputs
+# VPC GUID
 ##############################################################################
 
 output "vpc_id" {
-  description = "The ID of the VPC"
-  value       = module.vpc.vpc_id
+  description = "ID of VPC created"
+  value       = ibm_is_vpc.vpc.id
 }
+
+
+##############################################################################
+# ACL ID
+##############################################################################
+
+output "acl_id" {
+  description = "ID of ACL created"
+  value       = ibm_is_network_acl.multizone_acl.id
+}
+
 
 output "kubernetes_cluster_id" {
   description = "The ID of the Kubernetes cluster"
