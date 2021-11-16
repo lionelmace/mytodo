@@ -24,7 +24,7 @@ module "vpc" {
   create_vpc                  = var.create_vpc
   vpc_name                    = "${var.prefix}-vpc"
   resource_group_id           = ibm_resource_group.resource_group.id
-  classic_access              = var.classic_access
+  classic_access              = var.vpc_classic_access
   default_address_prefix      = var.default_address_prefix
   default_network_acl_name    = var.default_network_acl_name
   default_security_group_name = var.default_security_group_name
@@ -51,8 +51,8 @@ module "vpc" {
 resource "ibm_is_vpc" "vpc" {
   name                      = "${var.prefix}-vpc"
   resource_group            = ibm_resource_group.resource_group.id
-  address_prefix_management = var.address_prefix_management
-  classic_access            = var.classic_access
+  address_prefix_management = var.vpc_address_prefix_management
+  classic_access            = var.vpc_classic_access
   tags                      = var.tags
 }
 
@@ -67,7 +67,7 @@ resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
   name  = "${var.prefix}-prefix-zone-${count.index + 1}"
   zone  = "${var.region}-${(count.index % 3) + 1}"
   vpc   = ibm_is_vpc.vpc.id
-  cidr  = element(var.cidr_blocks, count.index)
+  cidr  = element(var.vpc_cidr_blocks, count.index)
 }
 
 
@@ -77,7 +77,7 @@ resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
 
 resource "ibm_is_public_gateway" "pgw" {
 
-  count = var.enable_public_gateway ? 3 : 0
+  count = var.vpc_enable_public_gateway ? 3 : 0
   name  = "${var.prefix}-pgw-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc.id
   zone  = "${var.region}-${count.index + 1}"
@@ -94,7 +94,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
   dynamic "rules" {
 
-    for_each = var.acl_rules
+    for_each = var.vpc_acl_rules
 
     content {
       name        = rules.value.name
@@ -118,7 +118,7 @@ resource "ibm_is_subnet" "subnet" {
   zone            = "${var.region}-${count.index + 1}"
   ipv4_cidr_block = element(ibm_is_vpc_address_prefix.subnet_prefix.*.cidr, count.index)
   network_acl     = ibm_is_network_acl.multizone_acl.id
-  public_gateway  = var.enable_public_gateway ? element(ibm_is_public_gateway.pgw.*.id, count.index) : null
+  public_gateway  = var.vpc_enable_public_gateway ? element(ibm_is_public_gateway.pgw.*.id, count.index) : null
 }
 
 
@@ -152,8 +152,8 @@ module "vpc_kubernetes_cluster" {
   tags                  = var.tags
   kms_config = [
     {
-      instance_id      = ibm_resource_instance.kp_instance.guid,
-      crk_id           = ibm_kp_key.my_kp_key.id,
+      instance_id      = ibm_resource_instance.kp_instance.guid, # GUID of Key Protect instance
+      crk_id           = ibm_kp_key.my_kp_key.key_id,            # ID of customer root key
       private_endpoint = true
     }
   ]
@@ -194,8 +194,8 @@ module "vpc_openshift_cluster" {
   force_delete_storage            = var.openshift_force_delete_storage
   kms_config = [
     {
-      instance_id      = ibm_resource_instance.kp_instance.guid,
-      crk_id           = ibm_kp_key.my_kp_key.id,
+      instance_id      = ibm_resource_instance.kp_instance.guid, # GUID of Key Protect instance
+      crk_id           = ibm_kp_key.my_kp_key.key_id,            # ID of customer root key
       private_endpoint = true
     }
   ]
@@ -362,7 +362,7 @@ module "database_mongo" {
 ##############################################################################
 resource "ibm_resource_instance" "kp_instance" {
   resource_group_id = ibm_resource_group.resource_group.id
-  name              = "key-protect"
+  name              = "${var.prefix}-key-protect"
   service           = "kms"
   plan              = "tiered-pricing"
   location          = var.region

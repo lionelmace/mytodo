@@ -3,26 +3,26 @@
 ##############################################################################
 ## Global Variables
 ##############################################################################
-# Best is to set the variable export TF_VAR_ibmcloud_api_key=
-#ibmcloud_api_key=""
-prefix         = "mytodo"
-region         = "eu-de"
-resource_group = "mytodo"
-tags           = ["tf", "mytodo"]
+#ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
+prefix            = "mytodo"
+region            = "eu-de"  # eu-de for Frankfurt MZR
+resource_group    = "mytodo"
+tags              = ["tf", "mytodo"]
 
 
 ##############################################################################
 ## VPC
 ##############################################################################
-classic_access = false
+vpc_classic_access            = false
+vpc_address_prefix_management = "manual"
+vpc_enable_public_gateway     = true
+vpc_locations                 = ["eu-de-1", "eu-de-2", "eu-de-3"]
+vpc_number_of_addresses       = 256
+
 # default_address_prefix = "manual" # use by vpc module
-address_prefix_management = "manual"
-enable_public_gateway     = true
-locations                 = ["eu-de-1", "eu-de-2", "eu-de-3"]
-number_of_addresses       = 256
 # create_gateway            = true # module-vpc
 # public_gateway_name       = "pgw" # module-vpc
-# Something with those values for next release
+# Something with those values for next release...
 # subnets = {
 #     zone-1 = [ { name = "subnet-a" cidr = "10.10.10.0/24" public_gateway = true } ],
 #     zone-2 = [ { name = "subnet-b" cidr = "10.20.10.0/24" public_gateway = true } ],
@@ -58,7 +58,7 @@ cos_region = "global"
 
 
 ##############################################################################
-## Observability: LogDNA & Sysdig
+## Observability: Log Analysis (LogDNA) & Monitoring (Sysdig)
 ##############################################################################
 logdna_plan = "30-day"
 sysdig_plan = "graduated-tier-sysdig-secure-plus-monitor"

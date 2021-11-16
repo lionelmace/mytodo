@@ -44,13 +44,13 @@ variable "create_vpc" {
   default     = true
 }
 
-variable "classic_access" {
+variable "vpc_classic_access" {
   description = "Classic Access to the VPC"
   type        = bool
   default     = null
 }
 
-variable "address_prefix_management" {
+variable "vpc_address_prefix_management" {
   description = "Default address prefix creation method"
   type        = string
   default     = null
@@ -63,7 +63,7 @@ variable "default_address_prefix" {
   default     = null
 }*/
 
-variable "acl_rules" {
+variable "vpc_acl_rules" {
   default = [
     {
       name        = "egress"
@@ -82,12 +82,12 @@ variable "acl_rules" {
   ]
 }
 
-variable "cidr_blocks" {
+variable "vpc_cidr_blocks" {
   description = "List of CIDR blocks for subnets"
   default = [
     "10.10.10.0/24",
     "10.10.11.0/24",
-  "10.10.12.0/24"]
+    "10.10.12.0/24"]
 }
 
 variable "default_network_acl_name" {
@@ -118,13 +118,13 @@ variable "address_prefixes" {
   default = []
 }
 
-variable "locations" {
+variable "vpc_locations" {
   description = "zones per region"
   type        = list(string)
   default     = []
 }
 
-variable "number_of_addresses" {
+variable "vpc_number_of_addresses" {
   description = "Number of IPV4 Addresses"
   type        = number
   default     = null
@@ -142,13 +142,13 @@ variable "subnet_access_control_list" {
   default     = null
 }
 
-variable "routing_table" {
+variable "vpc_routing_table" {
   description = "Routing Table ID"
   type        = string
   default     = null
 }
 
-variable "enable_public_gateway" {
+variable "vpc_enable_public_gateway" {
   description = "Enable public gateways, true or false"
   default     = true
 }
