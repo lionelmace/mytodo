@@ -137,7 +137,7 @@ module "vpc_kubernetes_cluster" {
   worker_zones = {
     "${var.region}-1" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 0) },
     "${var.region}-2" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 1) },
-    "${var.region}-3" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 2) },
+    # "${var.region}-3" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 2) },
   }
   /* module-vpc
   worker_zones = {
@@ -177,7 +177,7 @@ module "vpc_openshift_cluster" {
   worker_zones = {
     "${var.region}-1" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 0) },
     "${var.region}-2" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 1) },
-    "${var.region}-3" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 2) },
+    # "${var.region}-3" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 2) },
   }
   /* module-vpc
   worker_zones = {
