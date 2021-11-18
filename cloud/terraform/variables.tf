@@ -375,22 +375,23 @@ variable "sysdig_service_endpoints" {
   default     = "private"
 }
 
-variable "sysdig_bind_resource_key" {
+variable "sysdig_bind_key" {
   description = "Enable this to bind key to logdna instance (true/false)"
   type        = bool
   default     = true
 }
 
-variable "sysdig_resource_key_name" {
+variable "sysdig_key_name" {
   description = "Name of the instance key"
   type        = string
   default     = "sysdig-ingestion-key"
 }
-variable "sysdig_role" {
-  description = "plan type"
-  type        = string
-  default     = "Administrator"
-}
+
+# variable "sysdig_role" {
+#   description = "plan type"
+#   type        = string
+#   default     = "Administrator"
+# }
 
 
 ##############################################################################

@@ -45,7 +45,7 @@ output "logdna_instance_id" {
   value       = module.logdna_instance.logdna_instance_id
 }
 
-output "sysdig_instance_id" {
+output "monitoring_instance_id" {
   description = "The ID of the Cloud Monitoring instance"
-  value       = module.sysdig_instance.sysdig_id
+  value       = module.monitoring_instance.id
 }
