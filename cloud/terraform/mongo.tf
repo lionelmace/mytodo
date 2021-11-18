@@ -4,22 +4,22 @@
 module "database_mongo" {
   source = "terraform-ibm-modules/database/ibm//modules/mongo"
 
-  resource_group_id = ibm_resource_group.resource_group.id
-  service_name      = "${var.prefix}-mongo"
-  plan              = var.icd_mongo_plan
-  location          = var.region
-  adminpassword     = var.icd_mongo_adminpassword
-  database_version  = var.icd_mongo_db_version
-  tags              = var.tags
+  resource_group_id     = ibm_resource_group.resource_group.id
+  service_name          = "${var.prefix}-mongo"
+  plan                  = var.icd_mongo_plan
+  location              = var.region
+  adminpassword         = var.icd_mongo_adminpassword
+  database_version      = var.icd_mongo_db_version
+  tags                  = var.tags
+  kms_instance          = ibm_resource_instance.kp_instance.guid
+  disk_encryption_key   = ibm_kp_key.my_kp_key.key_id
+  backup_encryption_key = ibm_kp_key.my_kp_key.key_id
   # memory_allocation                    = var.memory_allocation
   # disk_allocation                      = var.disk_allocation
   # cpu_allocation                       = var.cpu_allocation
   # service_endpoints                    = var.service_endpoints
   # backup_id                            = var.backup_id
   # remote_leader_id                     = var.remote_leader_id
-  kms_instance                         = ibm_resource_instance.kp_instance.guid
-  disk_encryption_key                  = ibm_kp_key.my_kp_key.key_id
-  backup_encryption_key                = ibm_kp_key.my_kp_key.key_id
   # point_in_time_recovery_deployment_id = var.point_in_time_recovery_deployment_id
   # point_in_time_recovery_time          = var.point_in_time_recovery_time
   # users                                = var.users
