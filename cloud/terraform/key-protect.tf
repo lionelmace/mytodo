@@ -12,6 +12,6 @@ resource "ibm_resource_instance" "kp_instance" {
 
 resource "ibm_kp_key" "my_kp_key" {
   key_protect_id = ibm_resource_instance.kp_instance.guid
-  key_name       = "my-key-name"
+  key_name       = "${var.prefix}-encryption-key"
   standard_key   = false
 }

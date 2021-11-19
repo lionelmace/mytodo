@@ -36,7 +36,7 @@ vpc_number_of_addresses       = 256
 kubernetes_cluster_name          = "iks"
 kubernetes_worker_pool_flavor    = "bx2.4x16"
 kubernetes_worker_nodes_per_zone = 1
-kubernetes_version               = "1.22.2"
+kubernetes_version               = "1.22.3"
 kubernetes_wait_till             = "IngressReady"
 # worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },
 #                { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
@@ -47,7 +47,7 @@ kubernetes_wait_till             = "IngressReady"
 ##############################################################################
 openshift_cluster_name       = "iro"
 openshift_worker_pool_flavor = "bx2.4x16"
-openshift_version            = "4.8.14_openshift"
+openshift_version            = "4.8.18_openshift"
 
 
 ##############################################################################
@@ -61,7 +61,10 @@ cos_region = "global"
 ## Observability: Log Analysis (LogDNA) & Monitoring (Sysdig)
 ##############################################################################
 logdna_plan = "30-day"
+logdna_enable_platform_logs = false
+
 sysdig_plan = "graduated-tier-sysdig-secure-plus-monitor"
+sysdig_enable_platform_metrics = false
 
 
 ##############################################################################

@@ -335,25 +335,28 @@ variable "logdna_role" {
   default     = "Administrator"
 }
 
-variable "logdna_bind_resource_key" {
+variable "logdna_bind_key" {
   description = "Flag indicating that key should be bind to logdna instance"
   type        = bool
   default     = true
 }
 
-variable "logdna_resource_key_name" {
+variable "logdna_key_name" {
   description = "Name of the instance key"
   type        = string
   default     = "log-ingestion-key"
 }
 
-##############################################################################
-# Module: Configure Log Services
-##############################################################################
 variable "logdna_private_endpoint" {
   description = "Add this option to connect to your LogDNA service instance through the private service endpoint"
   type        = bool
   default     = true
+}
+
+variable "logdna_enable_platform_logs" {
+  type        = bool
+  description = "Receive platform logs in Logdna"
+  default     = false
 }
 
 
@@ -364,11 +367,7 @@ variable "sysdig_plan" {
   description = "plan type"
   type        = string
 }
-# variable "parameters" {
-#   type        = map(string)
-#   description = "Arbitrary parameters to pass"
-#   default     = null
-# }
+
 variable "sysdig_service_endpoints" {
   description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
   type        = string
@@ -393,14 +392,16 @@ variable "sysdig_key_name" {
 #   default     = "Administrator"
 # }
 
-
-##############################################################################
-# Module: Configure Log Services
-##############################################################################
 variable "sysdig_private_endpoint" {
   description = "Add this option to connect to your Sysdig service instance through the private service endpoint"
   type        = bool
   default     = true
+}
+
+variable "sysdig_enable_platform_metrics" {
+  type        = bool
+  description = "Receive platform metrics in Sysdig"
+  default     = false
 }
 
 
