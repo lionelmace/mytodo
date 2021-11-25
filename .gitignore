@@ -1,14 +1,6 @@
 # Node.js
 node_modules
 
-# # Terraform
-# .terraform.*
-# .terraform/
-# **/*.terraform.*.*
-# **/*.tfstate
-# **/*.tfvars
-**/*.backup
-
 # Cloud Foundry
 vcap-local.json
 
