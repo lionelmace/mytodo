@@ -36,3 +36,27 @@ module "vpc_kubernetes_cluster" {
   # disable_public_service_endpoint = var.disable_public_service_endpoint
   # update_all_workers              = var.update_all_workers
 }
+
+
+##############################################################################
+# Attach Log Analysis Services to cluster
+##############################################################################
+module "kubernetes_logdna_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
+
+  cluster            = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+  logdna_instance_id = module.logging_instance.guid
+  private_endpoint   = var.logdna_private_endpoint
+}
+
+
+##############################################################################
+# Attach Monitoring Services to cluster
+##############################################################################
+module "kubernetes_sysdig_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
+
+  cluster            = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+  sysdig_instance_id = module.monitoring_instance.guid
+  private_endpoint   = var.sysdig_private_endpoint
+}

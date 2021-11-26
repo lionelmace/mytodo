@@ -39,3 +39,25 @@ module "vpc_openshift_cluster" {
   entitlement = var.entitlement
   tags        = var.tags
 }
+
+##############################################################################
+# Attach Log Analysis Services to cluster
+##############################################################################
+module "openshift_logdna_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
+
+  cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+  logdna_instance_id = module.logging_instance.guid
+  private_endpoint   = var.logdna_private_endpoint
+}
+
+##############################################################################
+# Attach Monitoring Services to cluster
+##############################################################################
+module "openshift_sysdig_attach" {
+  source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
+
+  cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+  sysdig_instance_id = module.monitoring_instance.guid
+  private_endpoint   = var.sysdig_private_endpoint
+}

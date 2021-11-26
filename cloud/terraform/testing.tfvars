@@ -60,10 +60,10 @@ cos_region = "global"
 ##############################################################################
 ## Observability: Log Analysis (LogDNA) & Monitoring (Sysdig)
 ##############################################################################
-logdna_plan = "30-day"
+logdna_plan                 = "30-day"
 logdna_enable_platform_logs = false
 
-sysdig_plan = "graduated-tier-sysdig-secure-plus-monitor"
+sysdig_plan                    = "graduated-tier-sysdig-secure-plus-monitor"
 sysdig_enable_platform_metrics = false
 
 

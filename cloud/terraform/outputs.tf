@@ -24,7 +24,6 @@ output "acl_id" {
   value       = ibm_is_network_acl.multizone_acl.id
 }
 
-
 output "kubernetes_cluster_id" {
   description = "The ID of the Kubernetes cluster"
   value       = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
