@@ -14,14 +14,8 @@ module "vpc_openshift_cluster" {
   worker_zones = {
     "${var.region}-1" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 0) },
     "${var.region}-2" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 1) },
-    # "${var.region}-3" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 2) },
+    "${var.region}-3" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 2) },
   }
-  /* module-vpc
-  worker_zones = {
-    "${var.region}-1" = { subnet_id = module.vpc.subnet_ids[0] },
-    "${var.region}-2" = { subnet_id = module.vpc.subnet_ids[1] },
-    "${var.region}-3" = { subnet_id = module.vpc.subnet_ids[2] }
-  }*/
   worker_nodes_per_zone           = var.openshift_worker_nodes_per_zone
   kube_version                    = var.openshift_version
   worker_labels                   = var.worker_labels
@@ -31,8 +25,8 @@ module "vpc_openshift_cluster" {
   force_delete_storage            = var.openshift_force_delete_storage
   kms_config = [
     {
-      instance_id      = ibm_resource_instance.kp_instance.guid, # GUID of Key Protect instance
-      crk_id           = ibm_kp_key.my_kp_key.key_id,            # ID of customer root key
+      instance_id      = ibm_resource_instance.key-protect.guid, # GUID of Key Protect instance
+      crk_id           = ibm_kp_key.key.key_id,                 # ID of customer root key
       private_endpoint = true
     }
   ]
@@ -41,7 +35,7 @@ module "vpc_openshift_cluster" {
 }
 
 ##############################################################################
-# Attach Log Analysis Services to cluster
+# Attach Log Analysis Service to cluster
 ##############################################################################
 module "openshift_logdna_attach" {
   source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
@@ -52,7 +46,7 @@ module "openshift_logdna_attach" {
 }
 
 ##############################################################################
-# Attach Monitoring Services to cluster
+# Attach Monitoring Service to cluster
 ##############################################################################
 module "openshift_sysdig_attach" {
   source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"

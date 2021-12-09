@@ -25,8 +25,11 @@ resource "ibm_iam_access_group_policy" "policy-k8s" {
 
 # Authorization policy between Mongo and Key Protect
 # Require to encrypt Mongo DB with Key in Key Protect
+# https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_services/main.tf
 resource "ibm_iam_authorization_policy" "mongo-kms" {
-  source_service_name = "databases-for-mongodb"
-  target_service_name = "kms"
-  roles               = ["Reader", "Authorization Delegator"]
+  source_service_name         = "databases-for-mongodb"
+  source_resource_instance_id = module.cos.cos_instance_guid
+  target_service_name         = "kms"
+  target_resource_instance_id = ibm_resource_instance.key-protect.guid
+  roles                       = ["Reader", "Authorization Delegator"]
 }

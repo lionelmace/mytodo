@@ -12,9 +12,9 @@ module "database_mongo" {
   database_version      = var.icd_mongo_db_version
   tags                  = var.tags
   service_endpoints     = var.icd_mongo_service_endpoints
-  kms_instance          = ibm_resource_instance.kp_instance.id
-  disk_encryption_key   = ibm_kp_key.my_kp_key.id
-  backup_encryption_key = ibm_kp_key.my_kp_key.id
+  kms_instance          = ibm_resource_instance.key-protect.id
+  disk_encryption_key   = ibm_kp_key.key.key_id
+  backup_encryption_key = ibm_kp_key.key.key_id
   depends_on = [ # require when using encryption key otherwise provisioning failed
     ibm_iam_authorization_policy.mongo-kms,
   ]

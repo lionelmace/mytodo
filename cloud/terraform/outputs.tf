@@ -24,16 +24,6 @@ output "acl_id" {
   value       = ibm_is_network_acl.multizone_acl.id
 }
 
-output "kubernetes_cluster_id" {
-  description = "The ID of the Kubernetes cluster"
-  value       = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
-}
-
-output "openshift_cluster_id" {
-  description = "The ID of the OpenShift cluster"
-  value       = module.vpc_openshift_cluster.vpc_openshift_cluster_id
-}
-
 output "cos_instance_crn" {
   description = "The CRN of the COS instance"
   value       = module.cos.cos_instance_id
