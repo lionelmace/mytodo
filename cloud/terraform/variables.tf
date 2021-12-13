@@ -47,7 +47,7 @@ variable "create_vpc" {
 variable "vpc_classic_access" {
   description = "Classic Access to the VPC"
   type        = bool
-  default     = null
+  default     = false
 }
 
 variable "vpc_address_prefix_management" {
