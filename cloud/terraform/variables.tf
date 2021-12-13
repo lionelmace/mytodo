@@ -108,15 +108,15 @@ variable "default_routing_table_name" {
   default     = null
 }
 
-variable "address_prefixes" {
-  description = "List of Prefixes for the vpc"
-  type = list(object({
-    name     = string
-    location = string
-    ip_range = string
-  }))
-  default = []
-}
+# variable "address_prefixes" {
+#   description = "List of Prefixes for the vpc"
+#   type = list(object({
+#     name     = string
+#     location = string
+#     ip_range = string
+#   }))
+#   default = []
+# }
 
 # variable "vpc_locations" {
 #   description = "zones per region"
@@ -180,7 +180,7 @@ variable "floating_ip" {
 
 variable "kubernetes_cluster_name" {
   description = "name for the iks cluster"
-  default     = ""
+  default     = "iks"
 }
 
 variable "kubernetes_worker_pool_flavor" {
@@ -235,7 +235,7 @@ variable "kubernetes_force_delete_storage" {
 variable "openshift_cluster_name" {
   description = "Name of the cluster"
   type        = string
-  default     = ""
+  default     = "iro"
 }
 
 variable "openshift_worker_pool_flavor" {
