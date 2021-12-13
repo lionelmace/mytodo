@@ -306,12 +306,14 @@ variable "entitlement" {
 ##############################################################################
 variable "cos_plan" {
   description = "COS plan type"
-  type        = "standard"
+  type        = string
+  default     = "standard"
 }
 
 variable "cos_region" {
   description = " Enter Region for provisioning"
-  type        = "global"
+  type        = string
+  default     = "global"
 }
 
 
@@ -320,7 +322,8 @@ variable "cos_region" {
 ##############################################################################
 variable "logdna_plan" {
   description = "plan type (14-day, 30-day, 7-day, hipaa-30-day and lite)"
-  type        = "30-day"
+  type        = string
+  default     = "30-day"
 }
 
 variable "logdna_service_endpoints" {
@@ -365,7 +368,8 @@ variable "logdna_enable_platform_logs" {
 ##############################################################################
 variable "sysdig_plan" {
   description = "plan type"
-  type        = "graduated-tier-sysdig-secure-plus-monitor"
+  type        = string
+  default     = "graduated-tier-sysdig-secure-plus-monitor"
 }
 
 variable "sysdig_service_endpoints" {
