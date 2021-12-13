@@ -14,7 +14,7 @@ variable "prefix" {
 
 variable "region" {
   description = "IBM Cloud region where all resources will be provisioned"
-  default     = ""
+  default     = "eu-de"
 }
 
 variable "resource_group" {
@@ -53,7 +53,7 @@ variable "vpc_classic_access" {
 variable "vpc_address_prefix_management" {
   description = "Default address prefix creation method"
   type        = string
-  default     = null
+  default     = "manual"
 }
 
 /* Used by module vpc
@@ -118,35 +118,35 @@ variable "address_prefixes" {
   default = []
 }
 
-variable "vpc_locations" {
-  description = "zones per region"
-  type        = list(string)
-  default     = []
-}
+# variable "vpc_locations" {
+#   description = "zones per region"
+#   type        = list(string)
+#   default     = ["eu-de-1", "eu-de-2", "eu-de-3"]
+# }
 
-variable "vpc_number_of_addresses" {
-  description = "Number of IPV4 Addresses"
-  type        = number
-  default     = null
-}
+# variable "vpc_number_of_addresses" {
+#   description = "Number of IPV4 Addresses"
+#   type        = number
+#   default     = null
+# }
 
-variable "vpc" {
-  description = "ID of the Existing VPC to which subnets, gateways are to be attached"
-  type        = string
-  default     = null
-}
+# variable "vpc" {
+#   description = "ID of the Existing VPC to which subnets, gateways are to be attached"
+#   type        = string
+#   default     = null
+# }
 
-variable "subnet_access_control_list" {
-  description = "Network ACL ID"
-  type        = string
-  default     = null
-}
+# variable "subnet_access_control_list" {
+#   description = "Network ACL ID"
+#   type        = string
+#   default     = null
+# }
 
-variable "vpc_routing_table" {
-  description = "Routing Table ID"
-  type        = string
-  default     = null
-}
+# variable "vpc_routing_table" {
+#   description = "Routing Table ID"
+#   type        = string
+#   default     = null
+# }
 
 variable "vpc_enable_public_gateway" {
   description = "Enable public gateways, true or false"
@@ -203,13 +203,13 @@ variable "kubernetes_worker_nodes_per_zone" {
 variable "kubernetes_version" {
   description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
   type        = string
-  default     = "1.22.2"
+  default     = "1.22.4"
 }
 
 variable "kubernetes_wait_till" {
   description = "To avoid long wait times when you run your Terraform code, you can specify the stage when you want Terraform to mark the cluster resource creation as completed. Depending on what stage you choose, the cluster creation might not be fully completed and continues to run in the background. However, your Terraform code can continue to run without waiting for the cluster to be fully created. Supported args are `MasterNodeReady`, `OneWorkerNodeReady`, and `IngressReady`"
   type        = string
-  default     = "MasterNodeReady"
+  default     = "IngressReady"
 
   validation {
     error_message = "`kubernetes_wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
@@ -247,7 +247,7 @@ variable "openshift_worker_pool_flavor" {
 variable "openshift_version" {
   description = "The OpenShift version that you want to set up in your cluster."
   type        = string
-  default     = ""
+  default     = "4.8.21_openshift"
 }
 
 variable "openshift_worker_nodes_per_zone" {
@@ -265,7 +265,7 @@ variable "worker_labels" {
 variable "openshift_wait_till" {
   description = "specify the stage when Terraform to mark the cluster creation as completed."
   type        = string
-  default     = "MasterNodeReady"
+  default     = "IngressReady"
 
   validation {
     error_message = "`openshift_wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
@@ -306,12 +306,12 @@ variable "entitlement" {
 ##############################################################################
 variable "cos_plan" {
   description = "COS plan type"
-  type        = string
+  type        = "standard"
 }
 
 variable "cos_region" {
   description = " Enter Region for provisioning"
-  type        = string
+  type        = "global"
 }
 
 
@@ -320,7 +320,7 @@ variable "cos_region" {
 ##############################################################################
 variable "logdna_plan" {
   description = "plan type (14-day, 30-day, 7-day, hipaa-30-day and lite)"
-  type        = string
+  type        = "30-day"
 }
 
 variable "logdna_service_endpoints" {
@@ -365,7 +365,7 @@ variable "logdna_enable_platform_logs" {
 ##############################################################################
 variable "sysdig_plan" {
   description = "plan type"
-  type        = string
+  type        = "graduated-tier-sysdig-secure-plus-monitor"
 }
 
 variable "sysdig_service_endpoints" {
@@ -411,14 +411,15 @@ variable "sysdig_enable_platform_metrics" {
 variable "icd_mongo_plan" {
   type        = string
   description = "The plan type of the Database instance"
+  default     = "standard"
 }
 variable "icd_mongo_adminpassword" {
-  default     = null
   type        = string
   description = "The admin user password for the instance"
+  default     = "Passw0rd01"
 }
 variable "icd_mongo_db_version" {
-  default     = null
+  default     = "4.2"
   type        = string
   description = "The database version to provision if specified"
 }
@@ -433,7 +434,7 @@ variable "icd_mongo_whitelist" {
   description = "Database Whitelist It is set of IP Address and description"
 }
 variable "icd_mongo_service_endpoints" {
-  default     = null
+  default     = "public"
   type        = string
   description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
 }
