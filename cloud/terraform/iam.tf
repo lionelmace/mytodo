@@ -1,5 +1,6 @@
 resource "ibm_iam_access_group" "accgrp" {
   name = "${var.prefix}-ag"
+  tags = var.tags
 }
 
 resource "ibm_iam_access_group_policy" "policy-cos" {
