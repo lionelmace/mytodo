@@ -90,24 +90,6 @@ variable "vpc_cidr_blocks" {
   "10.10.12.0/24"]
 }
 
-variable "default_network_acl_name" {
-  description = "Name of the Default ACL"
-  type        = string
-  default     = null
-}
-
-variable "default_security_group_name" {
-  description = "Name of the Default Security Group"
-  type        = string
-  default     = null
-}
-
-variable "default_routing_table_name" {
-  description = "Name of the Default Routing Table"
-  type        = string
-  default     = null
-}
-
 # variable "address_prefixes" {
 #   description = "List of Prefixes for the vpc"
 #   type = list(object({
