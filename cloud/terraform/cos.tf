@@ -18,3 +18,8 @@ module "cos" {
   # bind_resource_key = var.bind_resource_key
   # key_parameters    = var.key_parameters
 }
+
+output "cos_instance_crn" {
+  description = "The CRN of the COS instance"
+  value       = module.cos.cos_instance_id
+}

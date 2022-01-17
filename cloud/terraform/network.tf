@@ -47,6 +47,10 @@ resource "ibm_is_vpc" "vpc" {
   tags                      = var.tags
 }
 
+output "vpc_id" {
+  description = "ID of VPC created"
+  value       = ibm_is_vpc.vpc.id
+}
 
 ##############################################################################
 # Prefixes and subnets for zone 1
@@ -95,6 +99,11 @@ resource "ibm_is_network_acl" "multizone_acl" {
       direction   = rules.value.direction
     }
   }
+}
+
+output "acl_id" {
+  description = "ID of ACL created"
+  value       = ibm_is_network_acl.multizone_acl.id
 }
 
 ##############################################################################

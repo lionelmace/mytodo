@@ -10,7 +10,7 @@ resource "ibm_database" "icd_mongo" {
   location          = var.region
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = var.tags
-  
+
   # Encrypt DB (comment to use IBM-provided Automatic Key)
   key_protect_instance      = ibm_resource_instance.key-protect.id
   key_protect_key           = ibm_kp_key.key.id
@@ -18,7 +18,7 @@ resource "ibm_database" "icd_mongo" {
   depends_on = [ # require when using encryption key otherwise provisioning failed
     ibm_iam_authorization_policy.mongo-kms,
   ]
-  
+
   # DB Settings
   adminpassword                = var.icd_mongo_adminpassword
   members_memory_allocation_mb = 3072  # 1GB  per member

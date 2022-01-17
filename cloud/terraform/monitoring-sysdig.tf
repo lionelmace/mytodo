@@ -18,3 +18,8 @@ module "monitoring_instance" {
   key_tags                = var.tags
   # role              = var.sysdig_role
 }
+
+output "monitoring_instance_id" {
+  description = "The ID of the Cloud Monitoring instance"
+  value       = module.monitoring_instance.id
+}

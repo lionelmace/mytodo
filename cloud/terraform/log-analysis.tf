@@ -18,3 +18,8 @@ module "logging_instance" {
   key_tags             = var.tags
   # role              = var.logdna_role
 }
+
+output "logdna_instance_id" {
+  description = "The ID of the Log Analysis instance"
+  value       = module.logging_instance.id
+}
