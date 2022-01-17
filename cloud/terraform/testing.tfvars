@@ -75,7 +75,7 @@ icd_mongo_plan = "standard"
 # expected length in the range (10 - 32) - must not contain special characters
 icd_mongo_adminpassword     = "Passw0rd01"
 icd_mongo_db_version        = "4.2"
-icd_mongo_service_endpoints = "public"
+icd_mongo_service_endpoints = "private"
 icd_mongo_users = [{
   name     = "user123"
   password = "password12"
