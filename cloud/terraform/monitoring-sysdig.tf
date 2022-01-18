@@ -16,7 +16,6 @@ module "monitoring_instance" {
   region                  = var.region
   tags                    = var.tags
   key_tags                = var.tags
-  # role              = var.sysdig_role
 }
 
 output "monitoring_instance_id" {
