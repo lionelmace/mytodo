@@ -6,6 +6,7 @@ vcap-local.json
 
 # Local Values
 **/*.pem
+**/*.crt
 **/.terraform/*
 cloud/certificate
 cloud/chart/mytodo/local-values.yaml
