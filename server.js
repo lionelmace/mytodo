@@ -94,7 +94,7 @@ app.use (function (req, res, next) {
 app.use(express.static(__dirname + '/public'));
 app.use(favicon(__dirname + '/public/icons/favicon-check.ico'));
 
-console.log('Number of cores: ', os.cpus().length);
+//console.log('Number of cores: ', os.cpus().length);
 
 // Healthcheck use for LivenessProbe ---------------------------------------
 app.get('/healthcheck',(req,res)=> {
