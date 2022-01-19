@@ -15,9 +15,6 @@ echo "BUILD_NUMBER=${BUILD_NUMBER}"
 echo "ARCHIVE_DIR=${ARCHIVE_DIR}"
 echo "GIT_COMMIT=${GIT_COMMIT}"
 
-# To review or change build options use:
-# ibmcloud cr build --help
-
 echo -e "\\n=========================================================="
 echo "CHECKING DOCKERFILE"
 echo "Checking Dockerfile at the repository root"
@@ -55,13 +52,13 @@ else
 fi
 
 # Create the config.json file to make private container registry accessible
-export DOCKER_CONFIG=$(mktemp -d -t cr-config-XXXXXXXXXX)
-kubectl create secret --dry-run=true --output=json \
-  docker-registry registry-dockerconfig-secret \
-  --docker-server=${REGISTRY_URL} \
-  --docker-password=${IBM_CLOUD_API_KEY} \
-  --docker-username=iamapikey --docker-email=a@b.com | \
-jq -r '.data[".dockerconfigjson"]' | base64 -d > ${DOCKER_CONFIG}/config.json
+# export DOCKER_CONFIG=$(mktemp -d -t cr-config-XXXXXXXXXX)
+# kubectl create secret --dry-run=true --output=json \
+#   docker-registry registry-dockerconfig-secret \
+#   --docker-server=${REGISTRY_URL} \
+#   --docker-password=${IBM_CLOUD_API_KEY} \
+#   --docker-username=iamapikey --docker-email=a@b.com | \
+# jq -r '.data[".dockerconfigjson"]' | base64 -d > ${DOCKER_CONFIG}/config.json
 
 echo "=========================================================="
 echo -e "BUILDING CONTAINER IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}"
