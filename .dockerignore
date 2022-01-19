@@ -3,6 +3,9 @@ credentials.env
 npm-debug.log
 vcap-local.json
 
+**/*.pem
+**/*.crt
+
 cloud/certificate
 cloud/chart/mytodo/local-values.yaml
 cloud/kubernetes/imagePullSecret.json

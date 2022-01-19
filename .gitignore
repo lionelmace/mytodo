@@ -19,7 +19,7 @@ cloud/kubernetes/mytodo-ns.yaml
 cloud/terraform-old
 
 # Miscellaneous
-myreadme.txt
+**/*.txt
 .editorconfig
 
 # Local .terraform directories

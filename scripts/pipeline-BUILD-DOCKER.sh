@@ -45,7 +45,45 @@ fi
 echo -e "\\n=========================================================="
 echo -e "BUILDING CONTAINER IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}"
 set -x
-ibmcloud cr build -t ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG} .
+# Checking ig buildctl is installed
+if which buildctl > /dev/null 2>&1; then
+  buildctl --version
+else 
+  echo "Installing Buildkit builctl"
+  curl -sL https://github.com/moby/buildkit/releases/download/v0.8.1/buildkit-v0.8.1.linux-amd64.tar.gz | tar -C /tmp -xz bin/buildctl && mv /tmp/bin/buildctl /usr/bin/buildctl && rmdir --ignore-fail-on-non-empty /tmp/bin
+  buildctl --version
+fi
+
+# Create the config.json file to make private container registry accessible
+export DOCKER_CONFIG=$(mktemp -d -t cr-config-XXXXXXXXXX)
+kubectl create secret --dry-run=true --output=json \
+  docker-registry registry-dockerconfig-secret \
+  --docker-server=${REGISTRY_URL} \
+  --docker-password=${IBM_CLOUD_API_KEY} \
+  --docker-username=iamapikey --docker-email=a@b.com | \
+jq -r '.data[".dockerconfigjson"]' | base64 -d > ${DOCKER_CONFIG}/config.json
+
+echo "=========================================================="
+echo -e "BUILDING CONTAINER IMAGE: ${IMAGE_NAME}:${IMAGE_TAG}"
+if [ -z "${DOCKER_ROOT}" ]; then DOCKER_ROOT=. ; fi
+if [ -z "${DOCKER_FILE}" ]; then DOCKER_FILE=Dockerfile ; fi
+if [ -z "$EXTRA_BUILD_ARGS" ]; then
+  echo -e ""
+else
+  for buildArg in $EXTRA_BUILD_ARGS; do
+    if [ "$buildArg" == "--build-arg" ]; then
+      echo -e ""
+    else      
+      BUILD_ARGS="${BUILD_ARGS} --opt build-arg:$buildArg"
+    fi
+  done
+fi
+set -x
+buildctl build \
+    --frontend dockerfile.v0 --opt filename=${DOCKER_FILE} --local dockerfile=${DOCKER_ROOT} \
+    ${BUILD_ARGS} --local context=${DOCKER_ROOT} \
+    --import-cache type=registry,ref=${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME} \
+    --output type=image,name="${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}",push=true
 set +x
 ibmcloud cr image-inspect ${REGISTRY_URL}/${REGISTRY_NAMESPACE}/${IMAGE_NAME}:${IMAGE_TAG}
 
