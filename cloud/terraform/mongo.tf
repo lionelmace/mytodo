@@ -33,6 +33,17 @@ resource "ibm_database" "icd_mongo" {
   # }
 }
 
+# VPE can only be created once the Mongo DB is fully registered
+resource "time_sleep" "wait_for_mongo_initialization" {
+  # count = tobool(var.use_vpe) ? 1 : 0
+
+  depends_on = [
+    ibm_database.icd_mongo
+  ]
+
+  create_duration = "15m"
+}
+
 # VPE (Virtual Private Endpoint) for Mongo
 ##############################################################################
 # Make sure your Cloud Databases deployment's private endpoint is enabled
@@ -56,6 +67,10 @@ resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
       name   = "${ips.value.name}-ip"
     }
   }
+
+  depends_on = [
+    time_sleep.wait_for_mongo_initialization
+  ]
 
   tags = var.tags
 }
