@@ -33,7 +33,7 @@ resource "ibm_database" "icd_mongo" {
   # }
 }
 
-# VPE can only be created once the Mongo DB is fully registered
+# VPE can only be created once Mongo DB is fully registered in the backend
 resource "time_sleep" "wait_for_mongo_initialization" {
   # count = tobool(var.use_vpe) ? 1 : 0
 
@@ -41,7 +41,7 @@ resource "time_sleep" "wait_for_mongo_initialization" {
     ibm_database.icd_mongo
   ]
 
-  create_duration = "15m"
+  create_duration = "5m"
 }
 
 # VPE (Virtual Private Endpoint) for Mongo

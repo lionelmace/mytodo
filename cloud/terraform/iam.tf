@@ -29,7 +29,6 @@ resource "ibm_iam_access_group_policy" "policy-k8s" {
 # https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_services/main.tf
 resource "ibm_iam_authorization_policy" "mongo-kms" {
   source_service_name         = "databases-for-mongodb"
-  source_resource_instance_id = module.cos.cos_instance_guid
   target_service_name         = "kms"
   target_resource_instance_id = ibm_resource_instance.key-protect.guid
   roles                       = ["Reader", "Authorization Delegator"]
