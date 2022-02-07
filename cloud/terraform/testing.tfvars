@@ -19,16 +19,6 @@ vpc_enable_public_gateway     = true
 # vpc_locations                 = ["eu-de-1", "eu-de-2", "eu-de-3"]
 # vpc_number_of_addresses       = 256
 
-# default_address_prefix = "manual" # use by vpc module
-# create_gateway            = true # module-vpc
-# public_gateway_name       = "pgw" # module-vpc
-# Something with those values for next release...
-# subnets = {
-#     zone-1 = [ { name = "subnet-a" cidr = "10.10.10.0/24" public_gateway = true } ],
-#     zone-2 = [ { name = "subnet-b" cidr = "10.20.10.0/24" public_gateway = true } ],
-#     zone-3 = [ { name = "subnet-c" cidr = "10.30.10.0/24" public_gateway = true } ] 
-# }
-
 
 ##############################################################################
 ## Cluster Kubernetes

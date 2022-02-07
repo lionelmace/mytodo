@@ -1,41 +1,5 @@
 
 ##############################################################################
-# VPC
-##############################################################################
-/*
-module "vpc" {
-  # Limitation of Version 1.1.1
-  # https://github.com/terraform-ibm-modules/terraform-ibm-vpc/releases
-  # if you want to create custom address prefixes and add subnets to it.. 
-  # for now you need to two separate modules (vpc, subnet modules). 
-  # In the next release we are targeting this feature… so that only vpc module 
-  # would suffice to create custom address prefixes and subnets to it
-  version                     = "1.1.1"
-  source                      = "terraform-ibm-modules/vpc/ibm//modules/vpc"
-  create_vpc                  = var.create_vpc
-  vpc_name                    = "${var.prefix}-vpc"
-  resource_group_id           = ibm_resource_group.resource_group.id
-  classic_access              = var.vpc_classic_access
-  default_address_prefix      = var.default_address_prefix
-  default_network_acl_name    = var.default_network_acl_name
-  default_security_group_name = var.default_security_group_name
-  default_routing_table_name  = var.default_routing_table_name
-  vpc_tags                    = var.tags
-  # address_prefixes            = var.address_prefixes
-  locations           = var.locations
-  subnet_name         = "${var.prefix}-sn"
-  number_of_addresses = var.number_of_addresses
-  vpc                 = var.vpc
-  # Public Gateway required to access the OpenShift Console
-  create_gateway      = var.create_gateway
-  public_gateway_name = var.public_gateway_name
-  floating_ip         = var.floating_ip
-  gateway_tags        = var.tags
-}
-*/
-
-
-##############################################################################
 # Create a VPC
 ##############################################################################
 
@@ -127,6 +91,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
   name = "${var.prefix}-multizone-acl"
   vpc  = ibm_is_vpc.vpc.id
+  resource_group = ibm_resource_group.resource_group.id
 
   dynamic "rules" {
 
