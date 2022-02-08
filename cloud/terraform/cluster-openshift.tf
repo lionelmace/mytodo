@@ -6,7 +6,6 @@
 module "vpc_openshift_cluster" {
   source = "terraform-ibm-modules/cluster/ibm//modules/vpc-openshift"
 
-  # vpc_id             = module.vpc.vpc_id[0] # module-vpc
   vpc_id             = ibm_is_vpc.vpc.id
   resource_group_id  = ibm_resource_group.resource_group.id
   cluster_name       = var.openshift_cluster_name

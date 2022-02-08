@@ -5,7 +5,6 @@
 module "vpc_kubernetes_cluster" {
   source = "terraform-ibm-modules/cluster/ibm//modules/vpc-kubernetes"
 
-  # vpc_id             = module.vpc.vpc_id[0] # module-vp
   vpc_id             = ibm_is_vpc.vpc.id
   resource_group_id  = ibm_resource_group.resource_group.id
   cluster_name       = var.kubernetes_cluster_name
