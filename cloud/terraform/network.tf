@@ -18,7 +18,7 @@ resource "ibm_is_vpc" "vpc" {
 # Prefixes and subnets for zone 1
 ##############################################################################
 
-resource "ibm_is_vpc_address_prefix" "subnet_prefix" {
+resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
   count = 3
   name  = "${var.prefix}-prefix-zone-${count.index + 1}"
@@ -116,8 +116,10 @@ resource "ibm_is_subnet" "subnet" {
   name            = "${var.prefix}-subnet-${count.index + 1}"
   vpc             = ibm_is_vpc.vpc.id
   zone            = "${var.region}-${count.index + 1}"
-  # ipv4_cidr_block = element(ibm_is_vpc_address_prefix.subnet_prefix.*.cidr, count.index)
+  # ipv4_cidr_block = element(ibm_is_vpc_address_prefix.address_prefix.*.cidr, count.index)
   ipv4_cidr_block = element(var.subnet_cidr_blocks, count.index)
   network_acl     = ibm_is_network_acl.multizone_acl.id
   public_gateway  = var.vpc_enable_public_gateway ? element(ibm_is_public_gateway.pgw.*.id, count.index) : null
+
+  depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
