@@ -35,22 +35,28 @@ module "vpc_openshift_cluster" {
 
 ##############################################################################
 # Attach Log Analysis Service to cluster
+# 
+# Integrating Logging requires the master node to be 'Ready'
+# If not, you will face a timeout error after 45mins
 ##############################################################################
-module "openshift_logdna_attach" {
-  source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
+# module "openshift_logdna_attach" {
+#   source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
 
-  cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
-  logdna_instance_id = module.logging_instance.guid
-  private_endpoint   = var.logdna_private_endpoint
-}
+#   cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+#   logdna_instance_id = module.logging_instance.guid
+#   private_endpoint   = var.logdna_private_endpoint
+# }
 
 ##############################################################################
 # Attach Monitoring Service to cluster
+# 
+# Integrating Monitoring requires the master node to be 'Ready'
+# If not, you will face a timeout error after 45mins
 ##############################################################################
-module "openshift_sysdig_attach" {
-  source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
+# module "openshift_sysdig_attach" {
+#   source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
 
-  cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
-  sysdig_instance_id = module.monitoring_instance.guid
-  private_endpoint   = var.sysdig_private_endpoint
-}
+#   cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+#   sysdig_instance_id = module.monitoring_instance.guid
+#   private_endpoint   = var.sysdig_private_endpoint
+# }
