@@ -79,6 +79,6 @@ data "ibm_is_virtual_endpoint_gateway_ips" "mongo_vpe_ips" {
   gateway = ibm_is_virtual_endpoint_gateway.vpe_mongo.id
 }
 
-output "mongo_vpe_ips" {
-  value = data.ibm_is_virtual_endpoint_gateway_ips.mongo_vpe_ips
-}
+# output "mongo_vpe_ips" {
+#   value = data.ibm_is_virtual_endpoint_gateway_ips.mongo_vpe_ips
+# }
