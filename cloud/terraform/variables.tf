@@ -157,7 +157,7 @@ variable "kubernetes_force_delete_storage" {
   default     = true
 }
 
-variable "update_all_workers" {
+variable "kubernetes_update_all_workers" {
   description = "Kubernetes version of the worker nodes is updated."
   type        = bool
   default     = true
@@ -235,6 +235,13 @@ variable "entitlement" {
   type        = string
   default     = "cloud_pak"
 }
+
+variable "openshift_update_all_workers" {
+  description = "OpenShift version of the worker nodes is updated."
+  type        = bool
+  default     = true
+}
+
 
 
 ##############################################################################

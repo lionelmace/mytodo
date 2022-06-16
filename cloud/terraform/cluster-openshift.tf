@@ -31,6 +31,7 @@ module "vpc_openshift_cluster" {
   ]
   entitlement = var.entitlement
   tags        = var.tags
+  update_all_workers = var.openshift_update_all_workers
 }
 
 ##############################################################################

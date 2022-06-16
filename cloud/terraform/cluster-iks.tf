@@ -27,7 +27,7 @@ module "vpc_kubernetes_cluster" {
     }
   ]
   # disable_public_service_endpoint = var.disable_public_service_endpoint
-  update_all_workers              = var.update_all_workers
+  update_all_workers   = var.kubernetes_update_all_workers
 }
 
 
