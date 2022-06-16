@@ -22,6 +22,9 @@ cloud/terraform-old
 **/*.txt
 .editorconfig
 
+# Ignore tekton for now
+**/tekton/*
+
 # Local .terraform directories
 **/.terraform/*
 # .tfstate files
