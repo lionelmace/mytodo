@@ -26,7 +26,7 @@ vpc_enable_public_gateway     = true
 kubernetes_cluster_name          = "iks"
 kubernetes_worker_pool_flavor    = "bx2.4x16"
 kubernetes_worker_nodes_per_zone = 1
-kubernetes_version               = "1.23.7"
+kubernetes_version               = "1.24.1"
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 kubernetes_wait_till             = "OneWorkerNodeReady"
 # worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },

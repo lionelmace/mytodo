@@ -4,6 +4,7 @@
 
 variable "ibmcloud_api_key" {
   description = "The IBM Cloud platform API key needed to deploy IAM enabled resources"
+  type = string
 }
 
 variable "prefix" {
@@ -152,6 +153,12 @@ variable "kubernetes_wait_till" {
 
 variable "kubernetes_force_delete_storage" {
   description = "force the removal of persistent storage associated with the cluster during cluster deletion."
+  type        = bool
+  default     = true
+}
+
+variable "update_all_workers" {
+  description = "Kubernetes version of the worker nodes is updated."
   type        = bool
   default     = true
 }
