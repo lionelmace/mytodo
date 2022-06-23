@@ -26,7 +26,7 @@ vpc_enable_public_gateway     = true
 kubernetes_cluster_name          = "iks"
 kubernetes_worker_pool_flavor    = "bx2.4x16"
 kubernetes_worker_nodes_per_zone = 1
-kubernetes_version               = "1.24.1"
+kubernetes_version               = "1.24.2"
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 kubernetes_wait_till             = "OneWorkerNodeReady"
 kubernetes_update_all_workers    = false
@@ -39,7 +39,7 @@ kubernetes_update_all_workers    = false
 ##############################################################################
 openshift_cluster_name       = "iro"
 openshift_worker_pool_flavor = "bx2.4x16"
-openshift_version            = "4.10.15_openshift"
+openshift_version            = "4.10.17_openshift"
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 openshift_wait_till          = "OneWorkerNodeReady"
 openshift_update_all_workers = false
