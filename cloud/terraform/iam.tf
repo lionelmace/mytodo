@@ -47,6 +47,26 @@ resource "ibm_iam_access_group_policy" "iam-toolchain" {
   }
 }
 
+resource "ibm_iam_access_group_policy" "iam-logdna" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Manager", "Viewer", "Standard Member"]
+
+  resources {
+    service           = "logdna"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+resource "ibm_iam_access_group_policy" "iam-sysdig" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Writer", "Editor"]
+
+  resources {
+    service           = "sysdig-monitor"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
 # Authorization policy between Mongo and Key Protect
 # Require to encrypt Mongo DB with Key in Key Protect
 # https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_services/main.tf
