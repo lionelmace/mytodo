@@ -12,7 +12,7 @@ Watch this 6 mins <a href="https://youtu.be/XVVb-aLw9ow" target=”_blank”>You
 
 All the cloud services shown in the architecture below can be provisioned through the use of Terraform.
 
-![Architeture](./images/ibmcloud-mytodo-tf.drawio.png)
+![Architecture](./images/ibmcloud-mytodo-tf.drawio.png)
 
 The terraform scripts can be found in the folder [cloud/terraform](cloud/terraform). All the instructions are documented [here](https://lionelmace.github.io/iks-lab/appendix-terraform.html).
 
