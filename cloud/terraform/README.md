@@ -1,6 +1,6 @@
 # Deploy the solution using Terraform
 
-Version: `1.45.0`
+Version: `2022-09-09`
 
 In this tutorial, we'll use terraform to provision the following architecture:
 
