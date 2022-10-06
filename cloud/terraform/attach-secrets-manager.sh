@@ -6,7 +6,7 @@
 set -e -o pipefail
 
 # install IBM Cloud CLI (not required if running in Schematics)
-curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+# curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
 
 # use IBM Cloud CLI to interact with Secrets Manager
 ibmcloud login --apikey $APIKEY -r $REGION
