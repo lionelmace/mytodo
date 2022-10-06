@@ -30,7 +30,7 @@ resource "null_resource" "attach-secrets-manager-to-cluster" {
     environment = {
       APIKEY             = self.triggers.APIKEY
       REGION             = self.triggers.REGION
-      CLUSTER_ID         = self.triggers.CLUTER_ID
+      CLUSTER_ID         = self.triggers.CLUSTER_ID
       SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
     }
   }
