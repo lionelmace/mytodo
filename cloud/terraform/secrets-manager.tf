@@ -10,3 +10,8 @@ resource "ibm_resource_instance" "secrets-manager" {
   tags              = var.tags
   service_endpoints = "private"
 }
+
+output "sm_instance_crn" {
+  description = "The CRN of the Secrets Manager instance"
+  value       = ibm_resource_instance.secrets-manager.id
+}
