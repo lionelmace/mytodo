@@ -30,7 +30,7 @@ module "vpc_kubernetes_cluster" {
   update_all_workers = var.kubernetes_update_all_workers
 }
 
-output "iks-cluster-crn" {
+output "iks_cluster_crn" {
   description = "The CRN of the IKS Cluser"
   value       = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
 }

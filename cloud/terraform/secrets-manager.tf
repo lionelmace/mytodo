@@ -21,8 +21,8 @@ resource "null_resource" "attach-secrets-manager-to-cluster" {
   triggers = {
     APIKEY             = var.ibmcloud_api_key
     REGION             = var.region
-    CLUSTER_ID         = var.iks_cluster_crn
-    SECRETS_MANAGER_ID = var.secrets-manager-crn
+    CLUSTER_ID         = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+    SECRETS_MANAGER_ID = ibm_resource_instance.secrets-manager.id
   }
 
   provisioner "local-exec" {
