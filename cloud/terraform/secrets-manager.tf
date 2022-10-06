@@ -9,16 +9,39 @@ resource "ibm_resource_instance" "secrets-manager" {
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = var.tags
   service_endpoints = "private"
-
-  # Once the cluster is created... create and register this Secrets Manager
-  # instance to your cluster
-  depends_on = [module.vpc_kubernetes_cluster]
-  provisioner "local-exec" {
-    command = "ibmcloud ks ingress instance register --cluster ${iks-cluster-crn} --crn ${secrets-manager-crn} --is-default"
-  }
 }
 
 output "secrets-manager-crn" {
   description = "The CRN of the Secrets Manager instance"
   value       = ibm_resource_instance.secrets-manager.id
+}
+
+resource "null_resource" "attach-secrets-manager-to-cluster" {
+
+  triggers = {
+    APIKEY             = var.ibmcloud_api_key
+    REGION             = var.region
+    CLUSTER_ID         = var.iks_cluster_crn
+    SECRETS_MANAGER_ID = var.secrets-manager-crn
+  }
+
+  provisioner "local-exec" {
+    command = "./attach-secrets-manager.sh"
+    environment = {
+      APIKEY             = self.triggers.APIKEY
+      REGION             = self.triggers.REGION
+      CLUSTER_ID         = self.triggers.CLUTER_ID
+      SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
+    }
+  }
+
+  # provisioner "local-exec" {
+  #   when    = destroy
+  #   command = "./secrets-destroy.sh"
+  #   environment = {
+  #     APIKEY             = self.triggers.APIKEY
+  #     REGION             = self.triggers.REGION
+  #     SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
+  #   }
+  # }
 }
