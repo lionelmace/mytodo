@@ -34,4 +34,37 @@ output "secrets-manager-crn" {
 #       SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
 #     }
 #   }
+#   depends_on = [ ibm_iam_authorization_policy.iks-sm, ]
+# }
+
+# resource "null_resource" "attach-secrets-manager-to-openshift" {
+
+#   triggers = {
+#     APIKEY             = var.ibmcloud_api_key
+#     REGION             = var.region
+#     CLUSTER_ID         = module.vpc_openshift_cluster.vpc_openshift_cluster_id
+#     SECRETS_MANAGER_ID = ibm_resource_instance.secrets-manager.id
+#   }
+
+#   provisioner "local-exec" {
+#     command = "./attach-secrets-manager.sh"
+#     environment = {
+#       APIKEY             = self.triggers.APIKEY
+#       REGION             = self.triggers.REGION
+#       CLUSTER_ID         = self.triggers.CLUSTER_ID
+#       SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
+#     }
+#   }
+
+#   # provisioner "local-exec" {
+#   #   when    = destroy
+#   #   command = "./secrets-destroy.sh"
+#   #   environment = {
+#   #     APIKEY             = self.triggers.APIKEY
+#   #     REGION             = self.triggers.REGION
+#   #     SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
+#   #   }
+#   # }
+
+#   depends_on = [ ibm_iam_authorization_policy.roks-sm, ]
 # }
