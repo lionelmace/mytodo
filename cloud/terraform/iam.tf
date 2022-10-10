@@ -71,6 +71,7 @@ resource "ibm_iam_access_group_policy" "iam-sysdig" {
 resource "ibm_iam_service_id" "kubernetes-secrets" {
   name        = "kubernetes-secrets"
   description = "A service ID for testing Secrets Manager and Kubernetes Service."
+  tags        = var.tags
 }
 
 resource "ibm_iam_service_policy" "secrets-policy" {
