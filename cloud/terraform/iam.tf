@@ -67,6 +67,23 @@ resource "ibm_iam_access_group_policy" "iam-sysdig" {
   }
 }
 
+# SERVICE ID
+resource "ibm_iam_service_id" "kubernetes-secrets" {
+  name        = "kubernetes-secrets"
+  description = "A service ID for testing Secrets Manager and Kubernetes Service."
+}
+
+resource "ibm_iam_service_policy" "policy" {
+  iam_service_id = ibm_iam_service_id.kubernetes-secrets.id
+  roles          = ["SecretsReader"]
+
+  resources {
+    # service              = "kubernetes"
+    resource_instance_id = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+  }
+}
+
+
 # AUTHORIZATIONS
 
 # Authorization policy between Mongo and Key Protect
