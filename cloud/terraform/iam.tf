@@ -68,6 +68,8 @@ resource "ibm_iam_access_group_policy" "iam-sysdig" {
 }
 
 # SERVICE ID
+# Equivalent to CLI commands in this tutorial
+# https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-tutorial-kubernetes-secrets#tutorial-external-kubernetes-secrets-access
 resource "ibm_iam_service_id" "kubernetes-secrets" {
   name        = "kubernetes-secrets"
   description = "A service ID for testing Secrets Manager and Kubernetes Service."
@@ -112,6 +114,7 @@ resource "ibm_iam_authorization_policy" "iks-sm" {
   roles                       = ["Manager"]
 }
 
+# Authorization policy between OpenShift and Secrets Manager
 resource "ibm_iam_authorization_policy" "roks-sm" {
   source_service_name         = "containers-kubernetes"
   source_resource_instance_id = module.vpc_openshift_cluster.vpc_openshift_cluster_id
