@@ -87,7 +87,7 @@ resource "ibm_iam_service_policy" "secrets-policy" {
 resource "ibm_iam_service_api_key" "secrets_apikey" {
   name           = "secrets_apikey"
   description    = "An API key for testing Secrets Manager."
-  iam_service_id = ibm_iam_service_id.kubernetes-secrets.id
+  iam_service_id = ibm_iam_service_id.kubernetes-secrets.iam_id
 }
 
 
