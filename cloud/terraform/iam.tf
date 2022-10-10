@@ -73,13 +73,13 @@ resource "ibm_iam_service_id" "kubernetes-secrets" {
   description = "A service ID for testing Secrets Manager and Kubernetes Service."
 }
 
-resource "ibm_iam_service_policy" "policy" {
+resource "ibm_iam_service_policy" "secrets-policy" {
   iam_service_id = ibm_iam_service_id.kubernetes-secrets.id
   roles          = ["SecretsReader"]
 
   resources {
-    # service              = "kubernetes"
-    resource_instance_id = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+    service            = "secrets-manager"
+    resource_instance_id = ibm_iam_service_id.kubernetes-secrets.id
   }
 }
 
