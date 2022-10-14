@@ -4,7 +4,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mytodo
-  namespace: default
+  # namespace: default
 spec:
   replicas: 3
   selector:
@@ -18,7 +18,8 @@ spec:
     spec:
       containers:
       - name: mytodo
-        image: de.icr.io/mace/mytodo:lts-alpine3.14
+        # image: de.icr.io/mace/mytodo:lts-alpine3.16
+        image: nginx
         imagePullPolicy: Always
         resources:
           requests:
@@ -43,13 +44,13 @@ apiVersion: v1
 kind: Service
 metadata:
  annotations:
-  # service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public
-  service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private
+  service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: public
+  # service.kubernetes.io/ibm-load-balancer-cloud-provider-ip-type: private
  labels:
   app: mytodo
   tier: frontend
  name: mytodo-service
- namespace: default
+#  namespace: default
 spec:
   ports:
   - name: 8080-tcp
@@ -61,18 +62,19 @@ spec:
     tier: frontend
     # deploymentconfig: nodejs-sample
 ---
-# Command line: oc create route edge --service=mytodo-service
+# Create a Route
+# oc create route edge --service=mytodo-service
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: mytodo-service
-  namespace: default
+  # namespace: default
   labels:
     app: mytodo
     tier: frontend
 spec:
-  host: >-
-    iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  # host: mytodo-import-yaml.iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  host: mytodo-customns-import-yaml.iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
   to:
     kind: Service
     name: mytodo-service
