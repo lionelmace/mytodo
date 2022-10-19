@@ -57,3 +57,33 @@
 #   sysdig_instance_id = module.monitoring_instance.guid
 #   private_endpoint   = var.sysdig_private_endpoint
 # }
+
+# Authorization policy between IKS and Secrets Manager
+# resource "ibm_iam_authorization_policy" "iks-sm" {
+#   source_service_name         = "containers-kubernetes"
+#   source_resource_instance_id = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+#   target_service_name         = "secrets-manager"
+#   target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
+#   roles                       = ["Manager"]
+# }
+
+# resource "null_resource" "attach-secrets-manager-to-cluster" {
+
+#   triggers = {
+#     APIKEY             = var.ibmcloud_api_key
+#     REGION             = var.region
+#     CLUSTER_ID         = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+#     SECRETS_MANAGER_ID = ibm_resource_instance.secrets-manager.id
+#   }
+
+#   provisioner "local-exec" {
+#     command = "./attach-secrets-manager.sh"
+#     environment = {
+#       APIKEY             = self.triggers.APIKEY
+#       REGION             = self.triggers.REGION
+#       CLUSTER_ID         = self.triggers.CLUSTER_ID
+#       SECRETS_MANAGER_ID = self.triggers.SECRETS_MANAGER_ID
+#     }
+#   }
+#   depends_on = [ ibm_iam_authorization_policy.iks-sm, ]
+# }

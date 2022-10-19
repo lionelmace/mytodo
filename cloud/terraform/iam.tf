@@ -105,15 +105,6 @@ resource "ibm_iam_authorization_policy" "mongo-kms" {
   roles                       = ["Reader", "Authorization Delegator"]
 }
 
-# Authorization policy between IKS and Secrets Manager
-resource "ibm_iam_authorization_policy" "iks-sm" {
-  source_service_name         = "containers-kubernetes"
-  source_resource_instance_id = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
-  target_service_name         = "secrets-manager"
-  target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
-  roles                       = ["Manager"]
-}
-
 # Authorization policy between OpenShift and Secrets Manager
 resource "ibm_iam_authorization_policy" "roks-sm" {
   source_service_name         = "containers-kubernetes"
