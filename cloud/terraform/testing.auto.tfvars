@@ -38,9 +38,10 @@ kubernetes_update_all_workers = false
 ## Cluster OpenShift
 ##############################################################################
 openshift_cluster_name       = "iro"
-openshift_worker_pool_flavor = "bx2.4x16"
+# openshift_worker_pool_flavor = "bx2.4x16"
+openshift_worker_pool_flavor = "cx2.16x32" # ODF Flavors
 openshift_version            = "4.11.4_openshift"
-# Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
+# Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 openshift_wait_till          = "OneWorkerNodeReady"
 openshift_update_all_workers = false
 
@@ -54,7 +55,7 @@ cos_region = "global"
 ##############################################################################
 ## Observability: Log Analysis (LogDNA) & Monitoring (Sysdig)
 ##############################################################################
-# Posssible plans: lite, 7-day, 14-day, 30-day
+# Available Plans: lite, 7-day, 14-day, 30-day
 logdna_plan                 = "7-day"
 logdna_enable_platform_logs = false
 
