@@ -4,10 +4,10 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "mytodo"
+prefix         = "bivwak"
 region         = "eu-de" # eu-de for Frankfurt MZR
-resource_group = "mytodo"
-tags           = ["tf", "mytodo"]
+resource_group = "bivwak"
+tags           = ["tf", "bivwak"]
 
 
 ##############################################################################
@@ -38,9 +38,9 @@ kubernetes_update_all_workers = false
 ## Cluster OpenShift
 ##############################################################################
 openshift_cluster_name       = "iro"
-# openshift_worker_pool_flavor = "bx2.4x16"
-openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
-openshift_version            = "4.11.4_openshift"
+openshift_worker_pool_flavor = "bx2.4x16"
+# openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
+openshift_version            = "4.10.32_openshift"
 # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 openshift_wait_till          = "OneWorkerNodeReady"
 openshift_update_all_workers = false
