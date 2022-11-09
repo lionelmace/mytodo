@@ -259,6 +259,11 @@ variable "cos_region" {
   default     = "global"
 }
 
+variable cos_instance_crn {
+    description = "COS Instance CRN for ROKS Cluster"
+    type        = string
+}
+
 
 ##############################################################################
 # Module: Log Services
