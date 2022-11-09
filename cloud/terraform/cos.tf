@@ -4,15 +4,15 @@
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  name = "${var.prefix}-openshift-registry"
-  service = var.cos_plan
-  location = var.cos_region
+  name              = "${var.prefix}-openshift-registry"
+  service           = "cloud-object-storage"
+  plan              = var.cos_plan
+  location          = var.cos_region
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = var.tags
-  key_tags          = var.tags
 }
 
 output "cos_instance_crn" {
   description = "The CRN of the COS instance"
-  value       = ibm_resource_instance.cos.cos_instance_id
+  value       = ibm_resource_instance.cos.guid
 }

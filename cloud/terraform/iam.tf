@@ -81,7 +81,7 @@ resource "ibm_iam_service_policy" "secrets-policy" {
   roles          = ["SecretsReader"]
 
   resources {
-    service            = "secrets-manager"
+    service              = "secrets-manager"
     resource_instance_id = ibm_iam_service_id.kubernetes-secrets.id
   }
 }
