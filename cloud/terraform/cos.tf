@@ -15,8 +15,3 @@ resource "ibm_resource_instance" "cos" {
     service-endpoints = "private"
   }
 }
-
-output "cos_instance_crn" {
-  description = "The CRN of the COS instance"
-  value       = ibm_resource_instance.cos.id
-}
