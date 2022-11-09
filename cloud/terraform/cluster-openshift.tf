@@ -20,7 +20,7 @@ module "vpc_openshift_cluster" {
   worker_labels                   = var.worker_labels
   wait_till                       = var.openshift_wait_till
   disable_public_service_endpoint = var.disable_public_service_endpoint
-  cos_instance_crn                = ibm_resource_instance.cos.guid
+  cos_instance_crn                = var.cos_instance_crn
   force_delete_storage            = var.openshift_force_delete_storage
   kms_config = [
     {

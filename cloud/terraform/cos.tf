@@ -10,9 +10,13 @@ resource "ibm_resource_instance" "cos" {
   location          = var.cos_region
   resource_group_id = ibm_resource_group.resource_group.id
   tags              = var.tags
+
+  parameters = {
+    service-endpoints = "private"
+  }
 }
 
 output "cos_instance_crn" {
   description = "The CRN of the COS instance"
-  value       = ibm_resource_instance.cos.guid
+  value       = ibm_resource_instance.cos.id
 }
