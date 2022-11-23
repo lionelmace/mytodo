@@ -58,7 +58,7 @@ module "kubernetes_sysdig_attach" {
   private_endpoint   = var.sysdig_private_endpoint
 }
 
-Authorization policy between IKS and Secrets Manager
+# Authorization policy between IKS and Secrets Manager
 resource "ibm_iam_authorization_policy" "iks-sm" {
   source_service_name         = "containers-kubernetes"
   source_resource_instance_id = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
