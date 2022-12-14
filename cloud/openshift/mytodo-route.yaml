@@ -73,7 +73,7 @@ metadata:
     app: mytodo
     tier: frontend
 spec:
-  host: mytodo-route.iro-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  host: iro-odf-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
   to:
     kind: Service
     name: mytodo-service
