@@ -133,7 +133,7 @@ variable "kubernetes_worker_nodes_per_zone" {
 variable "kubernetes_version" {
   description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
   type        = string
-  default     = "1.25.2"
+  default     = "1.25.5"
 }
 
 variable "kubernetes_wait_till" {
@@ -183,7 +183,7 @@ variable "openshift_worker_pool_flavor" {
 variable "openshift_version" {
   description = "The OpenShift version that you want to set up in your cluster."
   type        = string
-  default     = "4.11.04_openshift"
+  default     = "4.11.17_openshift"
 }
 
 variable "openshift_worker_nodes_per_zone" {
