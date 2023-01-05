@@ -39,8 +39,8 @@ kubernetes_update_all_workers = false
 ## Cluster OpenShift
 ##############################################################################
 openshift_cluster_name       = "iro-odf"
-# openshift_worker_pool_flavor = "bx2.4x16"
-openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
+openshift_worker_pool_flavor = "bx2.4x16"
+# openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
 openshift_version = "4.11.17_openshift"
 
 # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
