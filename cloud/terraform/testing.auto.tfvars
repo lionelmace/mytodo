@@ -61,7 +61,7 @@ cos_region = "global"
 logdna_plan                 = "7-day"
 logdna_enable_platform_logs = false
 
-sysdig_plan                    = "graduated-tier-sysdig-secure-plus-monitor"
+sysdig_plan                    = "graduated-tier"
 sysdig_enable_platform_metrics = false
 
 

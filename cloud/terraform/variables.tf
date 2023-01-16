@@ -312,7 +312,8 @@ variable "logdna_enable_platform_logs" {
 variable "sysdig_plan" {
   description = "plan type"
   type        = string
-  default     = "graduated-tier-sysdig-secure-plus-monitor"
+  default     = "graduated-tier"
+  # default     = "graduated-tier-sysdig-secure-plus-monitor"
 }
 
 variable "sysdig_service_endpoints" {
