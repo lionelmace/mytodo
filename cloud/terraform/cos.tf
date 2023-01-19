@@ -15,3 +15,16 @@ resource "ibm_resource_instance" "cos" {
     service-endpoints = "private"
   }
 }
+
+## IAM
+##############################################################################
+
+resource "ibm_iam_access_group_policy" "policy-cos" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Viewer"]
+
+  resources {
+    service           = "cloud-object-storage"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}

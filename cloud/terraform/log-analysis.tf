@@ -23,3 +23,16 @@ output "logdna_instance_id" {
   description = "The ID of the Log Analysis instance"
   value       = module.logging_instance.id
 }
+
+## IAM
+##############################################################################
+
+resource "ibm_iam_access_group_policy" "iam-logdna" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Manager", "Viewer", "Standard Member"]
+
+  resources {
+    service           = "logdna"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
