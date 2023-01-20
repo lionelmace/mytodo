@@ -13,7 +13,7 @@ cloud/chart/mytodo/local-values.yaml
 credentials.env
 cloud/kubernetes/imagePullSecret.json
 cloud/kubernetes/ingress-tls-rewrite.yaml
-cloud/kubernetes/mytodo.yaml
+# cloud/kubernetes/mytodo.yaml
 cloud/kubernetes/mytodo-ocp.yaml
 cloud/kubernetes/mytodo-ns.yaml
 cloud/terraform-old
