@@ -13,7 +13,7 @@ resource "ibm_iam_authorization_policy" "vpn-sm" {
 ## Secrets Manager
 ##############################################################################
 resource "ibm_resource_instance" "secrets-manager" {
-  name              = "${var.prefix}-secrets-manager"
+  name              = format("%s-%s", var.prefix, "secrets-manager")
   service           = "secrets-manager"
   plan              = "trial"
   location          = var.region

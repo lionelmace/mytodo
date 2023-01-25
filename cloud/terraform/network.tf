@@ -4,7 +4,7 @@
 ##############################################################################
 
 resource "ibm_is_vpc" "vpc" {
-  name                        = "${var.prefix}-vpc"
+  name                        = format("%s-%s", var.prefix, "vpc")
   resource_group              = ibm_resource_group.resource_group.id
   address_prefix_management   = var.vpc_address_prefix_management
   default_security_group_name = "${var.prefix}-vpc-sg"

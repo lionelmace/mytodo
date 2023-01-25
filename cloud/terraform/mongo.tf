@@ -2,7 +2,7 @@
 ## ICD Mongo
 ##############################################################################
 resource "ibm_database" "icd_mongo" {
-  name              = "${var.prefix}-mongo"
+  name              = format("%s-%s", var.prefix, "mongo")
   service           = "databases-for-mongodb"
   plan              = var.icd_mongo_plan
   version           = var.icd_mongo_db_version
@@ -47,6 +47,21 @@ resource "ibm_database" "icd_mongo" {
   # }
 }
 
+## IAM
+##############################################################################
+# Doc at https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-iam
+resource "ibm_iam_access_group_policy" "iam-dbaas" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Editor"]
+
+  resources {
+    service           = "databases-for-postgresql"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
+
+## VPE (Optional)
+##############################################################################
 # VPE can only be created once Mongo DB is fully registered in the backend
 resource "time_sleep" "wait_for_mongo_initialization" {
   # count = tobool(var.use_vpe) ? 1 : 0

@@ -4,7 +4,7 @@
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  name              = "${var.prefix}-openshift-registry"
+  name              = format("%s-%s", var.prefix, "openshift-registry")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
