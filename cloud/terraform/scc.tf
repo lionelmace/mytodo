@@ -14,13 +14,13 @@ resource "ibm_scc_posture_collector" "scc_collector" {
 ##############################################################################
 
 resource "ibm_scc_posture_credential" "scc_credential" {
-  description = "Credential used by SCC collector for connecting to the resources."
+  description = "Credential used by collector for connecting to the resources."
   display_fields {
     ibm_api_key = var.ibmcloud_api_key
   }
   enabled = true
   name    = "${var.prefix}-credentials"
-  purpose = "discovery_fact_collection_remediation"
+  purpose = "discovery_fact_collection" # "discovery_fact_collection_remediation"
   type    = "ibm_cloud"
 }
 
