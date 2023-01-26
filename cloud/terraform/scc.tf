@@ -7,7 +7,6 @@ resource "ibm_scc_posture_collector" "scc_collector" {
   is_public   = true
   managed_by  = "ibm"
   name        = "${var.prefix}-collector"
-  #   passphrase  = "secret"
 }
 
 ## SCC Credentials
@@ -43,13 +42,11 @@ resource "ibm_scc_posture_scope" "scc_scope" {
 
 resource "ibm_scc_posture_scan_initiate_validation" "scc_scan" {
   scope_id = ibm_scc_posture_scope.scc_scope.id
-  # IBM Cloud Security Best Practices - Profile Id
-  # https://cloud.ibm.com/security-compliance/profiles
+  # IBM Cloud Security Best Practices (profile_id=19)
   profile_id = "19"
   name       = "${var.prefix}-scan"
-  #   group_profile_id = "group_profile_id"
-  #   description = "description"
-  # minimum scan frequency limit is 1 hour (= 3600 msec)
+  # For On-Demand scan, comment the frequency
+  # Minimum scan frequency limit is 1 hour (= 3600 msec)
   frequency = 3600
   #   no_of_occurrences = 1
 }
