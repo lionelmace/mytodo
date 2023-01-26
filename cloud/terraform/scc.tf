@@ -49,6 +49,7 @@ resource "ibm_scc_posture_scan_initiate_validation" "scc_scan" {
   name       = "${var.prefix}-scan"
   #   group_profile_id = "group_profile_id"
   #   description = "description"
-  frequency = 1
+  # minimum scan frequency limit is 1 hour (= 3600 msec)
+  frequency = 3600
   #   no_of_occurrences = 1
 }
