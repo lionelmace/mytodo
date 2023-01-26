@@ -25,7 +25,7 @@ module "vpc_openshift_cluster" {
   kms_config = [
     {
       instance_id      = ibm_resource_instance.key-protect.guid, # GUID of Key Protect instance
-      crk_id           = ibm_kp_key.key.key_id,                  # ID of customer root key
+      crk_id           = ibm_kms_key.key.key_id,                  # ID of customer root key
       private_endpoint = true
     }
   ]

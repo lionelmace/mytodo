@@ -19,7 +19,7 @@ resource "ibm_resource_instance" "key-protect" {
 # }
 
 resource "ibm_kms_key" "key" {
-  key_protect_id = ibm_resource_instance.key-protect.guid
+  instance_id = ibm_resource_instance.key-protect.guid
   key_name       = "${var.prefix}-root-key"
   standard_key   = false
   force_delete   = true
