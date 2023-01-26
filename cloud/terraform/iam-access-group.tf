@@ -28,27 +28,27 @@ resource "ibm_iam_access_group_policy" "policy-k8s" {
 # SERVICE ID
 # Equivalent to CLI commands in this tutorial
 # https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-tutorial-kubernetes-secrets#tutorial-external-kubernetes-secrets-access
-resource "ibm_iam_service_id" "kubernetes-secrets" {
-  name        = "kubernetes-secrets"
-  description = "A service ID for testing Secrets Manager and Kubernetes Service."
-  tags        = var.tags
-}
+# resource "ibm_iam_service_id" "kubernetes-secrets" {
+#   name        = "kubernetes-secrets"
+#   description = "A service ID for testing Secrets Manager and Kubernetes Service."
+#   tags        = var.tags
+# }
 
-resource "ibm_iam_service_policy" "secrets-policy" {
-  iam_service_id = ibm_iam_service_id.kubernetes-secrets.id
-  roles          = ["SecretsReader"]
+# resource "ibm_iam_service_policy" "secrets-policy" {
+#   iam_service_id = ibm_iam_service_id.kubernetes-secrets.id
+#   roles          = ["SecretsReader"]
 
-  resources {
-    service              = "secrets-manager"
-    resource_instance_id = ibm_iam_service_id.kubernetes-secrets.id
-  }
-}
+#   resources {
+#     service              = "secrets-manager"
+#     resource_instance_id = ibm_iam_service_id.kubernetes-secrets.id
+#   }
+# }
 
-resource "ibm_iam_service_api_key" "secrets_apikey" {
-  name           = "secrets_apikey"
-  description    = "An API key for testing Secrets Manager."
-  iam_service_id = ibm_iam_service_id.kubernetes-secrets.iam_id
-}
+# resource "ibm_iam_service_api_key" "secrets_apikey" {
+#   name           = "secrets_apikey"
+#   description    = "An API key for testing Secrets Manager."
+#   iam_service_id = ibm_iam_service_id.kubernetes-secrets.iam_id
+# }
 
 
 # AUTHORIZATIONS
