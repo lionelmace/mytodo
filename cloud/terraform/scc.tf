@@ -1,5 +1,5 @@
 
-## Collector
+## SCC Collector
 ##############################################################################
 
 resource "ibm_scc_posture_collector" "scc_collector" {
@@ -10,7 +10,7 @@ resource "ibm_scc_posture_collector" "scc_collector" {
   #   passphrase  = "secret"
 }
 
-## Credentials
+## SCC Credentials
 ##############################################################################
 
 resource "ibm_scc_posture_credential" "scc_credential" {
@@ -24,10 +24,10 @@ resource "ibm_scc_posture_credential" "scc_credential" {
   type    = "ibm_cloud"
 }
 
-## Scope
+## SCC Scope
 ##############################################################################
 
-resource "ibm_scc_posture_scope" "scopes" {
+resource "ibm_scc_posture_scope" "scc_scope" {
   collector_ids = [ibm_scc_posture_collector.scc_collector.id]
   #   collector_ids   = ["${ibm_scc_posture_collector.scc_collector.id}"]
   credential_id   = ibm_scc_posture_credential.scc_credential.id
@@ -35,17 +35,17 @@ resource "ibm_scc_posture_scope" "scopes" {
   description     = "IBMSchema"
   #   interval = 10
   #   is_discovery_scheduled = true
-  name = "IBMSchema-new-048-test"
+  name = "${var.prefix}-scope"
 }
 
-## Scan
+## SCC Scan
 ##############################################################################
 
 resource "ibm_scc_posture_scan_initiate_validation" "scc_scan" {
-  scope_id = ibm_scc_posture_scope.scopes.id
+  scope_id = ibm_scc_posture_scope.scc_scope.id
   # IBM Cloud Security Best Practices - Profile Id
-  # https://cloud.ibm.com/security-compliance/profiles/cff60115-4ea0-4a67-8ef2-49f319403969
-  profile_id = "394"
+  # https://cloud.ibm.com/security-compliance/profiles
+  profile_id = "19"
   name       = "${var.prefix}-scope"
   #   group_profile_id = "group_profile_id"
   #   description = "description"
