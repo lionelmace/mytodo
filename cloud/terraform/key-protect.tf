@@ -11,11 +11,29 @@ resource "ibm_resource_instance" "key-protect" {
   service_endpoints = "private"
 }
 
-resource "ibm_kp_key" "key" {
+# resource "ibm_kp_key" "key" {
+#   key_protect_id = ibm_resource_instance.key-protect.guid
+#   key_name       = "${var.prefix}-root-key"
+#   standard_key   = false
+#   force_delete   = true
+# }
+
+resource "ibm_kms_key" "key" {
   key_protect_id = ibm_resource_instance.key-protect.guid
   key_name       = "${var.prefix}-root-key"
   standard_key   = false
   force_delete   = true
+}
+
+resource "ibm_kms_key_policies" "key_policy" {
+  instance_id = ibm_resource_instance.key-protect.guid
+  key_id = ibm_kms_key.key.key_id
+  rotation {
+       interval_month = 3
+    }
+    dual_auth_delete {
+       enabled = false
+    }
 }
 
 ## IAM
