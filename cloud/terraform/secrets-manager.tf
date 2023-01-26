@@ -4,8 +4,7 @@
 ## Secrets Manager
 ##############################################################################
 resource "ibm_resource_instance" "secrets-manager" {
-  # name              = format("%s-%s", var.prefix, "secrets-manager")
-  name              = format("%s-%s", var.prefix, "secrets-manager", formatdate("YYYYMMDD", timestamp()))
+  name              = format("%s-%s", var.prefix, "secrets-manager")
   service           = "secrets-manager"
   plan              = "trial"
   location          = var.region
