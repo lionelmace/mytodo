@@ -46,9 +46,9 @@ resource "ibm_scc_posture_scan_initiate_validation" "scc_scan" {
   # IBM Cloud Security Best Practices - Profile Id
   # https://cloud.ibm.com/security-compliance/profiles
   profile_id = "19"
-  name       = "${var.prefix}-scope"
+  name       = "${var.prefix}-scan"
   #   group_profile_id = "group_profile_id"
   #   description = "description"
-  #   frequency = 1
+  frequency = 1
   #   no_of_occurrences = 1
 }
