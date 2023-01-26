@@ -17,3 +17,16 @@ resource "ibm_kp_key" "key" {
   standard_key   = false
   force_delete   = true
 }
+
+## IAM
+##############################################################################
+
+resource "ibm_iam_access_group_policy" "iam-kms" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Reader", "Viewer"]
+
+  resources {
+    service           = "kms"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
