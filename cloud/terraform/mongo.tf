@@ -111,3 +111,37 @@ data "ibm_is_virtual_endpoint_gateway_ips" "mongo_vpe_ips" {
 # output "mongo_vpe_ips" {
 #   value = data.ibm_is_virtual_endpoint_gateway_ips.mongo_vpe_ips
 # }
+
+
+# Variables
+##############################################################################
+variable "icd_mongo_plan" {
+  type        = string
+  description = "The plan type of the Database instance"
+  default     = "standard"
+}
+variable "icd_mongo_adminpassword" {
+  type        = string
+  description = "The admin user password for the instance"
+  default     = "Passw0rd01"
+}
+variable "icd_mongo_db_version" {
+  default     = "4.4"
+  type        = string
+  description = "The database version to provision if specified"
+}
+variable "icd_mongo_users" {
+  default     = null
+  type        = set(map(string))
+  description = "Database Users. It is set of username and passwords"
+}
+variable "icd_mongo_whitelist" {
+  default     = null
+  type        = set(map(string))
+  description = "Database Whitelist It is set of IP Address and description"
+}
+variable "icd_mongo_service_endpoints" {
+  default     = "public"
+  type        = string
+  description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
+}
