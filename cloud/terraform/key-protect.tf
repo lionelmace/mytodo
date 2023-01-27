@@ -24,7 +24,7 @@ resource "ibm_kms_instance_policies" "instance_policy" {
       enabled = true
     }
     key_create_import_access {
-      enable = true
+      enabled = true
     }
 }
 
