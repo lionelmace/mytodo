@@ -41,7 +41,7 @@ resource "ibm_cos_bucket" "standard-bucket" {
   metrics_monitoring {
     usage_metrics_enabled   = true
     request_metrics_enabled = true
-    metrics_monitoring_crn  = module.monitoring_instance.guid
+    metrics_monitoring_crn  = module.monitoring_instance.id
   }
   # allowed_ip = ["223.196.168.27", "223.196.161.38", "192.168.0.1"]
 }
