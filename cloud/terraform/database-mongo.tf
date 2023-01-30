@@ -37,34 +37,34 @@ resource "ibm_database" "icd_mongo" {
     }
   }
 
-  auto_scaling {
-    cpu {
-      rate_increase_percent       = 20
-      rate_limit_count_per_member = 20
-      rate_period_seconds         = 900
-      rate_units                  = "count"
-    }
-    disk {
-      capacity_enabled             = true
-      free_space_less_than_percent = 15
-      io_above_percent             = 85
-      io_enabled                   = true
-      io_over_period               = "15m"
-      rate_increase_percent        = 15
-      rate_limit_mb_per_member     = 3670016
-      rate_period_seconds          = 900
-      rate_units                   = "mb"
-    }
-    memory {
-      io_above_percent         = 90
-      io_enabled               = true
-      io_over_period           = "15m"
-      rate_increase_percent    = 10
-      rate_limit_mb_per_member = 114688
-      rate_period_seconds      = 900
-      rate_units               = "mb"
-    }
-  }
+  # auto_scaling {
+  #   cpu {
+  #     rate_increase_percent       = 20
+  #     rate_limit_count_per_member = 20
+  #     rate_period_seconds         = 900
+  #     rate_units                  = "count"
+  #   }
+  #   disk {
+  #     capacity_enabled             = true
+  #     free_space_less_than_percent = 15
+  #     io_above_percent             = 85
+  #     io_enabled                   = true
+  #     io_over_period               = "15m"
+  #     rate_increase_percent        = 15
+  #     rate_limit_mb_per_member     = 3670016
+  #     rate_period_seconds          = 900
+  #     rate_units                   = "mb"
+  #   }
+  #   memory {
+  #     io_above_percent         = 90
+  #     io_enabled               = true
+  #     io_over_period           = "15m"
+  #     rate_increase_percent    = 10
+  #     rate_limit_mb_per_member = 114688
+  #     rate_period_seconds      = 900
+  #     rate_units               = "mb"
+  #   }
+  # }
 
   # users {
   #   name     = "user123"

@@ -48,11 +48,6 @@ data "ibm_scc_posture_profile" "profile_security_bestpractices" {
   profile_type = "predefined"
 }
 
-data "ibm_scc_posture_profile" "profile_fscloud" {
-  profile_id   = data.ibm_scc_posture_profiles.list_profiles.profiles[index(data.ibm_scc_posture_profiles.list_profiles.profiles.*.name, "IBM Cloud for Financial Services v0.6.0")].id
-  profile_type = "predefined"
-}
-
 resource "ibm_scc_posture_scan_initiate_validation" "scc_scan" {
   scope_id = ibm_scc_posture_scope.scc_scope.id
   # IBM Cloud Security Best Practices (profile_id=19)
@@ -62,6 +57,11 @@ resource "ibm_scc_posture_scan_initiate_validation" "scc_scan" {
   # Minimum scan frequency limit is 1 hour (= 3600 msec)
   frequency = 3600
   #   no_of_occurrences = 1
+}
+
+data "ibm_scc_posture_profile" "profile_fscloud" {
+  profile_id   = data.ibm_scc_posture_profiles.list_profiles.profiles[index(data.ibm_scc_posture_profiles.list_profiles.profiles.*.name, "IBM Cloud for Financial Services v0.6.0")].id
+  profile_type = "predefined"
 }
 
 resource "ibm_scc_posture_scan_initiate_validation" "scc_scan_fscloud" {
