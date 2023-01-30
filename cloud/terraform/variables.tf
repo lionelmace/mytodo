@@ -18,7 +18,7 @@ variable "region" {
   default     = "eu-de"
 }
 
-variable "resource_group" {
+variable "resource_group_name" {
   description = "Name of resource group where all infrastructure will be provisioned"
   default     = "mytodo"
 

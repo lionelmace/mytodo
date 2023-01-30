@@ -7,7 +7,7 @@
 prefix = "mytodo"
 # formatdate("YYYYMMDD", timestamp())
 region                    = "eu-de" # eu-de for Frankfurt MZR
-resource_group            = "mytodo"
+resource_group_name       = "mytodo"
 tags                      = ["tf", "mytodo"]
 platform_activity_tracker = "platform-activities"
 
