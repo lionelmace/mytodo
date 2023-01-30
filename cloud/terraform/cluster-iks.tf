@@ -22,7 +22,7 @@ module "vpc_kubernetes_cluster" {
   kms_config = [
     {
       instance_id      = ibm_resource_instance.key-protect.guid, # GUID of Key Protect instance
-      crk_id           = ibm_kms_key.key.key_id,                  # ID of root key
+      crk_id           = ibm_kms_key.key.key_id,                 # ID of root key
       private_endpoint = true
     }
   ]

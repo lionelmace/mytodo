@@ -4,11 +4,12 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix         = "mytodo"
+prefix = "mytodo"
 # formatdate("YYYYMMDD", timestamp())
-region         = "eu-de" # eu-de for Frankfurt MZR
-resource_group = "mytodo"
-tags           = ["tf", "mytodo"]
+region                    = "eu-de" # eu-de for Frankfurt MZR
+resource_group            = "mytodo"
+tags                      = ["tf", "mytodo"]
+platform_activity_tracker = "platform-activities"
 
 
 ##############################################################################

@@ -44,8 +44,8 @@ data "ibm_scc_posture_profiles" "list_profiles" {
 }
 
 data "ibm_scc_posture_profile" "profile_security_bestpractices" {
-    profile_id = data.ibm_scc_posture_profiles.list_profiles.profiles[index(data.ibm_scc_posture_profiles.list_profiles.profiles.*.name,"IBM Cloud Security Best Practices v1.0.0")].id
-    profile_type = "predefined"
+  profile_id   = data.ibm_scc_posture_profiles.list_profiles.profiles[index(data.ibm_scc_posture_profiles.list_profiles.profiles.*.name, "IBM Cloud Security Best Practices v1.0.0")].id
+  profile_type = "predefined"
 }
 
 resource "ibm_scc_posture_scan_initiate_validation" "scc_scan" {
