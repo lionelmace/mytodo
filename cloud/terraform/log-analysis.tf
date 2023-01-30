@@ -5,7 +5,7 @@
 module "logging_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/logging-instance"
 
-  resource_group_id    = ibm_resource_group.resource_group.id
+  resource_group_id    = local.resource_group_id
   name                 = format("%s-%s", var.prefix, "logs")
   is_sts_instance      = false
   service_endpoints    = var.logdna_service_endpoints
@@ -33,6 +33,6 @@ resource "ibm_iam_access_group_policy" "iam-logdna" {
 
   resources {
     service           = "logdna"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
   }
 }

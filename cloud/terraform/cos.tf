@@ -17,7 +17,7 @@ resource "ibm_resource_instance" "cos" {
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
-  resource_group_id = ibm_resource_group.resource_group.id
+  resource_group_id = local.resource_group_id
   tags              = var.tags
 
   parameters = {
@@ -56,6 +56,6 @@ resource "ibm_iam_access_group_policy" "policy-cos" {
 
   resources {
     service           = "cloud-object-storage"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
   }
 }

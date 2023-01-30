@@ -6,7 +6,7 @@
 module "monitoring_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/monitoring-sysdig"
 
-  resource_group_id       = ibm_resource_group.resource_group.id
+  resource_group_id       = local.resource_group_id
   name                    = format("%s-%s", var.prefix, "monitoring")
   plan                    = var.sysdig_plan
   service_endpoints       = var.sysdig_service_endpoints
@@ -32,6 +32,6 @@ resource "ibm_iam_access_group_policy" "iam-sysdig" {
 
   resources {
     service           = "sysdig-monitor"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
   }
 }

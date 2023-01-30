@@ -5,7 +5,7 @@
 
 resource "ibm_is_vpc" "vpc" {
   name                        = format("%s-%s", var.prefix, "vpc")
-  resource_group              = ibm_resource_group.resource_group.id
+  resource_group              = local.resource_group_id
   address_prefix_management   = var.vpc_address_prefix_management
   default_security_group_name = "${var.prefix}-vpc-sg"
   default_network_acl_name    = "${var.prefix}-vpc-acl"
@@ -89,7 +89,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
   name           = "${var.prefix}-multizone-acl"
   vpc            = ibm_is_vpc.vpc.id
-  resource_group = ibm_resource_group.resource_group.id
+  resource_group = local.resource_group_id
 
   dynamic "rules" {
 

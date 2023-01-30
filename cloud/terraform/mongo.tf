@@ -8,7 +8,7 @@ resource "ibm_database" "icd_mongo" {
   version           = var.icd_mongo_db_version
   service_endpoints = var.icd_mongo_service_endpoints
   location          = var.region
-  resource_group_id = ibm_resource_group.resource_group.id
+  resource_group_id = local.resource_group_id
   tags              = var.tags
 
   # Encrypt DB (comment to use IBM-provided Automatic Key)
@@ -85,7 +85,7 @@ resource "ibm_iam_access_group_policy" "iam-dbaas" {
 
   resources {
     service           = "databases-for-postgresql"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
   }
 }
 
@@ -109,7 +109,7 @@ resource "time_sleep" "wait_for_mongo_initialization" {
 ##############################################################################
 resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
   name           = "${var.prefix}-mongo-vpe"
-  resource_group = ibm_resource_group.resource_group.id
+  resource_group = local.resource_group_id
   vpc            = ibm_is_vpc.vpc.id
 
   target {

@@ -2,7 +2,7 @@
 ## Key Protect
 ##############################################################################
 resource "ibm_resource_instance" "key-protect" {
-  resource_group_id = ibm_resource_group.resource_group.id
+  resource_group_id = local.resource_group_id
   name              = format("%s-%s", var.prefix, "key-protect")
   service           = "kms"
   plan              = "tiered-pricing"
@@ -55,6 +55,6 @@ resource "ibm_iam_access_group_policy" "iam-kms" {
 
   resources {
     service           = "kms"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
   }
 }

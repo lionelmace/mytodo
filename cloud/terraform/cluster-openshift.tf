@@ -7,7 +7,7 @@ module "vpc_openshift_cluster" {
   source = "terraform-ibm-modules/cluster/ibm//modules/vpc-openshift"
 
   vpc_id             = ibm_is_vpc.vpc.id
-  resource_group_id  = ibm_resource_group.resource_group.id
+  resource_group_id  = local.resource_group_id
   cluster_name       = var.openshift_cluster_name
   worker_pool_flavor = var.openshift_worker_pool_flavor
   worker_zones = {

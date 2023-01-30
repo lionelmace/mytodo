@@ -3,7 +3,7 @@
 # Create a resource group or reuse an existing one
 ##############################################################################
 
-resource "ibm_resource_group" "resource_group" {
+resource "ibm_resource_group" "group" {
   count = var.resource_group_name != "" ? 0 : 1
   name  = format("%s-%s", var.prefix, "group")
   tags  = var.tags

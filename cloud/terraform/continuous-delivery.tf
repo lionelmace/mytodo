@@ -2,7 +2,7 @@
 ## Instances
 ##############################################################################
 resource "ibm_resource_instance" "continuous-delivery" {
-  resource_group_id = ibm_resource_group.resource_group.id
+  resource_group_id = local.resource_group_id
   name              = "${var.prefix}-continuous-delivery"
   service           = "continuous-delivery"
   plan              = "professional"
@@ -20,7 +20,7 @@ resource "ibm_iam_access_group_policy" "iam-continuous-delivery" {
 
   resources {
     service           = "continuous-delivery"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
   }
 }
 
@@ -31,6 +31,6 @@ resource "ibm_iam_access_group_policy" "iam-toolchain" {
 
   resources {
     service           = "toolchain"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
   }
 }

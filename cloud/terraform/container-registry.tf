@@ -1,6 +1,6 @@
 resource "ibm_cr_namespace" "container-registry-namespace" {
   name              = format("%s-%s", var.prefix, "registry")
-  resource_group_id = ibm_resource_group.resource_group.id
+  resource_group_id = local.resource_group_id
   tags              = var.tags
 }
 
@@ -13,7 +13,7 @@ resource "ibm_iam_access_group_policy" "iam-registry" {
 
   resources {
     service           = "container-registry"
-    resource_group_id = ibm_resource_group.resource_group.id
+    resource_group_id = local.resource_group_id
     resource_type     = "namespace"
     resource          = ibm_cr_namespace.container-registry-namespace.name
   }
