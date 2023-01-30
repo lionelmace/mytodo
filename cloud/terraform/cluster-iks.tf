@@ -2,6 +2,64 @@
 # Kubernetes cluster
 ##############################################################################
 
+
+# Kubernetes Variables
+##############################################################################
+
+variable "kubernetes_cluster_name" {
+  description = "name for the iks cluster"
+  default     = "iks"
+}
+
+variable "kubernetes_worker_pool_flavor" {
+  description = "The flavor of VPC worker node to use for your cluster. Use `ibmcloud ks flavors` to find flavors for a region."
+  type        = string
+  default     = "bx2.4x16"
+}
+
+variable "kubernetes_worker_nodes_per_zone" {
+  description = "Number of workers to provision in each subnet"
+  type        = number
+  default     = 1
+}
+
+variable "kubernetes_version" {
+  description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
+  type        = string
+  default     = "1.25.5"
+}
+
+variable "kubernetes_wait_till" {
+  description = "To avoid long wait times when you run your Terraform code, you can specify the stage when you want Terraform to mark the cluster resource creation as completed. Depending on what stage you choose, the cluster creation might not be fully completed and continues to run in the background. However, your Terraform code can continue to run without waiting for the cluster to be fully created. Supported args are `MasterNodeReady`, `OneWorkerNodeReady`, and `IngressReady`"
+  type        = string
+  default     = "OneWorkerNodeReady"
+
+  validation {
+    error_message = "`kubernetes_wait_till` value must be one of `MasterNodeReady`, `OneWorkerNodeReady`, or `IngressReady`."
+    condition = contains([
+      "MasterNodeReady",
+      "OneWorkerNodeReady",
+      "IngressReady"
+    ], var.kubernetes_wait_till)
+  }
+}
+
+variable "kubernetes_force_delete_storage" {
+  description = "force the removal of persistent storage associated with the cluster during cluster deletion."
+  type        = bool
+  default     = true
+}
+
+variable "kubernetes_update_all_workers" {
+  description = "Kubernetes version of the worker nodes is updated."
+  type        = bool
+  default     = true
+}
+
+
+# Kubernetes Cluster
+##############################################################################
+
 module "vpc_kubernetes_cluster" {
   source = "terraform-ibm-modules/cluster/ibm//modules/vpc-kubernetes"
 
@@ -37,7 +95,7 @@ output "iks_cluster_crn" {
 
 ##############################################################################
 # Log and Monitoring can only be attached once cluster is fully ready
-resource "time_sleep" "wait_for_cluster_initialization" {
+resource "time_sleep" "wait_for_iks_initialization" {
 
   depends_on = [
     module.vpc_kubernetes_cluster
@@ -58,7 +116,7 @@ module "kubernetes_logdna_attach" {
   private_endpoint   = var.logdna_private_endpoint
 
   depends_on = [
-    time_sleep.wait_for_cluster_initialization
+    time_sleep.wait_for_iks_initialization
   ]
 
 }
@@ -73,6 +131,10 @@ module "kubernetes_sysdig_attach" {
   cluster            = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
   sysdig_instance_id = module.monitoring_instance.guid
   private_endpoint   = var.sysdig_private_endpoint
+
+  depends_on = [
+    time_sleep.wait_for_iks_initialization
+  ]
 }
 
 # Authorization policy between IKS and Secrets Manager

@@ -4,11 +4,10 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix = "mytodo"
-# formatdate("YYYYMMDD", timestamp())
+prefix                    = "mytodo"
 region                    = "eu-de" # eu-de for Frankfurt MZR
-resource_group_name       = "mytodo"
-tags                      = ["tf", "mytodo"]
+resource_group_name       = ""
+tags                      = ["terraform", "mytodo"]
 platform_activity_tracker = "platform-activities"
 
 
@@ -25,13 +24,14 @@ vpc_enable_public_gateway     = true
 ##############################################################################
 ## Cluster Kubernetes
 ##############################################################################
-kubernetes_cluster_name       = "iks"
-kubernetes_worker_pool_flavor = "bx2.4x16"
-# kubernetes_worker_pool_flavor    = "bx2.16x64" # ODF or Portworx min flavor
-kubernetes_worker_nodes_per_zone = 1
+kubernetes_cluster_name          = "iks"
 kubernetes_version               = "1.25.5"
+kubernetes_worker_nodes_per_zone = 1
+kubernetes_worker_pool_flavor    = "bx2.4x16"
+# kubernetes_worker_pool_flavor    = "bx2.16x64" # ODF or Portworx min flavor
+
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
-kubernetes_wait_till          = "OneWorkerNodeReady"
+kubernetes_wait_till          = "IngressReady"
 kubernetes_update_all_workers = false
 # worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },
 #                { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
@@ -41,12 +41,12 @@ kubernetes_update_all_workers = false
 ## Cluster OpenShift
 ##############################################################################
 openshift_cluster_name       = "iro-odf"
+openshift_version            = "4.11.17_openshift"
 openshift_worker_pool_flavor = "bx2.4x16"
 # openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
-openshift_version = "4.11.17_openshift"
 
 # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
-openshift_wait_till          = "OneWorkerNodeReady"
+openshift_wait_till          = "IngressReady"
 openshift_update_all_workers = false
 
 ##############################################################################

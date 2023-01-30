@@ -17,8 +17,9 @@ resource "ibm_kms_instance_policies" "instance_policy" {
     enabled        = true
     interval_month = 3
   }
+  # A instance with dual authorization policy enabled cannot be destroyed by using Terraform.
   dual_auth_delete {
-    enabled = true
+    enabled = false
   }
   metrics {
     enabled = true

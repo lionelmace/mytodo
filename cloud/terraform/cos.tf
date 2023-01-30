@@ -8,7 +8,22 @@ data "ibm_resource_instance" "activity_tracker" {
   name = var.platform_activity_tracker
 }
 
+
+# COS Variables
 ##############################################################################
+variable "cos_plan" {
+  description = "COS plan type"
+  type        = string
+  default     = "standard"
+}
+
+variable "cos_region" {
+  description = " Enter Region for provisioning"
+  type        = string
+  default     = "global"
+}
+
+
 # COS Service for OpenShift Internal Registry
 ##############################################################################
 
