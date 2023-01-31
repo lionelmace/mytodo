@@ -19,17 +19,6 @@ variable "cos_region" {
   default     = "global"
 }
 
-variable "platform_activity_tracker" {
-  description = "Name of Platform Activity Tracker"
-  type        = string
-  default     = "platform-activities"
-}
-
-data "ibm_resource_instance" "activity_tracker" {
-  name = var.platform_activity_tracker
-}
-
-
 # COS Service for OpenShift Internal Registry
 ##############################################################################
 
@@ -58,7 +47,7 @@ resource "ibm_cos_bucket" "cos-bucket" {
   activity_tracking {
     read_data_events     = true
     write_data_events    = true
-    activity_tracker_crn = data.ibm_resource_instance.activity_tracker.id
+    activity_tracker_crn = local.activity_tracker_id
   }
   metrics_monitoring {
     usage_metrics_enabled   = true

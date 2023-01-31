@@ -4,11 +4,11 @@
 ## Global Variables
 ##############################################################################
 #ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-prefix                    = "mytodo"
-region                    = "eu-de" # eu-de for Frankfurt MZR
-resource_group_name       = ""
-tags                      = ["terraform", "mytodo"]
-platform_activity_tracker = "platform-activities"
+prefix                = "mytodo"
+region                = "eu-de" # eu-de for Frankfurt MZR
+resource_group_name   = ""
+tags                  = ["terraform", "mytodo"]
+activity_tracker_name = "platform-activities"
 
 
 ##############################################################################
