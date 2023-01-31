@@ -28,7 +28,7 @@ variable "cos_region" {
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  name              = format("%s-%s", var.prefix, "openshift-registry")
+  name              = format("%s-%s", var.prefix, "cos")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
