@@ -13,7 +13,7 @@ resource "ibm_resource_instance" "key-protect" {
 
 resource "ibm_kms_instance_policies" "instance_policy" {
   instance_id = ibm_resource_instance.key-protect.guid
-  key_id = ibm_kms_key.key.key_id
+  key_id      = ibm_kms_key.key.key_id
   rotation {
     enabled        = true
     interval_month = 3
