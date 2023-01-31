@@ -10,7 +10,7 @@
 variable "openshift_cluster_name" {
   description = "Name of the cluster"
   type        = string
-  default     = "iro"
+  default     = "roks"
 }
 
 variable "openshift_version" {
@@ -81,6 +81,7 @@ variable "openshift_update_all_workers" {
   default     = true
 }
 
+
 # OpenShift Cluster
 ##############################################################################
 
@@ -89,7 +90,7 @@ module "vpc_openshift_cluster" {
 
   vpc_id             = ibm_is_vpc.vpc.id
   resource_group_id  = local.resource_group_id
-  cluster_name       = var.openshift_cluster_name
+  cluster_name       = format("%s-%s", var.prefix, var.openshift_cluster_name)
   worker_pool_flavor = var.openshift_worker_pool_flavor
   worker_zones = {
     "${var.region}-1" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 0) },
@@ -133,6 +134,7 @@ resource "time_sleep" "wait_for_openshift_initialization" {
 # If not, you will face a timeout error after 45mins
 ##############################################################################
 module "openshift_logdna_attach" {
+
   source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
 
   cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
@@ -151,6 +153,7 @@ module "openshift_logdna_attach" {
 # If not, you will face a timeout error after 45mins
 ##############################################################################
 module "openshift_sysdig_attach" {
+
   source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
 
   cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id

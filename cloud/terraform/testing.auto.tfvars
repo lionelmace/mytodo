@@ -40,14 +40,14 @@ kubernetes_update_all_workers = false
 ##############################################################################
 ## Cluster OpenShift
 ##############################################################################
-openshift_cluster_name       = "iro-odf"
-openshift_version            = "4.11.22_openshift"
-openshift_worker_pool_flavor = "bx2.4x16"
-# openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
+# openshift_cluster_name       = "roks"
+# openshift_version            = "4.11.22_openshift"
+# openshift_worker_pool_flavor = "bx2.4x16"
+# # openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
 
-# Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
-openshift_wait_till          = "IngressReady"
-openshift_update_all_workers = false
+# # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
+# openshift_wait_till          = "IngressReady"
+# openshift_update_all_workers = false
 
 ##############################################################################
 ## COS
