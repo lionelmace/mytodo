@@ -13,7 +13,6 @@ resource "ibm_resource_instance" "key-protect" {
 
 resource "ibm_kms_instance_policies" "instance_policy" {
   instance_id = ibm_resource_instance.key-protect.guid
-  key_id      = ibm_kms_key.key.key_id
   rotation {
     enabled        = true
     interval_month = 3
@@ -35,6 +34,19 @@ resource "ibm_kms_key" "key" {
   key_name     = "${var.prefix}-root-key"
   standard_key = false
   force_delete = true
+}
+
+resource "ibm_kms_key_policies" "key_policy" {
+  instance_id = ibm_resource_instance.key-protect.guid
+  key_id      = ibm_kms_key.key.key_id
+  rotation {
+    enabled        = true
+    interval_month = 3
+  }
+  # A instance with dual authorization policy enabled cannot be destroyed by using Terraform.
+  dual_auth_delete {
+    enabled = false
+  }
 }
 
 
