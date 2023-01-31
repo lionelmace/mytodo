@@ -13,16 +13,16 @@ variable "openshift_cluster_name" {
   default     = "iro"
 }
 
+variable "openshift_version" {
+  description = "The OpenShift version that you want to set up in your cluster."
+  type        = string
+  default     = "4.11.22_openshift"
+}
+
 variable "openshift_worker_pool_flavor" {
   description = " The flavor of the VPC worker node that you want to use."
   type        = string
   default     = "bx2.4x16"
-}
-
-variable "openshift_version" {
-  description = "The OpenShift version that you want to set up in your cluster."
-  type        = string
-  default     = "4.11.17_openshift"
 }
 
 variable "openshift_worker_nodes_per_zone" {

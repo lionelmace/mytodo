@@ -11,6 +11,12 @@ variable "kubernetes_cluster_name" {
   default     = "iks"
 }
 
+variable "kubernetes_version" {
+  description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
+  type        = string
+  default     = "1.25.6"
+}
+
 variable "kubernetes_worker_pool_flavor" {
   description = "The flavor of VPC worker node to use for your cluster. Use `ibmcloud ks flavors` to find flavors for a region."
   type        = string
@@ -21,12 +27,6 @@ variable "kubernetes_worker_nodes_per_zone" {
   description = "Number of workers to provision in each subnet"
   type        = number
   default     = 1
-}
-
-variable "kubernetes_version" {
-  description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
-  type        = string
-  default     = "1.25.5"
 }
 
 variable "kubernetes_wait_till" {
