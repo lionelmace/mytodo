@@ -52,6 +52,7 @@ resource "ibm_iam_access_group_policy" "policy-k8s" {
 
 
 # AUTHORIZATIONS
+##############################################################################
 
 # Authorization policy between Mongo and Key Protect
 # Require to encrypt Mongo DB with Key in Key Protect
@@ -73,7 +74,7 @@ resource "ibm_iam_authorization_policy" "roks-sm" {
 }
 
 # Authorization policy between SCC (Source) and COS Bucket (Target)
-# Requires by the new SCC
+# Requires by the new SCC to store SCC evaluation results into a COS bucket
 resource "ibm_iam_authorization_policy" "iam-auth-scc-cos" {
   source_service_name         = "compliance"
   target_service_name         = "cloud-object-storage"
