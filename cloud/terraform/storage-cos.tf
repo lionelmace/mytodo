@@ -1,12 +1,8 @@
-variable "platform_activity_tracker" {
-  description = "Name of Platform Activity Tracker"
-  type        = string
-  default     = "platform-activities"
-}
-
-data "ibm_resource_instance" "activity_tracker" {
-  name = var.platform_activity_tracker
-}
+##############################################################################
+# COS Instance with 2 buckets: 
+# - 1 bucket automatically created by OpenShift for Container Registry
+# - 1 bucket to store your SCC evaluation results
+##############################################################################
 
 
 # COS Variables
@@ -21,6 +17,16 @@ variable "cos_region" {
   description = " Enter Region for provisioning"
   type        = string
   default     = "global"
+}
+
+variable "platform_activity_tracker" {
+  description = "Name of Platform Activity Tracker"
+  type        = string
+  default     = "platform-activities"
+}
+
+data "ibm_resource_instance" "activity_tracker" {
+  name = var.platform_activity_tracker
 }
 
 

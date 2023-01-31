@@ -80,7 +80,7 @@ resource "ibm_iam_access_group_policy" "iam-scc" {
   roles           = ["Reader", "Viewer"]
 
   resources {
-    service           = "scc"
+    service           = "securityAndComplianceCenter"
     resource_group_id = local.resource_group_id
   }
 }
