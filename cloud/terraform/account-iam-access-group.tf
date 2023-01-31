@@ -71,3 +71,13 @@ resource "ibm_iam_authorization_policy" "roks-sm" {
   target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
   roles                       = ["Manager"]
 }
+
+# Authorization policy between SCC (Source) and COS Bucket (Target)
+# Requires by the new SCC
+resource "ibm_iam_authorization_policy" "iam-auth-scc-cos" {
+  source_service_name  = "compliance"
+  target_service_name         = "cos"
+  target_resource_instance_id = ibm_resource_instance.cos.id
+  roles                       = ["Writer"]
+}
+
