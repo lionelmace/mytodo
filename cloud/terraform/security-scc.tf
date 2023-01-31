@@ -73,7 +73,7 @@ resource "ibm_scc_posture_scan_initiate_validation" "scc_scan_fscloud" {
   #   no_of_occurrences = 1
 }
 
-## IAM SCC
+## IAM
 ##############################################################################
 resource "ibm_iam_access_group_policy" "iam-scc" {
   access_group_id = ibm_iam_access_group.accgrp.id
@@ -81,6 +81,6 @@ resource "ibm_iam_access_group_policy" "iam-scc" {
 
   resources {
     service           = "compliance"
-    # resource_group_id = local.resource_group_id
+    resource_group_id = local.resource_group_id
   }
 }
