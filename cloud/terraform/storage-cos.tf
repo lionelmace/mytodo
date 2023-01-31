@@ -65,7 +65,7 @@ resource "ibm_cos_bucket" "cos-bucket" {
     request_metrics_enabled = true
     metrics_monitoring_crn  = module.monitoring_instance.id
   }
-  endpoint_type = "private"
+  endpoint_type = "public"
   # allowed_ip = ["223.196.168.27", "223.196.161.38", "192.168.0.1"]
 }
 
