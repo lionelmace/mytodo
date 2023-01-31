@@ -77,7 +77,7 @@ resource "ibm_scc_posture_scan_initiate_validation" "scc_scan_fscloud" {
 ##############################################################################
 resource "ibm_iam_access_group_policy" "iam-scc" {
   access_group_id = ibm_iam_access_group.accgrp.id
-  roles           = ["Reader", "Viewer"]
+  roles           = ["Viewer","Reader"]
 
   resources {
     service           = "securityAndComplianceCenter"
