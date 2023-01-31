@@ -72,3 +72,15 @@ resource "ibm_scc_posture_scan_initiate_validation" "scc_scan_fscloud" {
   # frequency = 3600
   #   no_of_occurrences = 1
 }
+
+## IAM
+##############################################################################
+resource "ibm_iam_access_group_policy" "iam-scc" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Reader", "Viewer"]
+
+  resources {
+    service           = "scc"
+    resource_group_id = local.resource_group_id
+  }
+}
