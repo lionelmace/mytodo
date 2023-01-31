@@ -75,9 +75,9 @@ resource "ibm_iam_authorization_policy" "roks-sm" {
 # Authorization policy between SCC (Source) and COS Bucket (Target)
 # Requires by the new SCC
 resource "ibm_iam_authorization_policy" "iam-auth-scc-cos" {
-  source_service_name  = "compliance"
+  source_service_name         = "compliance"
   target_service_name         = "cloud-object-storage"
-  target_resource_instance_id = ibm_resource_instance.cos.id
+  target_resource_instance_id = ibm_resource_instance.cos.guid
   roles                       = ["Writer"]
 }
 
