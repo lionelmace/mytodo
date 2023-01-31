@@ -44,7 +44,7 @@ resource "ibm_resource_instance" "cos" {
 ##############################################################################
 
 resource "ibm_cos_bucket" "a-smart-bucket" {
-  bucket_name          = "a-smart-bucket-at-eu-de"
+  bucket_name          = "cos-bucket-for-scc"
   resource_instance_id = ibm_resource_instance.cos.id
   region_location      = "eu-de"
   storage_class        = "smart"
