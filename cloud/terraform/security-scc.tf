@@ -81,6 +81,6 @@ resource "ibm_iam_access_group_policy" "iam-scc" {
 
   resources {
     service           = "securityAndComplianceCenter"
-    resource_group_id = local.resource_group_id
+    # resource_group_id = local.resource_group_id
   }
 }
