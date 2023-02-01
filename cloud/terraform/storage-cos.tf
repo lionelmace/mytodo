@@ -14,7 +14,7 @@ variable "cos_plan" {
 }
 
 variable "cos_region" {
-  description = " Enter Region for provisioning"
+  description = "Enter Region for provisioning"
   type        = string
   default     = "global"
 }
