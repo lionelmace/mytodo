@@ -25,15 +25,15 @@ resource "ibm_database" "icd_mongo" {
     group_id = "member"
 
     memory {
-      allocation_mb = 1024
+      allocation_mb = var.icd_mongo_ram_allocation
     }
 
     disk {
-      allocation_mb = 20480
+      allocation_mb = var.icd_mongo_disk_allocation
     }
 
     cpu {
-      allocation_count = 0
+      allocation_count = var.icd_mongo_core_allocation
     }
   }
 
@@ -149,26 +149,49 @@ variable "icd_mongo_plan" {
   description = "The plan type of the Database instance"
   default     = "standard"
 }
+
 variable "icd_mongo_adminpassword" {
   type        = string
   description = "The admin user password for the instance"
   default     = "Passw0rd01"
 }
+
+variable "icd_mongo_ram_allocation" {
+  type = number
+  description = "RAM (GB/data member)"
+  default = 1024
+}
+
+variable "icd_mongo_disk_allocation" {
+  type = number
+  description = "Disk Usage (GB/data member)"
+  default = 20480
+}
+
+variable "icd_mongo_core_allocation" {
+  type = number
+  description = "Dedicated Cores (cores/data member)"
+  default = 0
+}
+
 variable "icd_mongo_db_version" {
   default     = "4.4"
   type        = string
   description = "The database version to provision if specified"
 }
+
 variable "icd_mongo_users" {
   default     = null
   type        = set(map(string))
   description = "Database Users. It is set of username and passwords"
 }
+
 variable "icd_mongo_whitelist" {
   default     = null
   type        = set(map(string))
   description = "Database Whitelist It is set of IP Address and description"
 }
+
 variable "icd_mongo_service_endpoints" {
   default     = "public"
   type        = string
