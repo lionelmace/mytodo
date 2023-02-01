@@ -69,7 +69,7 @@ sysdig_enable_platform_metrics = false
 ##############################################################################
 ## ICD Mongo
 ##############################################################################
-icd_mongo_plan = "standard"
+icd_mongo_plan = "enterprise" # standard
 # expected length in the range (10 - 32) - must not contain special characters
 icd_mongo_adminpassword     = "Passw0rd01"
 icd_mongo_db_version        = "4.4"
