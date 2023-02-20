@@ -30,7 +30,7 @@ kubernetes_worker_pool_flavor    = "bx2.4x16"
 
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 kubernetes_wait_till          = "IngressReady"
-kubernetes_update_all_workers = false
+kubernetes_update_all_workers = true
 # worker_pools=[ { name = "dev" machine_type = "cx2.8x16" workers_per_zone = 2 },
 #                { name = "test" machine_type = "mx2.4x32" workers_per_zone = 2 } ]
 
