@@ -118,14 +118,14 @@ module "vpc_openshift_cluster" {
 
 ##############################################################################
 # Log and Monitoring can only be attached once cluster is fully ready
-resource "time_sleep" "wait_for_openshift_initialization" {
+# resource "time_sleep" "wait_for_openshift_initialization" {
 
-  depends_on = [
-    module.vpc_openshift_cluster
-  ]
+#   depends_on = [
+#     module.vpc_openshift_cluster
+#   ]
 
-  create_duration = "15m"
-}
+#   create_duration = "15m"
+# }
 
 ##############################################################################
 # Attach Log Analysis Service to cluster
@@ -141,9 +141,9 @@ module "openshift_logdna_attach" {
   logdna_instance_id = module.logging_instance.guid
   private_endpoint   = var.logdna_private_endpoint
 
-  depends_on = [
-    time_sleep.wait_for_openshift_initialization
-  ]
+  # depends_on = [
+  #   time_sleep.wait_for_openshift_initialization
+  # ]
 }
 
 ##############################################################################
@@ -160,7 +160,7 @@ module "openshift_sysdig_attach" {
   sysdig_instance_id = module.monitoring_instance.guid
   private_endpoint   = var.sysdig_private_endpoint
 
-  depends_on = [
-    time_sleep.wait_for_openshift_initialization
-  ]
+  # depends_on = [
+  #   time_sleep.wait_for_openshift_initialization
+  # ]
 }

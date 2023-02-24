@@ -95,14 +95,14 @@ output "iks_cluster_crn" {
 
 ##############################################################################
 # Log and Monitoring can only be attached once cluster is fully ready
-resource "time_sleep" "wait_for_iks_initialization" {
+# resource "time_sleep" "wait_for_iks_initialization" {
 
-  depends_on = [
-    module.vpc_kubernetes_cluster
-  ]
+#   depends_on = [
+#     module.vpc_kubernetes_cluster
+#   ]
 
-  create_duration = "15m"
-}
+#   create_duration = "15m"
+# }
 
 
 ##############################################################################
@@ -115,9 +115,9 @@ module "kubernetes_logdna_attach" {
   logdna_instance_id = module.logging_instance.guid
   private_endpoint   = var.logdna_private_endpoint
 
-  depends_on = [
-    time_sleep.wait_for_iks_initialization
-  ]
+  # depends_on = [
+  #   time_sleep.wait_for_iks_initialization
+  # ]
 
 }
 
@@ -132,9 +132,9 @@ module "kubernetes_sysdig_attach" {
   sysdig_instance_id = module.monitoring_instance.guid
   private_endpoint   = var.sysdig_private_endpoint
 
-  depends_on = [
-    time_sleep.wait_for_iks_initialization
-  ]
+  # depends_on = [
+  #   time_sleep.wait_for_iks_initialization
+  # ]
 }
 
 # Authorization policy between IKS and Secrets Manager
