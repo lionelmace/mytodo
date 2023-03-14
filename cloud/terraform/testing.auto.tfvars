@@ -25,8 +25,8 @@ vpc_enable_public_gateway     = true
 kubernetes_cluster_name          = "iks"
 kubernetes_version               = "1.26.1"
 kubernetes_worker_nodes_per_zone = 1
-# kubernetes_worker_pool_flavor    = "bx2.4x16"
-kubernetes_worker_pool_flavor    = "bx2.16x64" # ODF or Portworx flavor
+kubernetes_worker_pool_flavor    = "bx2.4x16"
+# kubernetes_worker_pool_flavor    = "bx2.16x64" # ODF or Portworx flavor
 
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 kubernetes_wait_till          = "IngressReady"
@@ -40,11 +40,11 @@ kubernetes_update_all_workers = true
 ##############################################################################
 openshift_cluster_name       = "roks"
 openshift_version            = "4.12.3_openshift"
-# openshift_worker_pool_flavor = "bx2.4x16"
-openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
+openshift_worker_pool_flavor = "bx2.4x16"
+# openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
 
 # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
-openshift_wait_till          = "IngressReady"
+openshift_wait_till          = "OneWorkerNodeReady"
 openshift_update_all_workers = false
 
 
