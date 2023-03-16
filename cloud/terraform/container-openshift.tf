@@ -22,7 +22,7 @@ variable "openshift_version" {
 variable "openshift_worker_pool_flavor" {
   description = " The flavor of the VPC worker node that you want to use."
   type        = string
-  default     = "bx2.4x16"
+  default     = "bx2.16x64"
 }
 
 variable "openshift_worker_nodes_per_zone" {
