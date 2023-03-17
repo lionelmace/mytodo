@@ -3,7 +3,7 @@
 ##############################################################################
 resource "ibm_database" "icd_postgres" {
   name              = format("%s-%s", var.prefix, "postgres")
-  service           = "databases-for-postgresdb"
+  service           = "databases-for-postgresql"
   plan              = var.icd_postgres_plan
   version           = var.icd_postgres_db_version
   service_endpoints = var.icd_postgres_service_endpoints
