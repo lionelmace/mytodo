@@ -70,10 +70,7 @@ resource "ibm_database" "icd_mongo" {
   #   name     = "user123"
   #   password = "password12"
   # }
-  # whitelist {
-  #   address     = "172.168.1.1/32"
-  #   description = "desc"
-  # }
+
 }
 
 ## IAM
@@ -184,12 +181,6 @@ variable "icd_mongo_users" {
   default     = null
   type        = set(map(string))
   description = "Database Users. It is set of username and passwords"
-}
-
-variable "icd_mongo_whitelist" {
-  default     = null
-  type        = set(map(string))
-  description = "Database Whitelist It is set of IP Address and description"
 }
 
 variable "icd_mongo_service_endpoints" {
