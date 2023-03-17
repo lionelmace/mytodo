@@ -40,8 +40,8 @@ kubernetes_update_all_workers = true
 ##############################################################################
 openshift_cluster_name       = "roks"
 openshift_version            = "4.12.3_openshift"
-# openshift_worker_pool_flavor = "bx2.4x16"
-openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
+openshift_worker_pool_flavor = "bx2.4x16"
+# openshift_worker_pool_flavor = "bx2.16x64" # ODF Flavors
 
 # Available values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
 openshift_wait_till          = "OneWorkerNodeReady"
