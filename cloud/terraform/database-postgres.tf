@@ -41,7 +41,7 @@ resource "ibm_database" "icd_postgres" {
 ## IAM
 ##############################################################################
 # Doc at https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-iam
-resource "ibm_iam_access_group_policy" "iam-dbaas" {
+resource "ibm_iam_access_group_policy" "iam-postgres" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles           = ["Editor"]
 
