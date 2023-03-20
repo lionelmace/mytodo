@@ -22,7 +22,7 @@ resource "ibm_cbr_rule" "cbr_rule" {
     }
     attributes {
       name  = "endpointType"
-      value = "public"
+      value = "private"
     }
   }
   resources {
