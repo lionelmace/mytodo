@@ -73,6 +73,26 @@ resource "ibm_database" "icd_mongo" {
 
 }
 
+## Service Credentials
+##############################################################################
+resource "ibm_resource_key" "key" {
+  name                 = format("%s-%s", var.prefix, "mongo-key")
+  resource_instance_id = ibm_database.icd_mongo.id
+  role                 = "Manager"
+}
+locals {
+  credentials =jsondecode(ibm_resource_key.key.credentials_json)
+}
+output "username" {
+  value = local.credentials.connection.mongodb.authentication.username
+}
+output "password" {
+  value = local.credentials.connection.mongodb.authentication.password
+}
+output "hosts" {
+  value = local.credentials.connection.mongodb.hosts
+}
+
 ## IAM
 ##############################################################################
 # Doc at https://cloud.ibm.com/docs/cloud-databases?topic=cloud-databases-iam
