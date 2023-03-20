@@ -10,11 +10,11 @@ resource "ibm_cbr_zone" "cbr_zone" {
 resource "ibm_cbr_rule" "cbr_rule" {
   description      = format("%s-%s", var.prefix, "rule")
   enforcement_mode = "enabled"
-  #   operations {
-  #         api_types {
-  #             api_type_id = "api_type_id"
-  #         }
-  #   }
+  operations {
+    api_types {
+      api_type_id = "crn:v1:bluemix:public:context-based-restrictions::::api-type:data-plane"
+    }
+  }
   contexts {
     attributes {
       name  = "networkZoneId"
