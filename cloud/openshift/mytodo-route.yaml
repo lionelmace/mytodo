@@ -34,9 +34,9 @@ spec:
           initialDelaySeconds: 3
           periodSeconds: 3
           failureThreshold: 2        
-        # envFrom:
-        # - secretRef:
-        #     name: database-credentials
+        envFrom:
+        - secretRef:
+            name: database-credentials
 
 ---
 apiVersion: v1
@@ -73,7 +73,7 @@ metadata:
     app: mytodo
     tier: frontend
 spec:
-  host: iro-odf-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  host: mytodo-roks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
   to:
     kind: Service
     name: mytodo-service
