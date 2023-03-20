@@ -1,6 +1,6 @@
 resource "ibm_cbr_zone" "cbr_zone" {
   name       = format("%s-%s", var.prefix, "zone")
-  account_id = "0b5a00334eaf9eb9339d2ab48f7326b4"
+  account_id = var.account_id
   addresses {
     type  = "vpc"
     value = ibm_is_vpc.vpc.crn
@@ -28,7 +28,7 @@ resource "ibm_cbr_rule" "cbr_rule" {
   resources {
     attributes {
       name  = "accountId"
-      value = "0b5a00334eaf9eb9339d2ab48f7326b4"
+      value = var.account_id
     }
     attributes {
       name  = "serviceName"
