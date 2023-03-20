@@ -37,7 +37,7 @@ resource "ibm_cbr_rule" "cbr_rule" {
     attributes {
       name     = "serviceInstance"
       operator = "stringEquals"
-      value    = ibm_database.icd_mongo.id
+      value    = ibm_database.icd_mongo.name
     }
   }
 }
