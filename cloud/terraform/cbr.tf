@@ -3,7 +3,7 @@ resource "ibm_cbr_zone" "cbr_zone" {
   account_id = "0b5a00334eaf9eb9339d2ab48f7326b4"
   addresses {
     type  = "vpc"
-    value = ibm_is_vpc.vpc.id
+    value = ibm_is_vpc.vpc.name
   }
 }
 
