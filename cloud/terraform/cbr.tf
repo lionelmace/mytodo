@@ -1,5 +1,5 @@
 resource "ibm_cbr_zone" "cbr_zone" {
-  name = format("%s-%s", var.prefix, "zone")
+  name       = format("%s-%s", var.prefix, "zone")
   account_id = "0b5a00334eaf9eb9339d2ab48f7326b4"
   addresses {
     type  = "vpc"
@@ -9,8 +9,12 @@ resource "ibm_cbr_zone" "cbr_zone" {
 
 resource "ibm_cbr_rule" "cbr_rule" {
   description      = format("%s-%s", var.prefix, "rule")
-#   account_id = "0b5a00334eaf9eb9339d2ab48f7326b4"
   enforcement_mode = "enabled"
+  #   operations {
+  #         api_types {
+  #             api_type_id = "api_type_id"
+  #         }
+  #   }
   contexts {
     attributes {
       name  = "networkZoneId"
@@ -22,6 +26,10 @@ resource "ibm_cbr_rule" "cbr_rule" {
     # }
   }
   resources {
+    attributes {
+      name  = "accountId"
+      value = "0b5a00334eaf9eb9339d2ab48f7326b4"
+    }
     attributes {
       name  = "serviceName"
       value = "databases-for-mongodb"
