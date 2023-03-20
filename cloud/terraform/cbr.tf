@@ -9,7 +9,7 @@ resource "ibm_cbr_zone" "cbr_zone" {
 
 resource "ibm_cbr_rule" "cbr_rule" {
   description      = format("%s-%s", var.prefix, "rule")
-  account_id = "0b5a00334eaf9eb9339d2ab48f7326b4"
+#   account_id = "0b5a00334eaf9eb9339d2ab48f7326b4"
   enforcement_mode = "enabled"
   contexts {
     attributes {
