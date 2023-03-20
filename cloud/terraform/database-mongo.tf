@@ -154,21 +154,21 @@ variable "icd_mongo_adminpassword" {
 }
 
 variable "icd_mongo_ram_allocation" {
-  type = number
+  type        = number
   description = "RAM (GB/data member)"
-  default = 1024
+  default     = 1024
 }
 
 variable "icd_mongo_disk_allocation" {
-  type = number
+  type        = number
   description = "Disk Usage (GB/data member)"
-  default = 20480
+  default     = 20480
 }
 
 variable "icd_mongo_core_allocation" {
-  type = number
+  type        = number
   description = "Dedicated Cores (cores/data member)"
-  default = 0
+  default     = 0
 }
 
 variable "icd_mongo_db_version" {

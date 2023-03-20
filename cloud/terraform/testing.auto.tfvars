@@ -82,7 +82,7 @@ icd_mongo_service_endpoints = "private"
 # icd_mongo_core_allocation = 6
 
 # Minimum parameter for Standard Edition
-icd_mongo_ram_allocation = 1024
+icd_mongo_ram_allocation  = 1024
 icd_mongo_disk_allocation = 20480
 icd_mongo_core_allocation = 0
 
@@ -102,7 +102,7 @@ icd_postgres_db_version        = "12"
 icd_postgres_service_endpoints = "public"
 
 # Minimum parameter for Standard Edition
-icd_postgres_ram_allocation = 1024
+icd_postgres_ram_allocation  = 1024
 icd_postgres_disk_allocation = 20480
 icd_postgres_core_allocation = 0
 
