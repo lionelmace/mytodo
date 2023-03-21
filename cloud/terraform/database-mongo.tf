@@ -78,7 +78,7 @@ resource "ibm_database" "icd_mongo" {
 resource "ibm_resource_key" "key" {
   name                 = format("%s-%s", var.prefix, "mongo-key")
   resource_instance_id = ibm_database.icd_mongo.id
-  role                 = "Manager"
+  role                 = "Viewer"
 }
 locals {
   credentials =jsondecode(ibm_resource_key.key.credentials_json)
@@ -106,57 +106,57 @@ resource "ibm_iam_access_group_policy" "iam-mongo" {
   }
 }
 
-## VPE (Optional)
-##############################################################################
-# VPE can only be created once Mongo DB is fully registered in the backend
-resource "time_sleep" "wait_for_mongo_initialization" {
-  # count = tobool(var.use_vpe) ? 1 : 0
+# ## VPE (Optional)
+# ##############################################################################
+# # VPE can only be created once Mongo DB is fully registered in the backend
+# resource "time_sleep" "wait_for_mongo_initialization" {
+#   # count = tobool(var.use_vpe) ? 1 : 0
 
-  depends_on = [
-    ibm_database.icd_mongo
-  ]
+#   depends_on = [
+#     ibm_database.icd_mongo
+#   ]
 
-  create_duration = "5m"
-}
-
-# VPE (Virtual Private Endpoint) for Mongo
-##############################################################################
-# Make sure your Cloud Databases deployment's private endpoint is enabled
-# otherwise you'll face this error: "Service does not support VPE extensions."
-##############################################################################
-resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
-  name           = "${var.prefix}-mongo-vpe"
-  resource_group = local.resource_group_id
-  vpc            = ibm_is_vpc.vpc.id
-
-  target {
-    crn           = ibm_database.icd_mongo.id
-    resource_type = "provider_cloud_service"
-  }
-
-  # one Reserved IP for per zone in the VPC
-  dynamic "ips" {
-    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-    content {
-      subnet = ips.key
-      name   = "${ips.value.name}-ip"
-    }
-  }
-
-  depends_on = [
-    time_sleep.wait_for_mongo_initialization
-  ]
-
-  tags = var.tags
-}
-
-data "ibm_is_virtual_endpoint_gateway_ips" "mongo_vpe_ips" {
-  gateway = ibm_is_virtual_endpoint_gateway.vpe_mongo.id
-}
-
-# output "mongo_vpe_ips" {
-#   value = data.ibm_is_virtual_endpoint_gateway_ips.mongo_vpe_ips
+#   create_duration = "5m"
 # }
+
+# # VPE (Virtual Private Endpoint) for Mongo
+# ##############################################################################
+# # Make sure your Cloud Databases deployment's private endpoint is enabled
+# # otherwise you'll face this error: "Service does not support VPE extensions."
+# ##############################################################################
+# resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
+#   name           = "${var.prefix}-mongo-vpe"
+#   resource_group = local.resource_group_id
+#   vpc            = ibm_is_vpc.vpc.id
+
+#   target {
+#     crn           = ibm_database.icd_mongo.id
+#     resource_type = "provider_cloud_service"
+#   }
+
+#   # one Reserved IP for per zone in the VPC
+#   dynamic "ips" {
+#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+#     content {
+#       subnet = ips.key
+#       name   = "${ips.value.name}-ip"
+#     }
+#   }
+
+#   depends_on = [
+#     time_sleep.wait_for_mongo_initialization
+#   ]
+
+#   tags = var.tags
+# }
+
+# data "ibm_is_virtual_endpoint_gateway_ips" "mongo_vpe_ips" {
+#   gateway = ibm_is_virtual_endpoint_gateway.vpe_mongo.id
+# }
+
+# # output "mongo_vpe_ips" {
+# #   value = data.ibm_is_virtual_endpoint_gateway_ips.mongo_vpe_ips
+# # }
 
 
 # Variables
