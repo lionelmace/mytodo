@@ -20,10 +20,10 @@ resource "ibm_cbr_rule" "cbr_rule" {
       name  = "networkZoneId"
       value = ibm_cbr_zone.cbr_zone.id
     }
-    attributes {
-      name  = "endpointType"
-      value = "private"
-    }
+    # attributes {
+    #   name  = "endpointType"
+    #   value = "private"
+    # }
   }
   resources {
     attributes {
