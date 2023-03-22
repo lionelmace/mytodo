@@ -7,6 +7,33 @@ resource "ibm_cbr_zone" "cbr_zone" {
   }
 }
 
+resource "ibm_cbr_zone" "cbr_zone_home" {
+  name       = format("%s-%s", var.prefix, "home")
+  account_id = var.account_id
+  addresses {
+    type  = "ipAddress"
+    value = "92.151.223.28/32"
+  }
+}
+
+# Zone with the VPC Public Gateways
+resource "ibm_cbr_zone" "cbr_zone_pgw" {
+  name       = format("%s-%s", var.prefix, "pgws")
+  account_id = var.account_id
+  addresses {
+    type  = "ipAddress"
+    value = "149.81.11.254"
+  }
+  addresses {
+    type  = "ipAddress"
+    value = "158.176.6.206"
+  }
+  addresses {
+    type  = "ipAddress"
+    value = "149.81.159.25"
+  }
+}
+
 resource "ibm_cbr_rule" "cbr_rule" {
   description      = format("%s-%s", var.prefix, "rule")
   enforcement_mode = "enabled"
@@ -24,6 +51,12 @@ resource "ibm_cbr_rule" "cbr_rule" {
     #   name  = "endpointType"
     #   value = "private"
     # }
+  }
+  contexts {
+    attributes {
+      name  = "networkZoneId"
+      value = ibm_cbr_zone.cbr_zone_home.id
+    }
   }
   resources {
     attributes {
