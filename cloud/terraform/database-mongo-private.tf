@@ -42,7 +42,7 @@ resource "ibm_database" "icd_mongo_private" {
 ##############################################################################
 resource "ibm_resource_key" "icd_mongo_private_key" {
   name                 = format("%s-%s", var.prefix, "mongo-private-key")
-  resource_instance_id = ibm_database.icd_mongo.id
+  resource_instance_id = ibm_database.icd_mongo_private.id
   role                 = "Viewer"
 }
 
