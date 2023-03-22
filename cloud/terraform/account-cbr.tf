@@ -22,17 +22,14 @@ resource "ibm_cbr_zone" "cbr_zone_pgw" {
   account_id = var.account_id
   addresses {
     type  = "ipAddress"
-    # value = "149.81.11.254"
     value = ibm_is_public_gateway.pgw.0.floating_ip.address
   }
   addresses {
     type  = "ipAddress"
-    # value = "158.176.6.206"
     value = ibm_is_public_gateway.pgw.1.floating_ip.address
   }
   addresses {
     type  = "ipAddress"
-    # value = "149.81.159.25"
     value = ibm_is_public_gateway.pgw.2.floating_ip.address
   }
 }
@@ -48,7 +45,7 @@ resource "ibm_cbr_rule" "cbr_rule" {
   contexts {
     attributes {
       name  = "networkZoneId"
-      value = ibm_cbr_zone.cbr_zone.id
+      value = ibm_cbr_zone.cbr_zone_pgw.id
     }
     # attributes {
     #   name  = "endpointType"
