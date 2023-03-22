@@ -23,7 +23,7 @@ resource "ibm_cbr_zone" "cbr_zone_pgw" {
   addresses {
     type  = "ipAddress"
     # value = "149.81.11.254"
-    value = ibm_is_public_gateway.pgw.1.ipAddress
+    value = ibm_is_public_gateway.pgw.1.floating_ip.address
   }
   addresses {
     type  = "ipAddress"
