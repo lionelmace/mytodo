@@ -22,7 +22,8 @@ resource "ibm_cbr_zone" "cbr_zone_pgw" {
   account_id = var.account_id
   addresses {
     type  = "ipAddress"
-    value = "149.81.11.254"
+    # value = "149.81.11.254"
+    value = ibm_is_public_gateway.pgw.1.ipAddress
   }
   addresses {
     type  = "ipAddress"
