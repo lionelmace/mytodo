@@ -34,6 +34,32 @@ resource "ibm_cbr_zone" "cbr_zone_pgw" {
   }
 }
 
+resource "ibm_cbr_rule" "cbr_rule_cos" {
+  description      = format("%s-%s", var.prefix, "rule-cos")
+  enforcement_mode = "report"
+  contexts {
+    attributes {
+      name  = "networkZoneId"
+      value = ibm_cbr_zone.cbr_zone.id
+    }
+  }
+  resources {
+    attributes {
+      name  = "accountId"
+      value = var.account_id
+    }
+    attributes {
+      name  = "serviceName"
+      value = "cloud-object-storage"
+    }
+    attributes {
+      name     = "serviceInstance"
+      operator = "stringEquals"
+      value    = ibm_resource_instance.cos.guid
+    }
+  }
+}
+
 resource "ibm_cbr_rule" "cbr_rule" {
   description      = format("%s-%s", var.prefix, "rule")
   enforcement_mode = "enabled"
