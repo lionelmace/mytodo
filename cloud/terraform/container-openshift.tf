@@ -76,6 +76,12 @@ variable "openshift_update_all_workers" {
   default     = true
 }
 
+variable "is_openshift_cluster" {
+  type    = bool
+  default = false
+}
+
+
 
 ## Resources
 ##############################################################################
@@ -151,7 +157,7 @@ data "ibm_container_cluster_config" "cluster_config" {
 
 resource "ibm_resource_instance" "openshift_cos_instance" {
   count             = var.is_openshift_cluster ? 1 : 0
-  name              = join("-", [var.environment_id, "roks-backup"])
+  name              = join("-", [var.prefix, "roks-backup"])
   resource_group_id = local.resource_group_id
   service           = "cloud-object-storage"
   plan              = "standard"
