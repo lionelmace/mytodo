@@ -246,12 +246,12 @@ resource "ibm_is_security_group" "sg-cis-cloudflare" {
 resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
   group     = ibm_is_security_group.sg-cis-cloudflare
 
-  dynamic "sgs" {
+  dynamic "rules" {
     for_each = var.vpc_sg_cloudflare_rules
 
     content {
-      direction = sgs.value.direction
-      remote    = sgs.value.remote
+      direction = rules.value.direction
+      remote    = rules.value.remote
     }
   }
 
