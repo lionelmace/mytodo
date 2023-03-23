@@ -1,8 +1,15 @@
-
+## IAM
 ##############################################################################
-# OpenShift cluster
-##############################################################################
+# Create a policy to all Kubernetes instances within the Resource Group
+resource "ibm_iam_access_group_policy" "policy-k8s" {
+  access_group_id = ibm_iam_access_group.accgrp.id
+  roles           = ["Manager", "Writer", "Editor", "Operator", "Viewer"]
 
+  resources {
+    service           = "containers-kubernetes"
+    resource_group_id = ibm_resource_group.resource_group.id
+  }
+}
 
 # OpenShift Variables
 ##############################################################################
@@ -19,7 +26,7 @@ variable "openshift_version" {
   default     = "4.12.3_openshift"
 }
 
-variable "openshift_worker_pool_flavor" {
+variable "openshift_machine_flavor" {
   description = " The flavor of the VPC worker node that you want to use."
   type        = string
   default     = "bx2.4x16"
@@ -82,28 +89,31 @@ variable "openshift_update_all_workers" {
 }
 
 
-# OpenShift Cluster
+## Resources
 ##############################################################################
-
-module "vpc_openshift_cluster" {
-  source = "terraform-ibm-modules/cluster/ibm//modules/vpc-openshift"
-
-  vpc_id             = ibm_is_vpc.vpc.id
-  resource_group_id  = local.resource_group_id
-  cluster_name       = format("%s-%s", var.prefix, var.openshift_cluster_name)
-  worker_pool_flavor = var.openshift_worker_pool_flavor
-  worker_zones = {
-    "${var.region}-1" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 0) },
-    "${var.region}-2" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 1) },
-    "${var.region}-3" = { subnet_id = element(ibm_is_subnet.subnet.*.id, 2) },
-  }
-  worker_nodes_per_zone           = var.openshift_worker_nodes_per_zone
-  kube_version                    = var.openshift_version
-  worker_labels                   = var.worker_labels
-  wait_till                       = var.openshift_wait_till
+resource "ibm_container_vpc_cluster" "cluster" {
+  name              = format("%s-%s", var.prefix, var.openshift_cluster_name)
+  vpc_id            = ibm_is_vpc.vpc.id
+  resource_group_id = local.resource_group_id
+  kube_version      = var.openshift_version
+  cos_instance_crn  = var.is_openshift_cluster ? ibm_resource_instance.cos.id : null
+  entitlement       = var.entitlement
+  tags              = var.tags
   disable_public_service_endpoint = var.disable_public_service_endpoint
-  cos_instance_crn                = ibm_resource_instance.cos.id
-  force_delete_storage            = var.openshift_force_delete_storage
+  update_all_workers = var.openshift_update_all_workers
+
+  flavor            = var.openshift_worker_nodes_per_zone
+  worker_count      = var.worker_count
+  wait_till         = var.openshift_wait_till
+
+  dynamic "zones" {
+    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+    content {
+      name      = zones.value.zone
+      subnet_id = zones.value.id
+    }
+  }
+
   kms_config = [
     {
       instance_id      = ibm_resource_instance.key-protect.guid, # GUID of Key Protect instance
@@ -111,56 +121,52 @@ module "vpc_openshift_cluster" {
       private_endpoint = true
     }
   ]
-  entitlement        = var.entitlement
-  tags               = var.tags
-  update_all_workers = var.openshift_update_all_workers
 }
 
-##############################################################################
-# Log and Monitoring can only be attached once cluster is fully ready
-# resource "time_sleep" "wait_for_openshift_initialization" {
-
-#   depends_on = [
-#     module.vpc_openshift_cluster
-#   ]
-
-#   create_duration = "15m"
+# resource "null_resource" "cluster_wait" {
+#   triggers = {
+#     cluster_id = ibm_container_vpc_cluster.cluster.id
+#   }
+#   provisioner "local-exec" {
+#     command = <<EOT
+# sleep 120
+# EOT
+#   }
+#   depends_on = [ibm_container_vpc_cluster.cluster]
 # }
 
-##############################################################################
-# Attach Log Analysis Service to cluster
-# 
-# Integrating Logging requires the master node to be 'Ready'
-# If not, you will face a timeout error after 45mins
-##############################################################################
-module "openshift_logdna_attach" {
+resource "ibm_container_vpc_worker_pool" "worker_pools" {
+  for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
+  cluster           = ibm_container_vpc_cluster.cluster.id
+  resource_group_id = local.resource_group_id
+  worker_pool_name  = each.key
+  flavor            = lookup(each.value, "machine_type", null)
+  vpc_id            = ibm_is_vpc.vpc.id
+  worker_count      = each.value.workers_per_zone
 
-  source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
+  dynamic "zones" {
+    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+    content {
+      name      = zones.value.zone
+      subnet_id = zones.value.id
+    }
+  }
 
-  cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
-  logdna_instance_id = module.logging_instance.guid
-  private_endpoint   = var.logdna_private_endpoint
-
-  # depends_on = [
-  #   time_sleep.wait_for_openshift_initialization
-  # ]
+#   depends_on = [null_resource.cluster_wait]
 }
 
-##############################################################################
-# Attach Monitoring Service to cluster
-# 
-# Integrating Monitoring requires the master node to be 'Ready'
-# If not, you will face a timeout error after 45mins
-##############################################################################
-module "openshift_sysdig_attach" {
 
-  source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
+data "ibm_container_cluster_config" "cluster_config" {
+  cluster_name_id   = ibm_container_vpc_cluster.cluster.id
+  resource_group_id = ibm_resource_group.resource_group.id
+}
 
-  cluster            = module.vpc_openshift_cluster.vpc_openshift_cluster_id
-  sysdig_instance_id = module.monitoring_instance.guid
-  private_endpoint   = var.sysdig_private_endpoint
-
-  # depends_on = [
-  #   time_sleep.wait_for_openshift_initialization
-  # ]
+resource "ibm_resource_instance" "openshift_cos_instance" {
+  count             = var.is_openshift_cluster ? 1 : 0
+  name              = join("-", [var.environment_id, "roks-backup"])
+  resource_group_id = local.resource_group_id
+  service           = "cloud-object-storage"
+  plan              = "standard"
+  location          = "global"
+  tags              = var.tags
 }
