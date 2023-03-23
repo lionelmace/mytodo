@@ -252,12 +252,11 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
     content {
       direction = rules.value.direction
       remote    = rules.value.remote
+      tcp {
+        port_min = 443
+        port_max = 443
+      }
     }
-  }
-
-  tcp {
-    port_min = 443
-    port_max = 443
   }
 }
 
