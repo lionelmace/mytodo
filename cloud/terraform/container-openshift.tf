@@ -78,7 +78,7 @@ variable "openshift_update_all_workers" {
 
 variable "is_openshift_cluster" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "worker_pools" {
