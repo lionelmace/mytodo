@@ -167,7 +167,7 @@ variable "cis_ips" {
 }
 
 resource "ibm_is_security_group" "sg-cis-cloudflare" {
-  name = "cloudflare-security-group"
+  name = format("%s-%s", var.prefix, "sg-cis-ips")
   vpc  = ibm_is_vpc.vpc.id
 }
 
@@ -181,6 +181,8 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
     port_max = 443
   }
 }
+
+# Attached CIS Security Group to VPC Load Balancer
 
 
 # Network ACLs
