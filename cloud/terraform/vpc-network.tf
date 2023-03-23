@@ -183,7 +183,20 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
 }
 
 # Attached CIS Security Group to VPC Load Balancer
+variable "vpc_lb_name" {
+  description = "VPC Load Balancer"
+  default     = ""
+}
 
+data "ibm_is_lb" "lb" {
+  count = var.vpc_lb_name != "" ? 1 : 0
+  name  = var.vpc_lb_name
+}
+
+output "lb-name" {
+  description = "The VPC LB name"
+  value       = ibm_is_lb.name
+} 
 
 # Network ACLs
 ##############################################################################
