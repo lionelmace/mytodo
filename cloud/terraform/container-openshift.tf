@@ -133,7 +133,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   disable_public_service_endpoint = var.disable_public_service_endpoint
   update_all_workers              = var.openshift_update_all_workers
 
-  flavor       = var.openshift_worker_nodes_per_zone
+  flavor       = var.openshift_machine_flavor
   worker_count = var.openshift_worker_nodes_per_zone
   wait_till    = var.openshift_wait_till
 
