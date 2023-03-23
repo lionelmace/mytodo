@@ -86,19 +86,19 @@ variable "is_openshift_cluster" {
 ## Resources
 ##############################################################################
 resource "ibm_container_vpc_cluster" "cluster" {
-  name              = format("%s-%s", var.prefix, var.openshift_cluster_name)
-  vpc_id            = ibm_is_vpc.vpc.id
-  resource_group_id = local.resource_group_id
-  kube_version      = var.openshift_version
-  cos_instance_crn  = var.is_openshift_cluster ? ibm_resource_instance.cos.id : null
-  entitlement       = var.entitlement
-  tags              = var.tags
+  name                            = format("%s-%s", var.prefix, var.openshift_cluster_name)
+  vpc_id                          = ibm_is_vpc.vpc.id
+  resource_group_id               = local.resource_group_id
+  kube_version                    = var.openshift_version
+  cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos.id : null
+  entitlement                     = var.entitlement
+  tags                            = var.tags
   disable_public_service_endpoint = var.disable_public_service_endpoint
-  update_all_workers = var.openshift_update_all_workers
+  update_all_workers              = var.openshift_update_all_workers
 
-  flavor            = var.openshift_worker_nodes_per_zone
-  worker_count      = var.openshift_worker_nodes_per_zone
-  wait_till         = var.openshift_wait_till
+  flavor       = var.openshift_worker_nodes_per_zone
+  worker_count = var.openshift_worker_nodes_per_zone
+  wait_till    = var.openshift_wait_till
 
   dynamic "zones" {
     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
@@ -108,13 +108,11 @@ resource "ibm_container_vpc_cluster" "cluster" {
     }
   }
 
-  kms_config = [
-    {
-      instance_id      = ibm_resource_instance.key-protect.guid, # GUID of Key Protect instance
-      crk_id           = ibm_kms_key.key.key_id,                 # ID of customer root key
-      private_endpoint = true
-    }
-  ]
+  kms_config {
+    instance_id      = ibm_resource_instance.key-protect.guid # GUID of Key Protect instance
+    crk_id           = ibm_kms_key.key.key_id                 # ID of customer root key
+    private_endpoint = true
+  }
 }
 
 # resource "null_resource" "cluster_wait" {
@@ -146,7 +144,7 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
     }
   }
 
-#   depends_on = [null_resource.cluster_wait]
+  #   depends_on = [null_resource.cluster_wait]
 }
 
 
