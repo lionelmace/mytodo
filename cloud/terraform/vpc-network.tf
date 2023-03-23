@@ -175,7 +175,7 @@ resource "ibm_is_security_group" "sg-cis-cloudflare" {
 
 resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
   count = 15
-  direction = rules.value.direction
+  direction = "inbound"
   remote    = element(var.cis_ips, count.index)
   tcp {
     port_min = 443
