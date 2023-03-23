@@ -127,7 +127,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   vpc_id                          = ibm_is_vpc.vpc.id
   resource_group_id               = local.resource_group_id
   kube_version                    = var.openshift_version
-  cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos.id : null
+  cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry.id : null
   entitlement                     = var.entitlement
   tags                            = var.tags
   disable_public_service_endpoint = var.disable_public_service_endpoint
@@ -189,9 +189,10 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
 #   resource_group_id = local.resource_group_id
 # }
 
-resource "ibm_resource_instance" "openshift_cos_instance" {
+# Object storage instance to back up the OpenShift Internal Registry
+resource "ibm_resource_instance" "cos_openshift_registry" {
   count             = var.is_openshift_cluster ? 1 : 0
-  name              = join("-", [var.prefix, "roks-backup"])
+  name              = join("-", [var.prefix, "cos-registry"])
   resource_group_id = local.resource_group_id
   service           = "cloud-object-storage"
   plan              = "standard"
