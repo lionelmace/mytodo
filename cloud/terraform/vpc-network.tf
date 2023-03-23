@@ -174,6 +174,7 @@ resource "ibm_is_security_group" "sg-cis-cloudflare" {
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
+  group     = ibm_is_security_group.sg-cis-cloudflare
   count = 15
   direction = "inbound"
   remote    = element(var.cis_ips, count.index)
