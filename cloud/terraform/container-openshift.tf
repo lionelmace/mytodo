@@ -81,7 +81,44 @@ variable "is_openshift_cluster" {
   default = false
 }
 
+variable "worker_pools" {
+  description = "List of maps describing worker pools"
 
+  type = list(object({
+    pool_name        = string
+    machine_type     = string
+    workers_per_zone = number
+  }))
+
+  default = [
+    {
+      pool_name        = "dev"
+      machine_type     = "bx2.4x16"
+      workers_per_zone = 1
+      # },
+      # {
+      #     pool_name        = "odf"
+      #     machine_type     = "bx2.16x64"
+      #     workers_per_zone = 1
+    }
+  ]
+
+  validation {
+    error_message = "Worker pool names must match the regex `^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$`."
+    condition = length([
+      for pool in var.worker_pools :
+      false if !can(regex("^([a-z]|[a-z][-a-z0-9]*[a-z0-9])$", pool.pool_name))
+    ]) == 0
+  }
+
+  validation {
+    error_message = "Worker pools cannot have duplicate names."
+    condition = length(distinct([
+      for pool in var.worker_pools :
+      pool.pool_name
+    ])) == length(var.worker_pools)
+  }
+}
 
 ## Resources
 ##############################################################################
@@ -147,11 +184,10 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
   #   depends_on = [null_resource.cluster_wait]
 }
 
-
-data "ibm_container_cluster_config" "cluster_config" {
-  cluster_name_id   = ibm_container_vpc_cluster.cluster.id
-  resource_group_id = ibm_resource_group.resource_group.id
-}
+# data "ibm_container_cluster_config" "cluster_config" {
+#   cluster_name_id   = ibm_container_vpc_cluster.cluster.id
+#   resource_group_id = local.resource_group_id
+# }
 
 resource "ibm_resource_instance" "openshift_cos_instance" {
   count             = var.is_openshift_cluster ? 1 : 0
