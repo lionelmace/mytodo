@@ -97,7 +97,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
   update_all_workers = var.openshift_update_all_workers
 
   flavor            = var.openshift_worker_nodes_per_zone
-  worker_count      = var.worker_count
+  worker_count      = var.openshift_worker_nodes_per_zone
   wait_till         = var.openshift_wait_till
 
   dynamic "zones" {
