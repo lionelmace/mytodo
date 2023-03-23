@@ -143,7 +143,7 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-https" {
 # SSH Inbound Rule
 ##############################################################################
 resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
-  group     = ibm_is_vpc.vpc.default_security_group.id
+  group     = ibm_is_vpc.vpc.default_security_group
   direction = "inbound"
   remote    = "0.0.0.0/0"
 
@@ -159,11 +159,11 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-ssh" {
 variable "cis_ips" {
   description = "List of CIS Cloudflare IPs"
   default = [
-    "173.245.48.0/20","103.21.244.0/22","103.22.200.0/22",
-    "103.31.4.0/22","141.101.64.0/18","108.162.192.0/18",
-    "190.93.240.0/20","188.114.96.0/20","197.234.240.0/22",
-    "198.41.128.0/17","162.158.0.0/15","104.16.0.0/13",
-    "104.24.0.0/14","172.64.0.0/13","131.0.72.0/22"]
+    "173.245.48.0/20", "103.21.244.0/22", "103.22.200.0/22",
+    "103.31.4.0/22", "141.101.64.0/18", "108.162.192.0/18",
+    "190.93.240.0/20", "188.114.96.0/20", "197.234.240.0/22",
+    "198.41.128.0/17", "162.158.0.0/15", "104.16.0.0/13",
+  "104.24.0.0/14", "172.64.0.0/13", "131.0.72.0/22"]
 }
 
 resource "ibm_is_security_group" "sg-cis-cloudflare" {
@@ -172,8 +172,8 @@ resource "ibm_is_security_group" "sg-cis-cloudflare" {
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
-  group     = ibm_is_security_group.sg-cis-cloudflare
-  count = 15
+  group     = ibm_is_security_group.sg-cis-cloudflare.id
+  count     = 15
   direction = "inbound"
   remote    = element(var.cis_ips, count.index)
   tcp {
