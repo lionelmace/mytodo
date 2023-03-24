@@ -195,6 +195,7 @@ output "openshift_alb_id" {
 }
 
 # Object storage instance to back up the OpenShift Internal Registry
+##############################################################################
 resource "ibm_resource_instance" "cos_openshift_registry" {
   count             = var.is_openshift_cluster ? 1 : 0
   name              = join("-", [var.prefix, "cos-registry"])

@@ -1,7 +1,5 @@
 ##############################################################################
-# COS Instance with 2 buckets: 
-# - 1 bucket automatically created by OpenShift for Container Registry
-# - 1 bucket to store your SCC evaluation results
+# COS Instance with 1 bucket to store your SCC evaluation results
 ##############################################################################
 
 
@@ -23,7 +21,7 @@ variable "cos_region" {
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  name              = format("%s-%s", var.prefix, "cos")
+  name              = format("%s-%s", var.prefix, "cos-scc")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
@@ -55,7 +53,6 @@ resource "ibm_cos_bucket" "cos-bucket" {
     metrics_monitoring_crn  = module.monitoring_instance.id
   }
   endpoint_type = "public"
-  # allowed_ip = ["223.196.168.27", "223.196.161.38", "192.168.0.1"]
 }
 
 
