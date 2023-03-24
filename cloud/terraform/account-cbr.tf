@@ -55,7 +55,7 @@ resource "ibm_cbr_rule" "cbr_rule_cos" {
     attributes {
       name     = "serviceInstance"
       operator = "stringEquals"
-      value    = ibm_resource_instance.cos.guid
+      value    = ibm_resource_instance.cos_openshift_registry.guid
     }
   }
 }
