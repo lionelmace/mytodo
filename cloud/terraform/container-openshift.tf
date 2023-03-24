@@ -184,10 +184,15 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
   #   depends_on = [null_resource.cluster_wait]
 }
 
-# data "ibm_container_cluster_config" "cluster_config" {
-#   cluster_name_id   = ibm_container_vpc_cluster.cluster.id
-#   resource_group_id = local.resource_group_id
-# }
+data "openshift_cluster_config" "cluster_config" {
+  cluster_name_id = ibm_container_vpc_cluster.cluster.id
+  cluster_alb_id  = ibm_container_vpc_cluster.cluster.albs.id
+  # resource_group_id = local.resource_group_id
+}
+
+output "openshift_alb_id" {
+  value = data.openshift_cluster_config.cluster_config.cluster_alb_id
+}
 
 # Object storage instance to back up the OpenShift Internal Registry
 resource "ibm_resource_instance" "cos_openshift_registry" {
