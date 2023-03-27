@@ -152,18 +152,6 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 }
 
-# resource "null_resource" "cluster_wait" {
-#   triggers = {
-#     cluster_id = ibm_container_vpc_cluster.cluster.id
-#   }
-#   provisioner "local-exec" {
-#     command = <<EOT
-# sleep 120
-# EOT
-#   }
-#   depends_on = [ibm_container_vpc_cluster.cluster]
-# }
-
 resource "ibm_container_vpc_worker_pool" "worker_pools" {
   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
   cluster           = ibm_container_vpc_cluster.cluster.id
@@ -180,8 +168,6 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
       subnet_id = zones.value.id
     }
   }
-
-  #   depends_on = [null_resource.cluster_wait]
 }
 
 # data "openshift_cluster_config" "cluster_config" {
@@ -194,7 +180,7 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
 #   value = data.openshift_cluster_config.cluster_config.cluster_alb_id
 # }
 
-# Object storage instance to back up the OpenShift Internal Registry
+# Object storage to backup the OpenShift Internal Registry
 ##############################################################################
 resource "ibm_resource_instance" "cos_openshift_registry" {
   count             = var.is_openshift_cluster ? 1 : 0

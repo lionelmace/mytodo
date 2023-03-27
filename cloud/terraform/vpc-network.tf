@@ -84,7 +84,7 @@ resource "ibm_is_vpc" "vpc" {
 
 
 ##############################################################################
-# Prefixes and subnets for zone 1
+# Prefixes and subnets for zone
 ##############################################################################
 
 resource "ibm_is_vpc_address_prefix" "address_prefix" {
@@ -182,6 +182,22 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
   }
 }
 
+##############################################################################
+# resource "ibm_is_security_group" "home-access" {
+#   name = format("%s-%s", var.prefix, "sg-cis-ips")
+#   vpc  = ibm_is_vpc.vpc.id
+# }
+
+# resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
+#   group     = ibm_is_security_group.sg-cis-cloudflare.id
+#   count     = 15
+#   direction = "inbound"
+#   remote    = element(var.cis_ips, count.index)
+#   tcp {
+#     port_min = 443
+#     port_max = 443
+#   }
+# }
 # Attached CIS Security Group to VPC Load Balancer
 # variable "alb_id" {
 #   description = "VPC Load Balancer"
