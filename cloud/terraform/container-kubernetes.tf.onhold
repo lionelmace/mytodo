@@ -14,7 +14,7 @@ variable "kubernetes_cluster_name" {
 variable "kubernetes_version" {
   description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
   type        = string
-  default     = "1.26.1"
+  default     = "1.26.3"
 }
 
 variable "kubernetes_worker_pool_flavor" {

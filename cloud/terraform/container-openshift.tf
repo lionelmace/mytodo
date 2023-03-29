@@ -11,7 +11,7 @@ variable "openshift_cluster_name" {
 variable "openshift_version" {
   description = "The OpenShift version that you want to set up in your cluster."
   type        = string
-  default     = "4.12.3_openshift"
+  default     = "4.12.7_openshift"
 }
 
 variable "openshift_machine_flavor" {
