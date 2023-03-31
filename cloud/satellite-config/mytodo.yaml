@@ -1,0 +1,80 @@
+---
+# Application to deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mytodo
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mytodo
+  template:
+    metadata:
+      labels:
+        app: mytodo
+        tier: frontend
+    spec:
+      containers:
+      - name: mytodo
+        image: de.icr.io/mace/mytodo:lts-alpine3.16
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 250m     # 250 millicores = 1/4 core
+            memory: 128Mi # 128 MB
+          limits:
+            cpu: 500m
+            memory: 384Mi
+        livenessProbe:
+          httpGet:
+            path: /healthcheck/
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          failureThreshold: 2        
+        # envFrom:
+        # - secretRef:
+        #     name: database-credentials
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ labels:
+  app: mytodo
+  tier: frontend
+ name: mytodo-service
+ namespace: default
+spec:
+  type: ClusterIP
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: mytodo
+    tier: frontend
+
+---
+# Create a Route
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mytodo-route
+  namespace: default
+  labels:
+    app: mytodo
+    tier: frontend
+spec:
+  to:
+    kind: Service
+    name: mytodo-service
+    weight: 100
+  port:
+    targetPort: 8080-tcp
+  tls:
+    termination: edge
+  wildcardPolicy: None
