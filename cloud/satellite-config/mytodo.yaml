@@ -20,6 +20,8 @@ spec:
       - name: mytodo
         image: de.icr.io/mace/mytodo:lts-alpine3.16
         imagePullPolicy: Always
+        imagePullSecrets:
+        - name: all-icr-io
         resources:
           requests:
             cpu: 250m     # 250 millicores = 1/4 core

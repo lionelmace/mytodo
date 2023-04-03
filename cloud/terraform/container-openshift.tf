@@ -15,7 +15,7 @@ variable "openshift_version" {
 }
 
 variable "openshift_machine_flavor" {
-  description = " The flavor of the VPC worker node that you want to use."
+  description = " The default flavor of the OpenShift worker node."
   type        = string
   default     = "bx2.4x16"
 }
@@ -152,23 +152,24 @@ resource "ibm_container_vpc_cluster" "cluster" {
   }
 }
 
-resource "ibm_container_vpc_worker_pool" "worker_pools" {
-  for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
-  cluster           = ibm_container_vpc_cluster.cluster.id
-  resource_group_id = local.resource_group_id
-  worker_pool_name  = each.key
-  flavor            = lookup(each.value, "machine_type", null)
-  vpc_id            = ibm_is_vpc.vpc.id
-  worker_count      = each.value.workers_per_zone
+# Additional worker pool
+# resource "ibm_container_vpc_worker_pool" "worker_pools" {
+#   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
+#   cluster           = ibm_container_vpc_cluster.cluster.id
+#   resource_group_id = local.resource_group_id
+#   worker_pool_name  = each.key
+#   flavor            = lookup(each.value, "machine_type", null)
+#   vpc_id            = ibm_is_vpc.vpc.id
+#   worker_count      = each.value.workers_per_zone
 
-  dynamic "zones" {
-    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-    content {
-      name      = zones.value.zone
-      subnet_id = zones.value.id
-    }
-  }
-}
+#   dynamic "zones" {
+#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+#     content {
+#       name      = zones.value.zone
+#       subnet_id = zones.value.id
+#     }
+#   }
+# }
 
 # data "openshift_cluster_config" "cluster_config" {
 #   cluster_name_id = ibm_container_vpc_cluster.cluster.id
@@ -180,7 +181,7 @@ resource "ibm_container_vpc_worker_pool" "worker_pools" {
 #   value = data.openshift_cluster_config.cluster_config.cluster_alb_id
 # }
 
-# Object storage to backup the OpenShift Internal Registry
+# Object Storage to backup the OpenShift Internal Registry
 ##############################################################################
 resource "ibm_resource_instance" "cos_openshift_registry" {
   count             = var.is_openshift_cluster ? 1 : 0
