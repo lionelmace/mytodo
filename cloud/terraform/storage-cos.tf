@@ -37,7 +37,7 @@ resource "ibm_resource_instance" "cos" {
 ##############################################################################
 # SCC requires Cross-Region bucket for resiliency
 resource "ibm_cos_bucket" "cos-bucket" {
-  bucket_name           = "cos-bucket-for-scc"
+  bucket_name           = "cos-bucket-scc"
   resource_instance_id  = ibm_resource_instance.cos.id
   storage_class         = "smart"
   cross_region_location = "eu"
