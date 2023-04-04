@@ -23,18 +23,9 @@ resource "ibm_database" "icd_mongo" {
   adminpassword = var.icd_mongo_adminpassword
   group {
     group_id = "member"
-
-    memory {
-      allocation_mb = var.icd_mongo_ram_allocation
-    }
-
-    disk {
-      allocation_mb = var.icd_mongo_disk_allocation
-    }
-
-    cpu {
-      allocation_count = var.icd_mongo_core_allocation
-    }
+    memory { allocation_mb = var.icd_mongo_ram_allocation }
+    disk { allocation_mb = var.icd_mongo_disk_allocation }
+    cpu { allocation_count = var.icd_mongo_core_allocation }
   }
 
   # auto_scaling {

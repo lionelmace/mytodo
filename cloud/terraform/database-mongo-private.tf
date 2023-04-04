@@ -23,18 +23,9 @@ resource "ibm_database" "icd_mongo_private" {
   adminpassword = var.icd_mongo_private_adminpassword
   group {
     group_id = "member"
-
-    memory {
-      allocation_mb = var.icd_mongo_private_ram_allocation
-    }
-
-    disk {
-      allocation_mb = var.icd_mongo_private_disk_allocation
-    }
-
-    cpu {
-      allocation_count = var.icd_mongo_private_core_allocation
-    }
+    memory { allocation_mb = var.icd_mongo_private_ram_allocation }
+    disk { allocation_mb = var.icd_mongo_private_disk_allocation }
+    cpu { allocation_count = var.icd_mongo_private_core_allocation }
   }
 }
 
