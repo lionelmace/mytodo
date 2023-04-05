@@ -153,7 +153,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
 }
 
 # Additional worker pool
-resource "ibm_container_vpc_worker_pool" "worker_pools" {
+resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
   cluster           = ibm_container_vpc_cluster.cluster.id
   resource_group_id = local.resource_group_id
