@@ -182,8 +182,21 @@ resource "ibm_container_vpc_cluster" "cluster" {
 # }
 
 
+# Object Storage to backup the OpenShift Internal Registry
 ##############################################################################
-# Attach Log Analysis Service to cluster
+resource "ibm_resource_instance" "cos_openshift_registry" {
+  count             = var.is_openshift_cluster ? 1 : 0
+  name              = join("-", [var.prefix, "cos-registry"])
+  resource_group_id = local.resource_group_id
+  service           = "cloud-object-storage"
+  plan              = "standard"
+  location          = "global"
+  tags              = var.tags
+}
+
+
+##############################################################################
+# Connect Log Analysis Service to cluster
 # 
 # Integrating Logging requires the master node to be 'Ready'
 # If not, you will face a timeout error after 45mins
@@ -195,14 +208,15 @@ resource "ibm_ob_logging" "openshift_log_connect" {
   private_endpoint = var.log_private_endpoint
 }
 
-# Object Storage to backup the OpenShift Internal Registry
 ##############################################################################
-resource "ibm_resource_instance" "cos_openshift_registry" {
-  count             = var.is_openshift_cluster ? 1 : 0
-  name              = join("-", [var.prefix, "cos-registry"])
-  resource_group_id = local.resource_group_id
-  service           = "cloud-object-storage"
-  plan              = "standard"
-  location          = "global"
-  tags              = var.tags
+# Connect Monitoring Service to cluster
+# 
+# Integrating Monitoring requires the master node to be 'Ready'
+# If not, you will face a timeout error after 45mins
+##############################################################################
+resource "ibm_ob_monitoring" "openshift_connect_monitoring" {
+  depends_on       = [module.monitoring_instance.key_guid]
+  cluster          = ibm_container_vpc_cluster.cluster.id
+  instance_id      = module.monitoring_instance.guid
+  private_endpoint = var.sysdig_private_endpoint
 }
