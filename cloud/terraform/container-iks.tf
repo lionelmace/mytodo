@@ -90,23 +90,23 @@ resource "ibm_container_vpc_cluster" "vpc_iks_cluster" {
 }
 
 # Additional worker pool
-# resource "ibm_container_vpc_worker_pool" "worker_pools" {
-#   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
-#   cluster           = ibm_container_vpc_cluster.cluster.id
-#   resource_group_id = local.resource_group_id
-#   worker_pool_name  = each.key
-#   flavor            = lookup(each.value, "machine_type", null)
-#   vpc_id            = ibm_is_vpc.vpc.id
-#   worker_count      = each.value.workers_per_zone
+resource "ibm_container_vpc_worker_pool" "worker_pools" {
+  for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
+  cluster           = ibm_container_vpc_cluster.vpc_iks_cluster.id
+  resource_group_id = local.resource_group_id
+  worker_pool_name  = each.key
+  flavor            = lookup(each.value, "machine_type", null)
+  vpc_id            = ibm_is_vpc.vpc.id
+  worker_count      = each.value.workers_per_zone
 
-#   dynamic "zones" {
-#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-#     content {
-#       name      = zones.value.zone
-#       subnet_id = zones.value.id
-#     }
-#   }
-# }
+  dynamic "zones" {
+    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+    content {
+      name      = zones.value.zone
+      subnet_id = zones.value.id
+    }
+  }
+}
 
 ##############################################################################
 # Connect Log Analysis Service to cluster
@@ -137,7 +137,7 @@ resource "ibm_ob_monitoring" "iks_connect_monitoring" {
 # Authorization policy between IKS and Secrets Manager
 # resource "ibm_iam_authorization_policy" "iks-sm" {
 #   source_service_name         = "containers-kubernetes"
-#   source_resource_instance_id = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
+#   source_resource_instance_id = ibm_container_vpc_cluster.vpc_iks_cluster.id
 #   target_service_name         = "secrets-manager"
 #   target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
 #   roles                       = ["Manager"]

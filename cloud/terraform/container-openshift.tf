@@ -153,23 +153,23 @@ resource "ibm_container_vpc_cluster" "cluster" {
 }
 
 # Additional worker pool
-# resource "ibm_container_vpc_worker_pool" "worker_pools" {
-#   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
-#   cluster           = ibm_container_vpc_cluster.cluster.id
-#   resource_group_id = local.resource_group_id
-#   worker_pool_name  = each.key
-#   flavor            = lookup(each.value, "machine_type", null)
-#   vpc_id            = ibm_is_vpc.vpc.id
-#   worker_count      = each.value.workers_per_zone
+resource "ibm_container_vpc_worker_pool" "worker_pools" {
+  for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
+  cluster           = ibm_container_vpc_cluster.cluster.id
+  resource_group_id = local.resource_group_id
+  worker_pool_name  = each.key
+  flavor            = lookup(each.value, "machine_type", null)
+  vpc_id            = ibm_is_vpc.vpc.id
+  worker_count      = each.value.workers_per_zone
 
-#   dynamic "zones" {
-#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-#     content {
-#       name      = zones.value.zone
-#       subnet_id = zones.value.id
-#     }
-#   }
-# }
+  dynamic "zones" {
+    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+    content {
+      name      = zones.value.zone
+      subnet_id = zones.value.id
+    }
+  }
+}
 
 # data "openshift_cluster_config" "cluster_config" {
 #   cluster_name_id = ibm_container_vpc_cluster.cluster.id
@@ -220,3 +220,11 @@ resource "ibm_ob_monitoring" "openshift_connect_monitoring" {
   instance_id      = module.monitoring_instance.guid
   private_endpoint = var.sysdig_private_endpoint
 }
+
+
+##############################################################################
+# Connect Secrets Manager to cluster
+##############################################################################
+# resource "null_resource" "openshift_connect_secrets" {
+#   To be added when available
+# }
