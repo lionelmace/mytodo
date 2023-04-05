@@ -75,7 +75,7 @@ output "log_instance_id" {
 ## IAM
 ##############################################################################
 
-resource "ibm_iam_access_group_policy" "iam-logdna" {
+resource "ibm_iam_access_group_policy" "iam-log-analysis" {
   access_group_id = ibm_iam_access_group.accgrp.id
   roles           = ["Manager", "Viewer", "Standard Member"]
 

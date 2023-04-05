@@ -181,6 +181,20 @@ resource "ibm_container_vpc_cluster" "cluster" {
 #   value = data.openshift_cluster_config.cluster_config.cluster_alb_id
 # }
 
+
+##############################################################################
+# Attach Log Analysis Service to cluster
+# 
+# Integrating Logging requires the master node to be 'Ready'
+# If not, you will face a timeout error after 45mins
+##############################################################################
+resource "ibm_ob_logging" "openshift_log_connect" {
+  depends_on       = module.logging_instance.key_guid  
+  cluster          = ibm_container_vpc_cluster.cluster.id
+  instance_id      = module.logging_instance.guid
+  private_endpoint = var.log_private_endpoint
+}
+
 # Object Storage to backup the OpenShift Internal Registry
 ##############################################################################
 resource "ibm_resource_instance" "cos_openshift_registry" {
