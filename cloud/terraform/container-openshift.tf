@@ -189,7 +189,7 @@ resource "ibm_container_vpc_cluster" "cluster" {
 # If not, you will face a timeout error after 45mins
 ##############################################################################
 resource "ibm_ob_logging" "openshift_log_connect" {
-  depends_on       = module.logging_instance.key_guid  
+  depends_on       = [module.logging_instance.key_guid]
   cluster          = ibm_container_vpc_cluster.cluster.id
   instance_id      = module.logging_instance.guid
   private_endpoint = var.log_private_endpoint
