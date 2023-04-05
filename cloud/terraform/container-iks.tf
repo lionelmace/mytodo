@@ -17,7 +17,7 @@ variable "iks_version" {
   default     = "1.26.3"
 }
 
-variable "iks_worker_pool_flavor" {
+variable "iks_machine_flavor" {
   description = "The flavor of VPC worker node to use for your cluster. Use `ibmcloud ks flavors` to find flavors for a region."
   type        = string
   default     = "bx2.4x16"
