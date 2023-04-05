@@ -109,27 +109,30 @@ resource "ibm_container_vpc_cluster" "vpc_iks_cluster" {
 # }
 
 ##############################################################################
-# Attach Log Analysis Services to cluster
+# Connect Log Analysis Service to cluster
+# 
+# Integrating Logging requires the master node to be 'Ready'
+# If not, you will face a timeout error after 45mins
 ##############################################################################
-# module "iks_logdna_attach" {
-#   source = "terraform-ibm-modules/cluster/ibm//modules/configure-logdna"
-
-#   cluster            = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
-#   logdna_instance_id = module.logging_instance.guid
-#   private_endpoint   = var.logdna_private_endpoint
-# }
-
+resource "ibm_ob_logging" "iks_connect_log" {
+  depends_on       = [module.logging_instance.key_guid]
+  cluster          = ibm_container_vpc_cluster.vpc_iks_cluster.id
+  instance_id      = module.logging_instance.guid
+  private_endpoint = var.log_private_endpoint
+}
 
 ##############################################################################
-# Attach Monitoring Services to cluster
+# Connect Monitoring Service to cluster
+# 
+# Integrating Monitoring requires the master node to be 'Ready'
+# If not, you will face a timeout error after 45mins
 ##############################################################################
-# module "iks_sysdig_attach" {
-#   source = "terraform-ibm-modules/cluster/ibm//modules/configure-sysdig-monitor"
-
-#   cluster            = module.vpc_kubernetes_cluster.kubernetes_vpc_cluster_id
-#   sysdig_instance_id = module.monitoring_instance.guid
-#   private_endpoint   = var.sysdig_private_endpoint
-# }
+resource "ibm_ob_monitoring" "iks_connect_monitoring" {
+  depends_on       = [module.monitoring_instance.key_guid]
+  cluster          = ibm_container_vpc_cluster.vpc_iks_cluster.id
+  instance_id      = module.monitoring_instance.guid
+  private_endpoint = var.sysdig_private_endpoint
+}
 
 # Authorization policy between IKS and Secrets Manager
 # resource "ibm_iam_authorization_policy" "iks-sm" {
