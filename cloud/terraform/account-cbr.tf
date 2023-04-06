@@ -44,7 +44,7 @@ resource "ibm_cbr_zone" "cbr_zone_cis_ips" {
     for_each = var.cis_ips
     content {
       type  = "subnet"
-      value = each.value
+      value = addresses.value
     }
   }
 }
