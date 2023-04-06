@@ -175,7 +175,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 # Retrieve VPC LB attached to the cluster
 ##############################################################################
 output "name" {
-  value = ibm_container_vpc_cluster.roks_cluster
+  value = nonsensitive(ibm_container_vpc_cluster.roks_cluster)
 }
 
 # data "ibm_container_vpc_alb" "iks_cluster_alb" {
