@@ -174,18 +174,17 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 
 # Retrieve VPC LB attached to the cluster
 ##############################################################################
-# output "name" {
-#   value = ibm_container_vpc_cluster.roks_cluster
-#   sensitive = false
-# }
+data "ibm_container_vpc_cluster" "roks_cluster" {
+  name = ibm_container_vpc_cluster.roks_cluster.id
+}
 
-# data "ibm_container_vpc_alb" "roks_cluster_alb" {
-#   alb_id = ibm_container_vpc_cluster.roks_cluster.albs[0].id
-# }
+data "ibm_container_vpc_alb" "roks_cluster_alb" {
+  alb_id = data.ibm_container_vpc_cluster.roks_cluster.albs[0].id
+}
 
-# output "roks_cluster_alb" {
-#   value = data.ibm_container_vpc_alb.roks_cluster_alb
-# }
+output "roks_cluster_alb" {
+  value = data.ibm_container_vpc_alb.roks_cluster_alb
+}
 
 # data "openshift_cluster_config" "cluster_config" {
 #   cluster_name_id = ibm_container_vpc_cluster.cluster.id
