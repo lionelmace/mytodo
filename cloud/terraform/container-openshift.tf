@@ -152,7 +152,8 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
   }
 }
 
-# Additional worker pool
+# Additional Worker Pool
+##############################################################################
 # resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
 #   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
 #   cluster           = ibm_container_vpc_cluster.roks_cluster.id
@@ -170,6 +171,16 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 #     }
 #   }
 # }
+
+# Retrieve VPC LB attached to the cluster
+##############################################################################
+data "ibm_container_vpc_alb" "iks_cluster_alb" {
+  alb_id = ibm_container_vpc_cluster.roks_cluster.albs[0].id
+}
+
+output "iks_cluster_alb" {
+  value = data.ibm_container_vpc_alb.iks_cluster_alb
+}
 
 # data "openshift_cluster_config" "cluster_config" {
 #   cluster_name_id = ibm_container_vpc_cluster.cluster.id
