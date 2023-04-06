@@ -41,7 +41,7 @@ resource "ibm_cbr_zone"  "cbr_zone_cis_ips" {
   account_id = var.account_id
   count      = 15
   addresses {
-    type  = "ipRange"
+    type  = "subnet"
     value = element(var.cis_ips, count.index)
   }
 }
