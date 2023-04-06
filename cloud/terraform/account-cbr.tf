@@ -36,13 +36,22 @@ resource "ibm_cbr_zone" "cbr_zone_pgw" {
 }
 
 ##############################################################################
-resource "ibm_cbr_zone"  "cbr_zone_cis_ips" {
+resource "ibm_cbr_zone" "cbr_zone_cis_ips" {
   name       = format("%s-%s", var.prefix, "cis-ips")
   account_id = var.account_id
-  count      = 15
-  addresses {
-    type  = "subnet"
-    value = element(var.cis_ips, count.index)
+  # count      = 15
+  # addresses {
+  #   type  = "subnet"
+  #   value = element(var.cis_ips, count.index)
+  # }
+  dynamic "rules" {
+
+    for_each = var.cis_ips
+
+    content {
+      type  = "subnet"
+      value = rules.value
+    }
   }
 }
 
