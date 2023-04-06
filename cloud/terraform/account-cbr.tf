@@ -17,6 +17,7 @@ resource "ibm_cbr_zone" "cbr_zone_home" {
 }
 
 # Zone with the VPC Public Gateways
+##############################################################################
 resource "ibm_cbr_zone" "cbr_zone_pgw" {
   name       = format("%s-%s", var.prefix, "pgws")
   account_id = var.account_id
@@ -34,6 +35,18 @@ resource "ibm_cbr_zone" "cbr_zone_pgw" {
   }
 }
 
+##############################################################################
+resource "ibm_cbr_zone"  "cbr_zone_cis_ips" {
+  name       = format("%s-%s", var.prefix, "cis-ips")
+  account_id = var.account_id
+  addresses {
+    type  = "ipAddress"
+    value = element(var.cis_ips, count.index)
+  }
+}
+
+# Rules
+##############################################################################
 resource "ibm_cbr_rule" "cbr_rule_cos" {
   description      = format("%s-%s", var.prefix, "rule-cos")
   enforcement_mode = "report"
