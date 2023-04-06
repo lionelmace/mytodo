@@ -183,6 +183,33 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
 }
 
 ##############################################################################
+
+resource "ibm_is_security_group" "kube-master-outbound" {
+  name = format("%s-%s", var.prefix, "kube-master-outbound")
+  vpc  = ibm_is_vpc.vpc.id
+}
+
+resource "ibm_is_security_group_rule" "sg-rule-kube-master-tcp-outbound" {
+  group     = ibm_is_security_group.kube-master-outbound.id
+  direction = "outbound"
+  remote    = "0.0.0.0/0"
+  tcp {
+    port_min = 30000
+    port_max = 32767
+  }
+}
+resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
+  group     = ibm_is_security_group.kube-master-outbound.id
+  direction = "outbound"
+  remote    = "0.0.0.0/0"
+  udp {
+    port_min = 30000
+    port_max = 32767
+  }
+}
+
+
+##############################################################################
 # resource "ibm_is_security_group" "home-access" {
 #   name = format("%s-%s", var.prefix, "sg-cis-ips")
 #   vpc  = ibm_is_vpc.vpc.id
