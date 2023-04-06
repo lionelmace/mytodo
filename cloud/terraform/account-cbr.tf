@@ -12,7 +12,7 @@ resource "ibm_cbr_zone" "cbr_zone_home" {
   account_id = var.account_id
   addresses {
     type  = "ipAddress"
-    value = "92.151.223.28"
+    value = "62.193.63.110"
   }
 }
 
