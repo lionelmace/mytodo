@@ -122,7 +122,7 @@ variable "worker_pools" {
 
 ## Resources
 ##############################################################################
-resource "ibm_container_vpc_cluster" "cluster" {
+resource "ibm_container_vpc_cluster" "roks_cluster" {
   name                            = format("%s-%s", var.prefix, var.openshift_cluster_name)
   vpc_id                          = ibm_is_vpc.vpc.id
   resource_group_id               = local.resource_group_id
@@ -153,23 +153,23 @@ resource "ibm_container_vpc_cluster" "cluster" {
 }
 
 # Additional worker pool
-resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
-  for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
-  cluster           = ibm_container_vpc_cluster.cluster.id
-  resource_group_id = local.resource_group_id
-  worker_pool_name  = each.key
-  flavor            = lookup(each.value, "machine_type", null)
-  vpc_id            = ibm_is_vpc.vpc.id
-  worker_count      = each.value.workers_per_zone
+# resource "ibm_container_vpc_worker_pool" "roks_worker_pools" {
+#   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
+#   cluster           = ibm_container_vpc_cluster.roks_cluster.id
+#   resource_group_id = local.resource_group_id
+#   worker_pool_name  = each.key
+#   flavor            = lookup(each.value, "machine_type", null)
+#   vpc_id            = ibm_is_vpc.vpc.id
+#   worker_count      = each.value.workers_per_zone
 
-  dynamic "zones" {
-    for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
-    content {
-      name      = zones.value.zone
-      subnet_id = zones.value.id
-    }
-  }
-}
+#   dynamic "zones" {
+#     for_each = { for subnet in ibm_is_subnet.subnet : subnet.id => subnet }
+#     content {
+#       name      = zones.value.zone
+#       subnet_id = zones.value.id
+#     }
+#   }
+# }
 
 # data "openshift_cluster_config" "cluster_config" {
 #   cluster_name_id = ibm_container_vpc_cluster.cluster.id
@@ -203,7 +203,7 @@ resource "ibm_resource_instance" "cos_openshift_registry" {
 ##############################################################################
 resource "ibm_ob_logging" "openshift_log_connect" {
   depends_on       = [module.logging_instance.key_guid]
-  cluster          = ibm_container_vpc_cluster.cluster.id
+  cluster          = ibm_container_vpc_cluster.roks_cluster.id
   instance_id      = module.logging_instance.guid
   private_endpoint = var.log_private_endpoint
 }
@@ -216,7 +216,7 @@ resource "ibm_ob_logging" "openshift_log_connect" {
 ##############################################################################
 resource "ibm_ob_monitoring" "openshift_connect_monitoring" {
   depends_on       = [module.monitoring_instance.key_guid]
-  cluster          = ibm_container_vpc_cluster.cluster.id
+  cluster          = ibm_container_vpc_cluster.roks_cluster.id
   instance_id      = module.monitoring_instance.guid
   private_endpoint = var.sysdig_private_endpoint
 }

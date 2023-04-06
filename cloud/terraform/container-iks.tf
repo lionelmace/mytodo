@@ -59,7 +59,7 @@ variable "iks_update_all_workers" {
 
 ## Resources
 ##############################################################################
-resource "ibm_container_vpc_cluster" "vpc_iks_cluster" {
+resource "ibm_container_vpc_cluster" "iks_cluster" {
   name                            = format("%s-%s", var.prefix, var.iks_cluster_name)
   vpc_id                          = ibm_is_vpc.vpc.id
   resource_group_id               = local.resource_group_id
@@ -92,7 +92,7 @@ resource "ibm_container_vpc_cluster" "vpc_iks_cluster" {
 # Additional worker pool
 resource "ibm_container_vpc_worker_pool" "iks_worker_pools" {
   for_each          = { for pool in var.worker_pools : pool.pool_name => pool }
-  cluster           = ibm_container_vpc_cluster.vpc_iks_cluster.id
+  cluster           = ibm_container_vpc_cluster.iks_cluster.id
   resource_group_id = local.resource_group_id
   worker_pool_name  = each.key
   flavor            = lookup(each.value, "machine_type", null)
@@ -116,7 +116,7 @@ resource "ibm_container_vpc_worker_pool" "iks_worker_pools" {
 ##############################################################################
 resource "ibm_ob_logging" "iks_connect_log" {
   depends_on       = [module.logging_instance.key_guid]
-  cluster          = ibm_container_vpc_cluster.vpc_iks_cluster.id
+  cluster          = ibm_container_vpc_cluster.iks_cluster.id
   instance_id      = module.logging_instance.guid
   private_endpoint = var.log_private_endpoint
 }
@@ -129,7 +129,7 @@ resource "ibm_ob_logging" "iks_connect_log" {
 ##############################################################################
 resource "ibm_ob_monitoring" "iks_connect_monitoring" {
   depends_on       = [module.monitoring_instance.key_guid]
-  cluster          = ibm_container_vpc_cluster.vpc_iks_cluster.id
+  cluster          = ibm_container_vpc_cluster.iks_cluster.id
   instance_id      = module.monitoring_instance.guid
   private_endpoint = var.sysdig_private_endpoint
 }
