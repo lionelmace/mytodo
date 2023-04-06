@@ -176,7 +176,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 ##############################################################################
 output "name" {
   value = ibm_container_vpc_cluster.roks_cluster
-  sensitive = true
+  sensitive = false
 }
 
 # data "ibm_container_vpc_alb" "iks_cluster_alb" {
