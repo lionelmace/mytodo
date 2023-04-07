@@ -111,6 +111,8 @@ resource "ibm_container_vpc_cluster" "iks_cluster" {
 
 data "ibm_container_vpc_alb" "iks_cluster_alb" {
   alb_id = ibm_container_vpc_cluster.iks_cluster.albs[0].id
+
+  depends_on = [ ibm_container_vpc_cluster.iks_cluster ]
 }
 
 output "iks_cluster_alb" {
