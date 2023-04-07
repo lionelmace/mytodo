@@ -74,17 +74,16 @@ resource "ibm_resource_key" "key" {
 
 # Database connection
 ##############################################################################
-data "ibm_database_connection" "mongo_db_connection" {
-    deployment_id = ibm_database.icd_mongo.id
-    endpoint_type = var.icd_mongo_service_endpoints
-    user_id = "user_id"
-    user_type = "database"
-}
+# data "ibm_database_connection" "mongo_db_connection" {
+#     deployment_id = ibm_database.icd_mongo.id
+#     endpoint_type = var.icd_mongo_service_endpoints
+#     user_id = "user_id"
+#     user_type = "database"
+# }
 
-output "iks_cluster_alb" {
-  value = data.ibm_database_connection.mongo_db_connection.database
-}
-
+# output "iks_cluster_alb" {
+#   value = data.ibm_database_connection.mongo_db_connection.database
+# }
 
 
 ## IAM
