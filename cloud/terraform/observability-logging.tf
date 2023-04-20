@@ -6,9 +6,9 @@
 # Log Variables
 ##############################################################################
 variable "log_plan" {
-  description = "plan type (14-day, 30-day, 7-day, hipaa-30-day and lite)"
+  description = "plan type (7-day, 14-day, 30-day, hipaa-30-day and lite)"
   type        = string
-  default     = "30-day"
+  default     = "7-day"
 }
 
 variable "log_service_endpoints" {

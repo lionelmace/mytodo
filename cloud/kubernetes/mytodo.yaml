@@ -69,10 +69,10 @@ metadata:
 spec:
   tls:
     - hosts:
-      - lionel.dev-iks-168068-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-      secretName: dev-iks-168068-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+      - app.mytodo-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+      secretName: mytodo-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
   rules:
-  - host: lionel.dev-iks-168068-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  - host: app.mytodo-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /
