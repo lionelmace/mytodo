@@ -17,12 +17,10 @@ activity_tracker_name = "platform-activities"
 vpc_classic_access            = false
 vpc_address_prefix_management = "manual"
 vpc_enable_public_gateway     = true
-# vpc_locations                 = ["eu-de-1", "eu-de-2", "eu-de-3"]
-# vpc_number_of_addresses       = 256
 
 
 ##############################################################################
-## Cluster Kubernetes
+## Cluster IKS
 ##############################################################################
 iks_cluster_name          = "iks"
 iks_version               = "1.26.3"
@@ -31,12 +29,12 @@ iks_machine_flavor        = "bx2.4x16"
 # iks_machine_flavor    = "bx2.16x64" # ODF or Portworx flavor
 
 # Possible values: MasterNodeReady, OneWorkerNodeReady, or IngressReady
-kubernetes_wait_till          = "IngressReady"
-kubernetes_update_all_workers = true
+iks_wait_till          = "IngressReady"
+iks_update_all_workers = true
 
 
 ##############################################################################
-## Cluster OpenShift
+## Cluster ROKS
 ##############################################################################
 openshift_cluster_name   = "roks"
 openshift_version        = "4.12.7_openshift"
