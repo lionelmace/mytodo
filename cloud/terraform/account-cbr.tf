@@ -1,5 +1,5 @@
-resource "ibm_cbr_zone" "cbr_zone" {
-  name       = format("%s-%s", var.prefix, "zone")
+resource "ibm_cbr_zone" "zone_vpc" {
+  name       = format("%s-%s", var.prefix, "zone-vpc")
   account_id = var.account_id
   addresses {
     type  = "vpc"
@@ -7,8 +7,8 @@ resource "ibm_cbr_zone" "cbr_zone" {
   }
 }
 
-resource "ibm_cbr_zone" "cbr_zone_home" {
-  name       = format("%s-%s", var.prefix, "home")
+resource "ibm_cbr_zone" "zone_home" {
+  name       = format("%s-%s", var.prefix, "zone-home")
   account_id = var.account_id
   addresses {
     type  = "ipAddress"
@@ -51,13 +51,40 @@ resource "ibm_cbr_zone" "cbr_zone_cis_ips" {
 
 # Rules
 ##############################################################################
+# resource "ibm_cbr_rule" "cbr_rule_iks" {
+#   description      = format("%s-%s", var.prefix, "rule-access-iks")
+#   enforcement_mode = "report"
+#   contexts {
+#     attributes {
+#       name  = "networkZoneId"
+#       value = ibm_cbr_zone.zone_vpc.id
+#     }
+#   }
+#   resources {
+#     attributes {
+#       name  = "accountId"
+#       value = var.account_id
+#     }
+#     attributes {
+#       name  = "serviceName"
+#       value = "cloud-object-storage"
+#     }
+#     attributes {
+#       name     = "serviceInstance"
+#       operator = "stringEquals"
+#       value    = ibm_resource_instance.cos_openshift_registry[0].guid
+#     }
+#   }
+# }
+
+
 resource "ibm_cbr_rule" "cbr_rule_cos" {
   description      = format("%s-%s", var.prefix, "rule-cos")
   enforcement_mode = "report"
   contexts {
     attributes {
       name  = "networkZoneId"
-      value = ibm_cbr_zone.cbr_zone.id
+      value = ibm_cbr_zone.zone_vpc.id
     }
   }
   resources {
@@ -98,7 +125,7 @@ resource "ibm_cbr_rule" "cbr_rule" {
   contexts {
     attributes {
       name  = "networkZoneId"
-      value = ibm_cbr_zone.cbr_zone_home.id
+      value = ibm_cbr_zone.zone_home.id
     }
   }
   resources {
