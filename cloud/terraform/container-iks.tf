@@ -152,7 +152,7 @@ resource "ibm_iam_authorization_policy" "iks-sm" {
   source_service_name         = "containers-kubernetes"
   source_resource_instance_id = ibm_container_vpc_cluster.iks_cluster.id
   target_service_name         = "secrets-manager"
-  target_resource_instance_id = ibm_resource_instance.secrets-manager.guid
+  target_resource_instance_id = ibm_resource_instance.secrets-manager.id
   roles                       = ["Manager"]
 }
 
