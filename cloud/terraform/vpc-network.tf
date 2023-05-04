@@ -189,7 +189,7 @@ variable "control-plane-ips" {
   description = "List of Control Plane IPs"
   default = [
     "149.81.115.96/28", "149.81.128.192/27", "158.177.28.192/27",
-    "158.177.66.192/28", "161.156.134.64/28", "161.156.184.32/27"]
+    "158.177.66.192/28", "161.156.134.64/28", "161.156.184.32/27", "149.81.104.122"]
 }
 
 resource "ibm_is_security_group" "sg-iks-control-plane-fra" {
