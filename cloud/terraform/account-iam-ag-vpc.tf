@@ -36,11 +36,11 @@ locals {
   }
   # Types of resources required to be able to create a VSI
   is_instance_service_types = {
-    "imageId"         = "*"
-    "instanceId"      = "*"
-    "floatingIpId"    = "*"
-    "keyId"           = "*"
-    "volumeId"        = "*"
+    "imageId"      = "*"
+    "instanceId"   = "*"
+    "floatingIpId" = "*"
+    "keyId"        = "*"
+    "volumeId"     = "*"
     # "instanceGroupId" = "*" # not used, included for completeness
     # "dedicatedHostId" = "*" # not used, included for completeness
   }

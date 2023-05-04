@@ -56,8 +56,8 @@ variable "cis_ips" {
 }
 
 resource "ibm_is_security_group" "sg-cis-cloudflare" {
-  name = format("%s-%s", var.prefix, "sg-cis-ips")
-  vpc  = ibm_is_vpc.vpc.id
+  name           = format("%s-%s", var.prefix, "sg-cis-ips")
+  vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }
 
@@ -80,12 +80,12 @@ variable "control-plane-ips" {
   description = "List of Control Plane IPs"
   default = [
     "149.81.115.96/28", "149.81.128.192/27", "158.177.28.192/27",
-    "158.177.66.192/28", "161.156.134.64/28", "161.156.184.32/27"]
+  "158.177.66.192/28", "161.156.134.64/28", "161.156.184.32/27"]
 }
 
 resource "ibm_is_security_group" "sg-iks-control-plane-fra" {
-  name = format("%s-%s", var.prefix, "sg-iks-control-plane-fra")
-  vpc  = ibm_is_vpc.vpc.id
+  name           = format("%s-%s", var.prefix, "sg-iks-control-plane-fra")
+  vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }
 
@@ -111,8 +111,8 @@ resource "ibm_is_security_group_rule" "sg-rule-outbound-control-plane" {
 ##############################################################################
 
 resource "ibm_is_security_group" "kube-master-outbound" {
-  name = format("%s-%s", var.prefix, "kube-master-outbound")
-  vpc  = ibm_is_vpc.vpc.id
+  name           = format("%s-%s", var.prefix, "kube-master-outbound")
+  vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }
 
