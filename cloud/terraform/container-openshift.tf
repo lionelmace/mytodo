@@ -189,16 +189,16 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
 
 ## IAM
 ##############################################################################
-resource "ibm_iam_access_group_policy" "iam-roks" {
-  access_group_id = ibm_iam_access_group.accgrp.id
-  # Full Access Rights
-  roles = ["Reader", "Writer", "Manager", "Administrator", "Editor", "Operator", "Viewer"]
+# resource "ibm_iam_access_group_policy" "iam-roks" {
+#   access_group_id = ibm_iam_access_group.accgrp.id
+#   # Full Access Rights
+#   roles = ["Reader", "Writer", "Manager", "Administrator", "Editor", "Operator", "Viewer"]
 
-  resources {
-    service           = "containers-kubernetes"
-    resource_group_id = local.resource_group_id
-  }
-}
+#   resources {
+#     service           = "containers-kubernetes"
+#     resource_group_id = local.resource_group_id
+#   }
+# }
 
 
 # Object Storage to backup the OpenShift Internal Registry
