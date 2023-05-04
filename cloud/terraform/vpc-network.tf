@@ -182,6 +182,31 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
   }
 }
 
+# Control Plane IPs
+# Source: https://github.com/IBM-Cloud/kube-samples/blob/master/control-plane-ips/control-plane-ips-fra.txt
+##############################################################################
+variable "control-plane-ips" {
+  description = "List of Control Plane IPs"
+  default = [
+    "149.81.115.96/28", "149.81.128.192/27", "158.177.28.192/27",
+    "158.177.66.192/28", "161.156.134.64/28", "161.156.184.32/27"]
+}
+
+resource "ibm_is_security_group" "sg-iks-control-plane-fra" {
+  name = format("%s-%s", var.prefix, "sg-iks-control-plane-fra")
+  vpc  = ibm_is_vpc.vpc.id
+}
+
+resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
+  group     = ibm_is_security_group.sg-iks-control-plane-fra.id
+  count     = 6
+  direction = "inbound"
+  remote    = element(var.control-plane-ips, count.index)
+  # tcp {}
+}
+
+
+
 ##############################################################################
 
 resource "ibm_is_security_group" "kube-master-outbound" {
