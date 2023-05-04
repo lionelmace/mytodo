@@ -205,6 +205,16 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-control-plane" {
   # tcp {}
 }
 
+resource "ibm_is_security_group_rule" "sg-rule-outbound-control-plane" {
+  group     = ibm_is_security_group.sg-iks-control-plane-fra.id
+  count     = 6
+  direction = "outbound"
+  remote    = element(var.control-plane-ips, count.index)
+  tcp {
+    port_min = 80
+    port_max = 80
+  }
+}
 
 
 ##############################################################################
