@@ -91,7 +91,7 @@ resource "ibm_is_security_group" "sg-iks-control-plane-fra" {
 
 resource "ibm_is_security_group_rule" "sg-rule-inbound-control-plane" {
   group     = ibm_is_security_group.sg-iks-control-plane-fra.id
-  count     = length(var.control-plane-ips.default)
+  count     = 6
   direction = "inbound"
   remote    = element(var.control-plane-ips, count.index)
 }
