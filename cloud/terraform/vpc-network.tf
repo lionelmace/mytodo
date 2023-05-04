@@ -169,6 +169,7 @@ variable "cis_ips" {
 resource "ibm_is_security_group" "sg-cis-cloudflare" {
   name = format("%s-%s", var.prefix, "sg-cis-ips")
   vpc  = ibm_is_vpc.vpc.id
+  resource_group = local.resource_group_id
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
@@ -195,6 +196,7 @@ variable "control-plane-ips" {
 resource "ibm_is_security_group" "sg-iks-control-plane-fra" {
   name = format("%s-%s", var.prefix, "sg-iks-control-plane-fra")
   vpc  = ibm_is_vpc.vpc.id
+  resource_group = local.resource_group_id
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-inbound-control-plane" {
@@ -202,7 +204,6 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-control-plane" {
   count     = 7
   direction = "inbound"
   remote    = element(var.control-plane-ips, count.index)
-  # tcp {}
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-outbound-control-plane" {
