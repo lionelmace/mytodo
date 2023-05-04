@@ -197,7 +197,7 @@ resource "ibm_is_security_group" "sg-iks-control-plane-fra" {
   vpc  = ibm_is_vpc.vpc.id
 }
 
-resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
+resource "ibm_is_security_group_rule" "sg-rule-inbound-control-plane" {
   group     = ibm_is_security_group.sg-iks-control-plane-fra.id
   count     = 6
   direction = "inbound"
