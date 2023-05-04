@@ -223,6 +223,7 @@ resource "ibm_is_security_group_rule" "sg-rule-outbound-control-plane" {
 resource "ibm_is_security_group" "kube-master-outbound" {
   name = format("%s-%s", var.prefix, "kube-master-outbound")
   vpc  = ibm_is_vpc.vpc.id
+  resource_group = local.resource_group_id
 }
 
 resource "ibm_is_security_group_rule" "sg-rule-kube-master-tcp-outbound" {
