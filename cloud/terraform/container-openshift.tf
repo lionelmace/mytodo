@@ -123,9 +123,9 @@ variable "worker_pools" {
 ## Resources
 ##############################################################################
 resource "ibm_container_vpc_cluster" "roks_cluster" {
-  name                            = format("%s-%s", var.prefix, var.openshift_cluster_name)
-  vpc_id                          = ibm_is_vpc.vpc.id
-  resource_group_id               = local.resource_group_id
+  name              = format("%s-%s", var.prefix, var.openshift_cluster_name)
+  vpc_id            = ibm_is_vpc.vpc.id
+  resource_group_id = local.resource_group_id
   # Optional: Specify Kubes version. If not included, default version is used
   kube_version                    = var.openshift_version
   cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null

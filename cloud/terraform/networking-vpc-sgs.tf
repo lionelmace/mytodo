@@ -139,8 +139,8 @@ resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
 # Required if allowing traffic only from CIS
 ##############################################################################
 resource "ibm_is_security_group" "home-access" {
-  name = format("%s-%s", var.prefix, "access-from-home")
-  vpc  = ibm_is_vpc.vpc.id
+  name           = format("%s-%s", var.prefix, "access-from-home")
+  vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }
 
