@@ -135,7 +135,8 @@ resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
   }
 }
 
-
+# Allow access to the OpenShift Console my home IP address
+# Required if allowing traffic only from CIS
 ##############################################################################
 resource "ibm_is_security_group" "home-access" {
   name = format("%s-%s", var.prefix, "access-from-home")
@@ -148,20 +149,3 @@ resource "ibm_is_security_group_rule" "sg-rule-inbound-home" {
   direction = "inbound"
   remote    = "90.8.141.48"
 }
-
-# Attached CIS Security Group to VPC Load Balancer
-# variable "alb_id" {
-#   description = "VPC Load Balancer"
-#   default     = ""
-# }
-
-# data "ibm_is_lb" "lb" {
-#   count = var.vpc_lb_name != "" ? 1 : 0
-#   name  = var.vpc_lb_name
-#   alb_id = module.vpc_openshift_cluster.vpc_openshift_cluster_id.albs.id
-# }
-
-# output "lb-name" {
-#   description = "The VPC LB name"
-#   value       = ibm_is_lb.name
-# } 
