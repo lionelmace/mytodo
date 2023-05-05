@@ -137,22 +137,18 @@ resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
 
 
 ##############################################################################
-# resource "ibm_is_security_group" "home-access" {
-#   name = format("%s-%s", var.prefix, "sg-cis-ips")
-#   vpc  = ibm_is_vpc.vpc.id
-#   resource_group = local.resource_group_id
-# }
+resource "ibm_is_security_group" "home-access" {
+  name = format("%s-%s", var.prefix, "access-from-home")
+  vpc  = ibm_is_vpc.vpc.id
+  resource_group = local.resource_group_id
+}
 
-# resource "ibm_is_security_group_rule" "sg-rule-inbound-cloudflare" {
-#   group     = ibm_is_security_group.sg-cis-cloudflare.id
-#   count     = 15
-#   direction = "inbound"
-#   remote    = element(var.cis_ips, count.index)
-#   tcp {
-#     port_min = 443
-#     port_max = 443
-#   }
-# }
+resource "ibm_is_security_group_rule" "sg-rule-inbound-home" {
+  group     = ibm_is_security_group.home-access.id
+  direction = "inbound"
+  remote    = "90.8.141.48"
+}
+
 # Attached CIS Security Group to VPC Load Balancer
 # variable "alb_id" {
 #   description = "VPC Load Balancer"
