@@ -11,7 +11,7 @@ variable "openshift_cluster_name" {
 variable "openshift_version" {
   description = "The OpenShift version that you want to set up in your cluster."
   type        = string
-  default     = "4.12.13_openshift"
+  # default     = "4.12.13_openshift"
 }
 
 variable "openshift_machine_flavor" {
@@ -128,6 +128,7 @@ resource "ibm_container_vpc_cluster" "roks_cluster" {
   resource_group_id = local.resource_group_id
   # Optional: Specify Kubes version. If not included, default version is used
   # kube_version                    = var.openshift_version
+  kube_version = var.kube_version == "" ? null : var.kube_version
   cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null
   entitlement                     = var.entitlement
   tags                            = var.tags
