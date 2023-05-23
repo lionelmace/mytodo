@@ -65,7 +65,7 @@ resource "ibm_container_vpc_cluster" "iks_cluster" {
   resource_group_id = local.resource_group_id
   # Optional: Specify Kubes version. If not included, default version is used
   # kube_version                    = var.iks_version
-  kube_version = var.kube_version == "" ? null : var.kube_version
+  kube_version = var.iks_version == "" ? null : var.iks_version
   cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null
   tags                            = var.tags
   disable_public_service_endpoint = var.disable_public_service_endpoint
