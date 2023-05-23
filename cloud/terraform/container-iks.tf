@@ -157,7 +157,7 @@ resource "ibm_iam_authorization_policy" "iks-sm" {
 }
 
 resource "ibm_container_ingress_instance" "instance" {
-  cluster      = ibm_container_vpc_cluster.iks_cluster.name
+  cluster      = ibm_container_vpc_cluster.iks_cluster.id
   instance_crn = ibm_resource_instance.secrets-manager.id
   is_default   = true
 }
