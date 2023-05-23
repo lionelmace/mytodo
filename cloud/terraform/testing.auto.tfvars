@@ -23,7 +23,8 @@ vpc_enable_public_gateway     = true
 ## Cluster IKS
 ##############################################################################
 iks_cluster_name          = "iks"
-iks_version               = "1.26.4"
+# Optional: Specify Kubes version. If not included, default version is used
+# iks_version               = "1.26.4"
 iks_worker_nodes_per_zone = 1
 iks_machine_flavor        = "bx2.4x16"
 # iks_machine_flavor    = "bx2.16x64" # ODF or Portworx flavor
@@ -37,7 +38,8 @@ iks_update_all_workers = true
 ## Cluster ROKS
 ##############################################################################
 openshift_cluster_name   = "roks"
-openshift_version        = "4.12.13_openshift"
+# Optional: Specify Kubes version. If not included, default version is used
+# openshift_version        = "4.12.13_openshift"
 openshift_machine_flavor = "bx2.4x16"
 # openshift_machine_flavor = "bx2.16x64" # ODF Flavors
 
