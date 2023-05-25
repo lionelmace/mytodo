@@ -1,10 +1,17 @@
 ---
+# Create a Kubernetes namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mytodo
+
+---
 # Application to deploy
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mytodo
-  namespace: default
+  namespace: mytodo
 spec:
   replicas: 2
   selector:
@@ -36,9 +43,6 @@ spec:
           initialDelaySeconds: 3
           periodSeconds: 3
           failureThreshold: 2        
-        # envFrom:
-        # - secretRef:
-        #     name: database-credentials
 
 ---
 apiVersion: v1
@@ -48,7 +52,7 @@ metadata:
   app: mytodo
   tier: frontend
  name: mytodo-service
- namespace: default
+ namespace: mytodo
 spec:
   type: ClusterIP
   ports:
@@ -66,7 +70,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: mytodo-route
-  namespace: default
+  namespace: mytodo
   labels:
     app: mytodo
     tier: frontend
