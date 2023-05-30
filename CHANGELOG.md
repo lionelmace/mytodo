@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.2 - 2023-05-30
+
+### Added
+
+### Changed
+
+### Fixed
+
+* fix DA Software version
+
 ## 4.0.1 - 2023-05-30
 
 ### Added
