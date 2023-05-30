@@ -67,7 +67,7 @@
                 {
                   "diagram": {
                     "caption": "Architecture diagram",
-                    "url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/images/ibmcloud-mytodo-tf.png",
+                    "url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/images/ibmcloud-mytodo-tf.svg",
                     "metadata": []
                   },
                   "description": "A mytodo deployable architecture."
@@ -75,7 +75,7 @@
                 {
                   "diagram": {
                     "caption": "Terraform resources",
-                    "url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/images/ibmcloud-mytodo-tf.png",
+                    "url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/images/ibmcloud-mytodo-tf.svg",
                     "metadata": []
                   },
                   "description": "A view of the Terraform constructs used within the deployable architecture."
