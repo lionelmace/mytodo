@@ -1,0 +1,88 @@
+{
+    "products": [
+      {
+        "name": "mytodo-da",
+        "label": "Simple deployable architecture",
+        "product_kind": "solution",
+        "version": "1.0.23",
+        "tags": [
+          "network_vpc",
+          "Technology"
+        ],
+        "keywords": [
+          "vpc"
+        ],
+        "short_description": "A mytodo deployable architecture",
+        "long_description": "A mytodo deployable architecture to provision a Cloud Native Architecture.",
+        "offering_docs_url": "https://raw.githubusercontent.com/l2fprod/simple-da/main/README.md",
+        "support_details": "This is a demonstration and no official support is given.",
+        "flavors": [
+          {
+            "label": "Standard",
+            "name": "mytodo-da",
+            "install_type": "fullstack",
+            "configuration": [
+              {
+                "key": "prefix",
+                "required": false
+              }
+            ],
+            "outputs": [
+              {
+                "key": "vpc_id"
+              }
+            ],
+            "compliance": {
+              "authority": "scc-v3",
+              "controls": [
+                {
+                  "profile": {
+                    "name": "IBM Cloud Security Best Practices",
+                    "version": "1.1.0"
+                  },
+                  "names": [
+                    "4.39"
+                  ]
+                }
+              ]
+            },
+            "iam_permissions": [
+              {
+                "service_name": "iam-groups",
+                "role_crns": [
+                  "crn:v1:bluemix:public:iam::::role:Administrator"
+                ]
+              },
+              {
+                "service_name": "is.vpc",
+                "role_crns": [
+                  "crn:v1:bluemix:public:iam::::role:Administrator"
+                ]
+              }
+            ],
+            "release_notes_url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/CHANGELOG.md",
+            "architecture": {
+              "diagrams": [
+                {
+                  "diagram": {
+                    "caption": "Architecture diagram",
+                    "url": "https://raw.githubusercontent.com/lionelmace/mytodo/images/ibmcloud-mytodo-tf.svg",
+                    "metadata": []
+                  },
+                  "description": "A mytodo deployable architecture."
+                },
+                {
+                  "diagram": {
+                    "caption": "Terraform resources",
+                    "url": "https://raw.githubusercontent.com/lionelmace/mytodo/images/ibmcloud-mytodo-tf.svg",
+                    "metadata": []
+                  },
+                  "description": "A view of the Terraform constructs used within the deployable architecture."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
