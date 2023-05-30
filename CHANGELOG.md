@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.9 - 2023-05-30
+
+### Added
+
+### Changed
+
+* updated the README file in the terraform directory
+
+### Fixed
+
 ## 4.0.8 - 2023-05-30
 
 ### Added
