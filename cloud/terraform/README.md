@@ -2,7 +2,7 @@
 
 All the cloud services shown in the architecture below can be provisioned through the use of Terraform.
 
-![Architecture](./images/ibmcloud-mytodo-tf.svg)
+![Architecture](../../images/ibmcloud-mytodo-tf.svg)
 
 All those service instances will be created by terraform:
 
