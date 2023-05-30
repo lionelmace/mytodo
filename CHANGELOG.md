@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.5 - 2023-05-30
+
+### Added
+
+### Changed
+
+* changed Deployable Architecture short and long description
+
+### Fixed
+
 ## 4.0.4 - 2023-05-30
 
 ### Added
