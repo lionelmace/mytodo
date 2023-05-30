@@ -40,7 +40,7 @@ iks_update_all_workers = true
 ##############################################################################
 openshift_cluster_name   = "roks"
 # Specify OpenShift version. If not included, Kubernetes default version is used
-openshift_version        = "4.12.13_openshift"
+openshift_version        = "4.12.16_openshift"
 openshift_machine_flavor = "bx2.4x16"
 # openshift_machine_flavor = "bx2.16x64" # ODF Flavors
 
