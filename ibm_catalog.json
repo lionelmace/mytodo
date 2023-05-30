@@ -4,7 +4,7 @@
         "name": "mytodo-da",
         "label": "Simple deployable architecture",
         "product_kind": "solution",
-        "version": "4.0.2",
+        "version": "4.0.3",
         "tags": [
           "network_vpc",
           "Technology"
@@ -14,7 +14,7 @@
         ],
         "short_description": "A mytodo deployable architecture",
         "long_description": "A mytodo deployable architecture to provision a Cloud Native Architecture.",
-        "offering_docs_url": "https://raw.githubusercontent.com/l2fprod/simple-da/main/README.md",
+        "offering_docs_url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/README.md",
         "support_details": "This is a demonstration and no official support is given.",
         "flavors": [
           {
