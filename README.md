@@ -6,7 +6,7 @@ This Cloud Native Web App built with a common stack (Kubernetes, Mongo, Express,
 
 This repo also includes the terraform resources to provision the underlying Cloud Native infrastructure to run this app.
 
-![Todo](./images/ibmcloud-mytodo-tf.svg)
+![Todo](./images/ibmcloud-mytodo-tf.png)
 
 ## Additional Resources
 

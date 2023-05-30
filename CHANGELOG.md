@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.4 - 2023-05-30
+
+### Added
+
+### Changed
+
+### Fixed
+
+* fix images in the catalog configurration
+
 ## 4.0.3 - 2023-05-30
 
 ### Added
