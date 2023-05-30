@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.8 - 2023-05-30
+
+### Added
+
+### Changed
+
+* removed ibmcloud api key from terraform provider
+
+### Fixed
+
 ## 4.0.7 - 2023-05-30
 
 ### Added

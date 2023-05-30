@@ -4,7 +4,7 @@
         "name": "mytodo-da",
         "label": "Cloud Native Deployable Architecture",
         "product_kind": "solution",
-        "version": "4.0.7",
+        "version": "4.0.8",
         "tags": [
           "network_vpc",
           "Technology"
@@ -25,10 +25,6 @@
             "configuration": [
               {
                 "key": "prefix",
-                "required": false
-              },
-              {
-                "key": "ibmcloud_api_key",
                 "required": true
               }
             ],

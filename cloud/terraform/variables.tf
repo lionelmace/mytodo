@@ -2,11 +2,6 @@
 # Account Variables
 ##############################################################################
 
-variable "ibmcloud_api_key" {
-  description = "The IBM Cloud platform API key needed to deploy IAM enabled resources"
-  type        = string
-}
-
 variable "account_id" {
   description = "A unique identifier of the account"
   type        = string
