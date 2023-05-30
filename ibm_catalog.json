@@ -20,6 +20,7 @@
           {
             "label": "Standard",
             "name": "mytodo-da",
+            "working_directory": "cloud/terraform",
             "install_type": "fullstack",
             "configuration": [
               {
