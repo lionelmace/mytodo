@@ -5,13 +5,11 @@
 variable "account_id" {
   description = "A unique identifier of the account"
   type        = string
-  default     = ""
 }
 
 variable "prefix" {
   description = "A unique identifier need to provision resources. Must begin with a letter"
   type        = string
-  default     = "mytodo"
 }
 
 variable "region" {
