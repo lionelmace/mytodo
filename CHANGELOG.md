@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.0.11 - 2023-05-31
+
+### Added
+
+### Changed
+
+### Fixed
+
+* fixed image in readme
+
 ## 4.0.10 - 2023-05-30
 
 ### Added

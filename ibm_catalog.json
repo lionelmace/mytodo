@@ -4,7 +4,7 @@
         "name": "mytodo-da",
         "label": "Cloud Native Deployable Architecture",
         "product_kind": "solution",
-        "version": "4.0.10",
+        "version": "4.0.11",
         "tags": [
           "network_vpc",
           "Technology"
@@ -71,14 +71,6 @@
                     "metadata": []
                   },
                   "description": "A mytodo deployable architecture."
-                },
-                {
-                  "diagram": {
-                    "caption": "Terraform resources",
-                    "url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/images/ibmcloud-mytodo-tf.svg",
-                    "metadata": []
-                  },
-                  "description": "A view of the Terraform constructs used within the deployable architecture."
                 }
               ]
             }

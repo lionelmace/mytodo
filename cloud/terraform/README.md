@@ -1,10 +1,10 @@
 # Deploy the Cloud Native Architecture via Terraform
 
-All the cloud services shown in the architecture below can be provisioned through the use of Terraform.
+All the Cloud Services will be provisioned through the use of Terraform.
 
-![Architecture](../../images/ibmcloud-mytodo-tf.svg)
+Cloud Native Architecture is visible in this [diagram](https://raw.githubusercontent.com/lionelmace/mytodo/master/images/ibmcloud-mytodo-tf.svg)
 
-All those service instances will be created by terraform:
+List of Cloud Services:
 
 * VPC with 3 subnets, 3 public gateways
 * Kubernetes cluster
@@ -17,7 +17,7 @@ All those service instances will be created by terraform:
 * Context-Based Restrictions (CBR) Zone and Rule
 * Secrets Manager to store the cluster certificate
 
-> Both LogDNA and Sysdig instance will be attached to both clusters.
+> Both Log Analysis and Monitoring instances will be attached to the clusters.
 
 ## Resources
 
