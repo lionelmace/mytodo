@@ -14,7 +14,7 @@ variable "prefix" {
 
 variable "region" {
   description = "IBM Cloud region where all resources will be provisioned"
-  default     = "eu-de"
+  # default     = "eu-de"
 }
 
 variable "tags" {

@@ -5,7 +5,7 @@
 # Account ID is only used for CBR Rule and Zone
 account_id            = "0b5a00334eaf9eb9339d2ab48f7326b4"
 prefix                = "mytodo"
-region                = "eu-de" # eu-de for Frankfurt MZR
+region                = "ca-tor" # eu-de for Frankfurt MZR
 resource_group_name   = ""
 tags                  = ["terraform", "mytodo"]
 activity_tracker_name = "platform-activities"
@@ -40,7 +40,7 @@ iks_update_all_workers = true
 ##############################################################################
 openshift_cluster_name   = "roks"
 # Specify OpenShift version. If not included, Kubernetes default version is used
-openshift_version        = "4.12.16_openshift"
+openshift_version        = "4.11.39_openshift"
 openshift_machine_flavor = "bx2.4x16"
 # openshift_machine_flavor = "bx2.16x64" # ODF Flavors
 
