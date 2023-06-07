@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.1.1 - 2023-06-07
+
+### Added
+
+### Changed
+
+### Fixed
+
+* Remove cloud region
+* Remove backup encryption for DBaaS Mongo
+
 ## 4.0.12 - 2023-05-31
 
 ### Added
