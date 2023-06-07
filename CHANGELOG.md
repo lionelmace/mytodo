@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.1.2 - 2023-06-07
+
+### Added
+
+### Changed
+
+* Make the region mandatory in Deployment Architecture
+
+### Fixed
+
 ## 4.1.1 - 2023-06-07
 
 ### Added
