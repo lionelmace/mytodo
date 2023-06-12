@@ -11,6 +11,13 @@ resource "ibm_resource_instance" "secrets-manager" {
   service_endpoints = "private"
 }
 
+resource "ibm_sm_secret_group" "sm_secret_group"{
+  instance_id   = ibm_resource_instance.secrets-manager.guid
+  region        = var.region
+  name          = format("%s-%s", var.prefix, "sm-group")
+  description   = "Secret Group"
+}
+
 output "secrets-manager-crn" {
   description = "The CRN of the Secrets Manager instance"
   value       = ibm_resource_instance.secrets-manager.id

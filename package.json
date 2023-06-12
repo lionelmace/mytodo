@@ -12,14 +12,14 @@
   },
   "dependencies": {
     "@cloudant/cloudant": "^4.5.1",
-    "async": "^3.2.3",
-    "body-parser": "~1.19.1",
+    "async": "^3.2.4",
+    "body-parser": "~1.20.2",
     "cfenv": "^1.2.4",
-    "dotenv": "^14.2.0",
-    "express": "^4.17.2",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
     "method-override": "~3.0.0",
-    "mongodb": "^4.3.0",
-    "nano": "^9.0.5",
+    "mongodb": "^5.6.0",
+    "nano": "^10.1.2",
     "serve-favicon": "^2.5.0"
   }
 }
