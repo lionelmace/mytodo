@@ -5,7 +5,7 @@
 # Account ID is only used for CBR Rule and Zone
 account_id            = "0b5a00334eaf9eb9339d2ab48f7326b4"
 prefix                = "mytodo"
-region                = "ca-tor" # eu-de for Frankfurt MZR
+region                = "eu-de" # eu-de for Frankfurt MZR
 resource_group_name   = ""
 tags                  = ["terraform", "mytodo"]
 activity_tracker_name = "platform-activities"
