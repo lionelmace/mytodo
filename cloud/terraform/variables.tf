@@ -32,5 +32,5 @@ variable "region" {
 variable "tags" {
   description = "List of Tags"
   type        = list(string)
-  default     = ["tf", "mytodo"]
+  default     = ["tf", "cn"]
 }
