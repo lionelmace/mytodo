@@ -1,5 +1,5 @@
 resource "ibm_cr_namespace" "container-registry-namespace" {
-  name              = format("%s-%s", var.prefix, "registry")
+  name              = format("%s-%s", local.basename, "registry")
   resource_group_id = local.resource_group_id
   tags              = var.tags
 }

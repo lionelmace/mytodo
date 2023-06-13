@@ -54,7 +54,7 @@ module "logging_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/logging-instance"
 
   resource_group_id    = local.resource_group_id
-  name                 = format("%s-%s", var.prefix, "logs")
+  name                 = format("%s-%s", local.basename, "logs")
   is_sts_instance      = false
   service_endpoints    = var.log_service_endpoints
   bind_key             = var.log_bind_key

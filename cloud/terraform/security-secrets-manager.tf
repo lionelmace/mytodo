@@ -2,7 +2,7 @@
 ## Secrets Manager
 ##############################################################################
 resource "ibm_resource_instance" "secrets-manager" {
-  name              = format("%s-%s", var.prefix, "secrets-manager")
+  name              = format("%s-%s", local.basename, "secrets-manager")
   service           = "secrets-manager"
   plan              = "trial"
   location          = var.region
@@ -14,7 +14,7 @@ resource "ibm_resource_instance" "secrets-manager" {
 resource "ibm_sm_secret_group" "sm_secret_group"{
   instance_id   = ibm_resource_instance.secrets-manager.guid
   region        = var.region
-  name          = format("%s-%s", var.prefix, "sm-group")
+  name          = format("%s-%s", local.basename, "sm-group")
   description   = "Secret Group"
 }
 

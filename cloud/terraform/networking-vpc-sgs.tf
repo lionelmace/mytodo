@@ -56,7 +56,7 @@ variable "cis_ips" {
 }
 
 resource "ibm_is_security_group" "sg-cis-cloudflare" {
-  name           = format("%s-%s", var.prefix, "sg-cis-ips")
+  name           = format("%s-%s", local.basename, "sg-cis-ips")
   vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }
@@ -84,7 +84,7 @@ variable "control-plane-ips" {
 }
 
 resource "ibm_is_security_group" "sg-iks-control-plane-fra" {
-  name           = format("%s-%s", var.prefix, "sg-iks-control-plane-fra")
+  name           = format("%s-%s", local.basename, "sg-iks-control-plane-fra")
   vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }
@@ -111,7 +111,7 @@ resource "ibm_is_security_group_rule" "sg-rule-outbound-control-plane" {
 ##############################################################################
 
 resource "ibm_is_security_group" "kube-master-outbound" {
-  name           = format("%s-%s", var.prefix, "kube-master-outbound")
+  name           = format("%s-%s", local.basename, "kube-master-outbound")
   vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }
@@ -139,7 +139,7 @@ resource "ibm_is_security_group_rule" "sg-rule-kube-master-udp-outbound" {
 # Required if allowing traffic only from CIS
 ##############################################################################
 resource "ibm_is_security_group" "home-access" {
-  name           = format("%s-%s", var.prefix, "access-from-home")
+  name           = format("%s-%s", local.basename, "access-from-home")
   vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 }

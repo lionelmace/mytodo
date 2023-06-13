@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.2.0 - 2023-06-13
+
+### Added
+
+### Changed
+
+* Removed tfvars
+
+### Fixed
+
 ## 4.1.3 - 2023-06-13
 
 ### Added

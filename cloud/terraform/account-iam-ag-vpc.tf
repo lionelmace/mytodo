@@ -1,7 +1,7 @@
 
 # Name of the Access Group
 resource "ibm_iam_access_group" "ag-vpc" {
-  name = format("%s-%s", var.prefix, "ag-vpc")
+  name = format("%s-%s", local.basename, "ag-vpc")
   tags = var.tags
 }
 

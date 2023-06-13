@@ -2,7 +2,7 @@
 ## ICD Mongo
 ##############################################################################
 resource "ibm_database" "icd_mongo" {
-  name              = format("%s-%s", var.prefix, "mongo")
+  name              = format("%s-%s", local.basename, "mongo")
   service           = "databases-for-mongodb"
   plan              = var.icd_mongo_plan
   version           = var.icd_mongo_db_version
@@ -68,7 +68,7 @@ resource "ibm_database" "icd_mongo" {
 ## Service Credentials
 ##############################################################################
 resource "ibm_resource_key" "key" {
-  name                 = format("%s-%s", var.prefix, "mongo-key")
+  name                 = format("%s-%s", local.basename, "mongo-key")
   resource_instance_id = ibm_database.icd_mongo.id
   role                 = "Viewer"
 }
@@ -119,7 +119,7 @@ resource "ibm_iam_access_group_policy" "iam-mongo" {
 # # otherwise you'll face this error: "Service does not support VPE extensions."
 # ##############################################################################
 # resource "ibm_is_virtual_endpoint_gateway" "vpe_mongo" {
-#   name           = "${var.prefix}-mongo-vpe"
+#   name           = "${local.basename}-mongo-vpe"
 #   resource_group = local.resource_group_id
 #   vpc            = ibm_is_vpc.vpc.id
 

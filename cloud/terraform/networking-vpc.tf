@@ -71,11 +71,11 @@ variable "floating_ip" {
 ##############################################################################
 
 resource "ibm_is_vpc" "vpc" {
-  name                        = format("%s-%s", var.prefix, "vpc")
+  name                        = format("%s-%s", local.basename, "vpc")
   resource_group              = local.resource_group_id
   address_prefix_management   = var.vpc_address_prefix_management
-  default_security_group_name = "${var.prefix}-vpc-sg"
-  default_network_acl_name    = "${var.prefix}-vpc-acl"
+  default_security_group_name = "${local.basename}-vpc-sg"
+  default_network_acl_name    = "${local.basename}-vpc-acl"
   classic_access              = var.vpc_classic_access
   tags                        = var.tags
 }
@@ -88,7 +88,7 @@ resource "ibm_is_vpc" "vpc" {
 resource "ibm_is_vpc_address_prefix" "address_prefix" {
 
   count = 3
-  name  = "${var.prefix}-prefix-zone-${count.index + 1}"
+  name  = "${local.basename}-prefix-zone-${count.index + 1}"
   zone  = "${var.region}-${(count.index % 3) + 1}"
   vpc   = ibm_is_vpc.vpc.id
   cidr  = element(var.vpc_cidr_blocks, count.index)
@@ -102,7 +102,7 @@ resource "ibm_is_vpc_address_prefix" "address_prefix" {
 resource "ibm_is_public_gateway" "pgw" {
 
   count = var.vpc_enable_public_gateway ? 3 : 0
-  name  = "${var.prefix}-pgw-${count.index + 1}"
+  name  = "${local.basename}-pgw-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc.id
   zone  = "${var.region}-${count.index + 1}"
   resource_group = local.resource_group_id
@@ -113,7 +113,7 @@ resource "ibm_is_public_gateway" "pgw" {
 ##############################################################################
 resource "ibm_is_network_acl" "multizone_acl" {
 
-  name           = "${var.prefix}-multizone-acl"
+  name           = "${local.basename}-multizone-acl"
   vpc            = ibm_is_vpc.vpc.id
   resource_group = local.resource_group_id
 
@@ -139,7 +139,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 resource "ibm_is_subnet" "subnet" {
 
   count           = 3
-  name            = "${var.prefix}-subnet-${count.index + 1}"
+  name            = "${local.basename}-subnet-${count.index + 1}"
   vpc             = ibm_is_vpc.vpc.id
   zone            = "${var.region}-${count.index + 1}"
   ipv4_cidr_block = element(var.subnet_cidr_blocks, count.index)

@@ -1,15 +1,8 @@
 ##############################################################################
 ## Global Variables
 ##############################################################################
-#ibmcloud_api_key = ""      # Set the variable export TF_VAR_ibmcloud_api_key=
-# Account ID is only used for CBR Rule and Zone
-account_id            = "0b5a00334eaf9eb9339d2ab48f7326b4"
-prefix                = "mytodo"
-region                = "eu-de" # eu-de for Frankfurt MZR
-resource_group_name   = ""
-tags                  = ["terraform", "mytodo"]
-activity_tracker_name = "platform-activities"
 
+#region                = "eu-de" # eu-de for Frankfurt MZR
 
 ##############################################################################
 ## VPC
@@ -22,7 +15,6 @@ vpc_enable_public_gateway     = true
 ##############################################################################
 ## Cluster IKS
 ##############################################################################
-iks_cluster_name          = "iks"
 # Optional: Specify Kube version. If not included, default version is used
 # iks_version               = "1.27.2"
 iks_version               = ""
@@ -38,7 +30,6 @@ iks_update_all_workers = true
 ##############################################################################
 ## Cluster ROKS
 ##############################################################################
-openshift_cluster_name   = "roks"
 # Specify OpenShift version. If not included, Kubernetes default version is used
 openshift_version        = "4.11.39_openshift"
 openshift_machine_flavor = "bx2.4x16"

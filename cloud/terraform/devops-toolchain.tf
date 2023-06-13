@@ -3,7 +3,7 @@
 ##############################################################################
 resource "ibm_resource_instance" "continuous-delivery" {
   resource_group_id = local.resource_group_id
-  name              = "${var.prefix}-continuous-delivery"
+  name              = "${local.basename}-continuous-delivery"
   service           = "continuous-delivery"
   plan              = "professional"
   location          = var.region

@@ -21,7 +21,7 @@ variable "cos_region" {
 ##############################################################################
 
 resource "ibm_resource_instance" "cos" {
-  name              = format("%s-%s", var.prefix, "cos-scc")
+  name              = format("%s-%s", local.basename, "cos-scc")
   service           = "cloud-object-storage"
   plan              = var.cos_plan
   location          = var.cos_region
@@ -37,7 +37,7 @@ resource "ibm_resource_instance" "cos" {
 ##############################################################################
 # SCC requires Cross-Region bucket for resiliency
 resource "ibm_cos_bucket" "cos-bucket" {
-  bucket_name           = format("%s-%s", var.prefix, "cos-bucket-scc")
+  bucket_name           = format("%s-%s", local.basename, "cos-bucket-scc")
   resource_instance_id  = ibm_resource_instance.cos.id
   storage_class         = "smart"
   cross_region_location = "eu"

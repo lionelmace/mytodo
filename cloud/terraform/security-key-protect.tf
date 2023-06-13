@@ -3,7 +3,7 @@
 ##############################################################################
 resource "ibm_resource_instance" "key-protect" {
   resource_group_id = local.resource_group_id
-  name              = format("%s-%s", var.prefix, "key-protect")
+  name              = format("%s-%s", local.basename, "key-protect")
   service           = "kms"
   plan              = "tiered-pricing"
   location          = var.region
@@ -31,7 +31,7 @@ resource "ibm_kms_instance_policies" "instance_policy" {
 
 resource "ibm_kms_key" "key" {
   instance_id  = ibm_resource_instance.key-protect.guid
-  key_name     = "${var.prefix}-root-key"
+  key_name     = "${local.basename}-root-key"
   standard_key = false
   force_delete = true
 }

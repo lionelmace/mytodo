@@ -14,7 +14,7 @@ variable "iks_cluster_name" {
 variable "iks_version" {
   description = "Specify the Kubernetes version, including the major.minor version. To see available versions, run `ibmcloud ks versions`."
   type        = string
-  # default     = "1.26.4"
+  default     = ""
 }
 
 variable "iks_machine_flavor" {
@@ -60,7 +60,7 @@ variable "iks_update_all_workers" {
 ## Resources
 ##############################################################################
 resource "ibm_container_vpc_cluster" "iks_cluster" {
-  name              = format("%s-%s", var.prefix, var.iks_cluster_name)
+  name              = format("%s-%s", local.basename, var.iks_cluster_name)
   vpc_id            = ibm_is_vpc.vpc.id
   resource_group_id = local.resource_group_id
   # Optional: Specify Kubes version. If not included, default version is used

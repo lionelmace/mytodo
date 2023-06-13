@@ -17,7 +17,7 @@ variable "activity_tracker_plan" {
 
 resource "ibm_resource_instance" "activity_tracker" {
   count             = var.activity_tracker_name != "" ? 0 : 1
-  name              = format("%s-%s", var.prefix, "activity-tracker")
+  name              = format("%s-%s", local.basename, "activity-tracker")
   service           = "logdnaat"
   plan              = var.activity_tracker_plan
   location          = var.region
