@@ -4,7 +4,7 @@
         "name": "mytodo-da",
         "label": "Cloud Native Deployable Architecture",
         "product_kind": "solution",
-        "version": "4.1.2",
+        "version": "4.1.3",
         "tags": [
           "network_vpc",
           "Technology"
@@ -74,7 +74,7 @@
                     "url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/images/ibmcloud-mytodo-tf.svg",
                     "metadata": []
                   },
-                  "description": ""
+                  "description": "Cloud Native Architecture diagram"
                 }
               ]
             }

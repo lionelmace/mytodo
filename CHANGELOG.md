@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.1.3 - 2023-06-13
+
+### Added
+
+### Changed
+
+### Fixed
+
+* Added description to the architecture diagram
+
 ## 4.1.2 - 2023-06-07
 
 ### Added
