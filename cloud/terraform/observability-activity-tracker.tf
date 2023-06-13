@@ -6,7 +6,7 @@
 variable "activity_tracker_name" {
   description = "Name of Activity Tracker"
   type        = string
-  default     = "activity-tracker"
+  default     = ""
 }
 
 variable "activity_tracker_plan" {

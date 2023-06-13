@@ -4,7 +4,7 @@
         "name": "mytodo-da",
         "label": "Cloud Native Deployable Architecture",
         "product_kind": "solution",
-        "version": "4.4.0",
+        "version": "4.5.0",
         "tags": [
           "network_vpc",
           "Technology"

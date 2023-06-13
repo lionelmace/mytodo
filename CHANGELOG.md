@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.5.0 - 2023-06-13
+
+### Added
+
+### Changed
+
+### Fixed
+
+* Removed activity_tracker default name
+
 ## 4.4.0 - 2023-06-13
 
 ### Added
