@@ -26,7 +26,8 @@ resource "ibm_resource_group" "group" {
 # }
 
 locals {
-  resource_group_id = var.resource_group_name != "" ? data.ibm_resource_group.group.0.id : ibm_resource_group.group.0.id
+  # resource_group_id = var.resource_group_name != "" ? data.ibm_resource_group.group.0.id : ibm_resource_group.group.0.id
+  resource_group_id = var.resource_group_name == "" ? "${var.prefix}-group" : ibm_resource_group.group.0.id
 }
 
 output "resource_group_id" {
