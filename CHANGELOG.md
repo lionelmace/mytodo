@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.3.0 - 2023-06-13
+
+### Added
+
+### Changed
+
+* Remove local for resource group
+
+### Fixed
+
 ## 4.2.0 - 2023-06-13
 
 ### Added
