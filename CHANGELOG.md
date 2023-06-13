@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.4.0 - 2023-06-13
+
+### Added
+
+### Changed
+
+### Fixed
+
+* Removed account_id variable
+* Replaced tag mytodo by cn (cloud native)
+
 ## 4.3.0 - 2023-06-13
 
 ### Added
