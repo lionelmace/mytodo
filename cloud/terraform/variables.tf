@@ -2,11 +2,6 @@
 # Account Variables
 ##############################################################################
 
-variable "account_id" {
-  description = "A unique identifier of the account"
-  type        = string
-}
-
 variable "prefix" {
   type        = string
   default     = ""
