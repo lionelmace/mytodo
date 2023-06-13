@@ -72,7 +72,7 @@ variable "floating_ip" {
 
 resource "ibm_is_vpc" "vpc" {
   name                        = format("%s-%s", local.basename, "vpc")
-  resource_group              = local.resource_group_id
+  resource_group              = ibm_resource_group.group.id
   address_prefix_management   = var.vpc_address_prefix_management
   default_security_group_name = "${local.basename}-vpc-sg"
   default_network_acl_name    = "${local.basename}-vpc-acl"
@@ -105,7 +105,7 @@ resource "ibm_is_public_gateway" "pgw" {
   name  = "${local.basename}-pgw-${count.index + 1}"
   vpc   = ibm_is_vpc.vpc.id
   zone  = "${var.region}-${count.index + 1}"
-  resource_group = local.resource_group_id
+  resource_group = ibm_resource_group.group.id
 }
 
 
@@ -115,7 +115,7 @@ resource "ibm_is_network_acl" "multizone_acl" {
 
   name           = "${local.basename}-multizone-acl"
   vpc            = ibm_is_vpc.vpc.id
-  resource_group = local.resource_group_id
+  resource_group = ibm_resource_group.group.id
 
   dynamic "rules" {
 

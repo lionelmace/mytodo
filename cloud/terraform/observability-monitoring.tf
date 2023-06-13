@@ -49,7 +49,7 @@ variable "sysdig_enable_platform_metrics" {
 module "monitoring_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/monitoring-sysdig"
 
-  resource_group_id       = local.resource_group_id
+  resource_group_id       = ibm_resource_group.group.id
   name                    = format("%s-%s", local.basename, "monitoring")
   plan                    = var.sysdig_plan
   service_endpoints       = var.sysdig_service_endpoints
@@ -75,6 +75,6 @@ resource "ibm_iam_access_group_policy" "iam-sysdig" {
 
   resources {
     service           = "sysdig-monitor"
-    resource_group_id = local.resource_group_id
+    resource_group_id = ibm_resource_group.group.id
   }
 }

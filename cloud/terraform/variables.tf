@@ -21,7 +21,12 @@ resource "random_string" "random" {
 }
 
 locals {
-  basename = lower(var.prefix == "" ? "mytodo-${random_string.random.0.result}" : var.prefix)
+  basename = lower(var.prefix == "" ? "cn-${random_string.random.0.result}" : var.prefix)
+}
+
+resource "ibm_resource_group" "group" {
+  name = "${local.basename}-group"
+  tags = var.tags
 }
 
 variable "region" {

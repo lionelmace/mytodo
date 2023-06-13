@@ -53,7 +53,7 @@ variable "log_enable_platform_logs" {
 module "logging_instance" {
   source = "terraform-ibm-modules/observability/ibm//modules/logging-instance"
 
-  resource_group_id    = local.resource_group_id
+  resource_group_id    = ibm_resource_group.group.id
   name                 = format("%s-%s", local.basename, "logs")
   is_sts_instance      = false
   service_endpoints    = var.log_service_endpoints
@@ -81,6 +81,6 @@ resource "ibm_iam_access_group_policy" "iam-log-analysis" {
 
   resources {
     service           = "logdna"
-    resource_group_id = local.resource_group_id
+    resource_group_id = ibm_resource_group.group.id
   }
 }

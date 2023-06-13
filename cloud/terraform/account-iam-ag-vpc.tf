@@ -11,7 +11,7 @@ resource "ibm_iam_access_group_policy" "application1_policy" {
   roles           = ["Viewer"]
   resources {
     resource_type = "resource-group"
-    resource      = local.resource_group_id
+    resource      = ibm_resource_group.group.id
   }
 }
 
@@ -60,7 +60,7 @@ resource "ibm_iam_access_group_policy" "policy_vpv" {
     attributes = {
       (each.key) = each.value
     }
-    resource_group_id = local.resource_group_id
+    resource_group_id = ibm_resource_group.group.id
   }
 }
 
@@ -77,6 +77,6 @@ resource "ibm_iam_access_group_policy" "policy_vsi" {
     attributes = {
       (each.key) = each.value
     }
-    resource_group_id = local.resource_group_id
+    resource_group_id = ibm_resource_group.group.id
   }
 }
