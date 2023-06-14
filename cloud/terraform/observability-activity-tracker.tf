@@ -4,7 +4,7 @@
 ##############################################################################
 
 variable "activity_tracker_name" {
-  description = "Name of Activity Tracker"
+  description = "Only one instance of Activity Tracker is allowed in a region. If this region already has an instance, enter the name of this instance."
   type        = string
   default     = ""
 }
