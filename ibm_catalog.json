@@ -1,10 +1,10 @@
 {
     "products": [
       {
-        "name": "mytodo-da",
-        "label": "Cloud Native Deployable Architecture",
+        "name": "cn-da",
+        "label": "IBM Cloud Native Deployable Architecture",
         "product_kind": "solution",
-        "version": "4.6.0",
+        "version": "4.6.1",
         "tags": [
           "network_vpc",
           "Technology"
@@ -12,14 +12,14 @@
         "keywords": [
           "vpc"
         ],
-        "short_description": "A Cloud Native Deployable Architecture to build, deploy and monitor a highly scalable, flexible, and resilient applications.",
-        "long_description": "A Cloud Native Deployable Architecture to build, deploy and monitor a highly scalable, flexible, and resilient applications.",
+        "short_description": "An IBM Cloud Native Deployable Architecture to build, deploy and monitor a highly scalable, flexible, and resilient applications.",
+        "long_description": "An IBM Cloud Native Deployable Architecture to build, deploy and monitor a highly scalable, flexible, and resilient applications.",
         "offering_docs_url": "https://raw.githubusercontent.com/lionelmace/mytodo/master/README.md",
         "support_details": "This is a demonstration and no official support is given.",
         "flavors": [
           {
             "label": "Standard",
-            "name": "mytodo-da",
+            "name": "cn-da",
             "working_directory": "cloud/terraform",
             "install_type": "fullstack",
             "configuration": [

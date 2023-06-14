@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.6.1 - 2023-06-15
+
+### Added
+
+### Changed
+
+### Fixed
+
+* updated the readme
+
 ## 4.6.0 - 2023-06-14
 
 ### Added
