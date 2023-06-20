@@ -146,6 +146,7 @@ resource "ibm_is_subnet" "subnet" {
   network_acl     = ibm_is_network_acl.multizone_acl.id
   public_gateway  = var.vpc_enable_public_gateway ? element(ibm_is_public_gateway.pgw.*.id, count.index) : null
   tags            = var.tags
+  resource_group  = ibm_resource_group.group.id
 
   depends_on = [ibm_is_vpc_address_prefix.address_prefix]
 }
