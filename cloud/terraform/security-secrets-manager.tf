@@ -1,7 +1,15 @@
 ##############################################################################
-## Secrets Manager
+## Create a Secrets Manager instance or reuse an existing one
 ##############################################################################
-resource "ibm_resource_instance" "secrets-manager" {
+
+variable "existing_secrets_manager_crn" {
+  description = "Only one Trial plan of Secrets Manager is allowed per account. If this account already has an instance, enter the CRN (Cloud Resource Name)."
+  type        = string
+  default     = ""
+}
+
+resource "ibm_resource_instance" "secrets_manager" {
+  count             = var.existing_secrets_manager_crn != "" ? 0 : 1
   name              = format("%s-%s", local.basename, "secrets-manager")
   service           = "secrets-manager"
   plan              = "trial"
@@ -12,13 +20,21 @@ resource "ibm_resource_instance" "secrets-manager" {
 }
 
 resource "ibm_sm_secret_group" "sm_secret_group"{
-  instance_id   = ibm_resource_instance.secrets-manager.guid
+  instance_id   = ibm_resource_instance.secrets_manager.guid
   region        = var.region
   name          = format("%s-%s", local.basename, "sm-group")
   description   = "Secret Group"
 }
 
-output "secrets-manager-crn" {
-  description = "The CRN of the Secrets Manager instance"
-  value       = ibm_resource_instance.secrets-manager.id
+data "ibm_resource_instance" "secrets_manager" {
+  count = var.existing_secrets_manager_crn != "" ? 1 : 0
+  name  = var.existing_secrets_manager_crn
+}
+
+locals {
+  secrets_manager_id = var.existing_secrets_manager_crn != "" ? data.ibm_resource_instance.secrets_manager.0.id : ibm_resource_instance.secrets_manager.0.id
+}
+
+output "secrets_manager_id" {
+  value = local.secrets_manager_id
 }

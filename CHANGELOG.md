@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## 4.7.0 - 2023-07-01
+
+### Added
+
+### Changed
+
+### Fixed
+
+* added a manadatory variable to re-use existing Secrets Manager instance
+
 ## 4.6.1 - 2023-06-15
 
 ### Added

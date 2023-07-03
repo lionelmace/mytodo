@@ -4,7 +4,7 @@
         "name": "cn-da",
         "label": "IBM Cloud Native Deployable Architecture",
         "product_kind": "solution",
-        "version": "4.6.1",
+        "version": "4.7.0",
         "tags": [
           "network_vpc",
           "Technology"
@@ -34,7 +34,12 @@
               {
                 "key": "activity_tracker_name",
                 "required": true
+              },
+              {
+                "key": "existing_secrets_manager_crn",
+                "required": true
               }
+
             ],
             "outputs": [
               {

@@ -19,11 +19,6 @@ locals {
   basename = lower(var.prefix == "" ? "cn-${random_string.random.0.result}" : var.prefix)
 }
 
-resource "ibm_resource_group" "group" {
-  name = "${local.basename}-group"
-  tags = var.tags
-}
-
 variable "region" {
   description = "IBM Cloud region where all resources will be provisioned (e.g. eu-de)"
   default     = "eu-de"
