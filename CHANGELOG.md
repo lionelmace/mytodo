@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 4.7.0 - 2023-07-01
+## 4.7.1 - 2023-07-01
 
 ### Added
 
@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-* added a manadatory variable to re-use existing Secrets Manager instance
+* added a mandatory variable to re-use existing Secrets Manager instance
 
 ## 4.6.1 - 2023-06-15
 

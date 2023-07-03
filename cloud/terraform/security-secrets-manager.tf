@@ -20,7 +20,7 @@ resource "ibm_resource_instance" "secrets_manager" {
 }
 
 resource "ibm_sm_secret_group" "sm_secret_group"{
-  instance_id   = ibm_resource_instance.secrets_manager.guid
+  instance_id   = ibm_resource_instance.secrets_manager.0.guid
   region        = var.region
   name          = format("%s-%s", local.basename, "sm-group")
   description   = "Secret Group"
@@ -33,6 +33,7 @@ data "ibm_resource_instance" "secrets_manager" {
 
 locals {
   secrets_manager_id = var.existing_secrets_manager_crn != "" ? data.ibm_resource_instance.secrets_manager.0.id : ibm_resource_instance.secrets_manager.0.id
+  secrets_manager_guid = var.existing_secrets_manager_crn != "" ? data.ibm_resource_instance.secrets_manager.0.guid : ibm_resource_instance.secrets_manager.0.guid
 }
 
 output "secrets_manager_id" {
