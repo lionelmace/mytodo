@@ -65,10 +65,9 @@ resource "ibm_container_vpc_cluster" "iks_cluster" {
   resource_group_id = ibm_resource_group.group.id
   # Optional: Specify Kubes version. If not included, default version is used
   kube_version = var.iks_version == "" ? null : var.iks_version
-  cos_instance_crn                = var.is_openshift_cluster ? ibm_resource_instance.cos_openshift_registry[0].id : null
   tags                            = var.tags
   disable_public_service_endpoint = var.disable_public_service_endpoint
-  update_all_workers              = var.openshift_update_all_workers
+  update_all_workers              = var.iks_update_all_workers
 
   flavor       = var.iks_machine_flavor
   worker_count = var.iks_worker_nodes_per_zone

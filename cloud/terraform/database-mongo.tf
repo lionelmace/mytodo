@@ -202,3 +202,16 @@ variable "icd_mongo_service_endpoints" {
   type        = string
   description = "Types of the service endpoints. Possible values are 'public', 'private', 'public-and-private'."
 }
+
+# AUTHORIZATIONS
+##############################################################################
+
+# Authorization policy between Mongo and Key Protect
+# Require to encrypt Mongo DB with Key in Key Protect
+# https://github.com/IBM-Cloud/vpc-scaling-dedicated-host/blob/master/modules/create_services/main.tf
+resource "ibm_iam_authorization_policy" "mongo-kms" {
+  source_service_name         = "databases-for-mongodb"
+  target_service_name         = "kms"
+  target_resource_instance_id = ibm_resource_instance.key-protect.guid
+  roles                       = ["Reader", "Authorization Delegator"]
+}
