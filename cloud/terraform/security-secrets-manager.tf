@@ -19,12 +19,13 @@ resource "ibm_resource_instance" "secrets_manager" {
   service_endpoints = "private"
 }
 
-# resource "ibm_sm_secret_group" "sm_secret_group"{
-#   instance_id   = ibm_resource_instance.secrets_manager.0.guid
-#   region        = var.region
-#   name          = format("%s-%s", local.basename, "sm-group")
-#   description   = "Secret Group"
-# }
+resource "ibm_sm_secret_group" "sm_secret_group"{
+  # instance_id   = ibm_resource_instance.secrets_manager.0.guid
+  instance_id   = local.secrets_manager_guid
+  region        = var.region
+  name          = format("%s-%s", local.basename, "sm-group")
+  description   = "Secret Group"
+}
 
 data "ibm_resource_instance" "secrets_manager" {
   count = var.existing_secrets_manager_name != "" ? 1 : 0
@@ -33,7 +34,7 @@ data "ibm_resource_instance" "secrets_manager" {
 
 locals {
   secrets_manager_id = var.existing_secrets_manager_name != "" ? data.ibm_resource_instance.secrets_manager.0.id : ibm_resource_instance.secrets_manager.0.id
-  # secrets_manager_guid = var.existing_secrets_manager_name != "" ? data.ibm_resource_instance.secrets_manager.0.guid : ibm_resource_instance.secrets_manager.0.guid
+  secrets_manager_guid = var.existing_secrets_manager_name != "" ? data.ibm_resource_instance.secrets_manager.0.guid : ibm_resource_instance.secrets_manager.0.guid
   # secrets_manager_crn = var.existing_secrets_manager_name != "" ? data.ibm_resource_instance.secrets_manager.0.guid : ibm_resource_instance.secrets_manager.0.guid
 }
 
