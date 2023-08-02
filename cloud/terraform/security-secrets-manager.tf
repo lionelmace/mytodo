@@ -30,6 +30,7 @@ resource "ibm_sm_secret_group" "sm_secret_group"{
 data "ibm_resource_instance" "secrets_manager" {
   count = var.existing_secrets_manager_name != "" ? 1 : 0
   name  = var.existing_secrets_manager_name
+  resource_group_id = "9a6566da10fe448d9a093e61af45e674"
 }
 
 locals {
