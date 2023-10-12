@@ -31,6 +31,7 @@ if (result.error) {
   console.log('credentials.env =', result.parsed)
 }
 
+let db;
 // Cloud Foundry -----------------------------------------------------------
 // Run in Cloud Foundry - Read VCAP variables
 // if (!appEnv.isLocal) {
@@ -54,8 +55,20 @@ if (result.error) {
 // }
 
 // Database ----------------------------------------------------------------
-let db;
-if (process.env.CLOUDANT_URL !== undefined)  {
+// in Code Engine
+if (process.env.CE_SERVICES !== undefined){
+  console.log('Running in Code Engine');
+  const ceServices = JSON.parse(process.env.CE_SERVICES)
+  console.log("CE_SERVICE=", ceServices);
+
+  if (ceServices["databases-for-mongodb"]) {
+    const serviceKey = ceServices["databases-for-mongodb"][0];
+    db = require('./lib/db-mongo')({
+      connectionUrl: serviceKey.credentials.connection.mongodb.composed[0],
+      "MONGO_CERTIFICATE_BASE64": serviceKey.credentials.connection.mongodb.certificate.certificate_base64,
+    });
+  }
+} else if (process.env.CLOUDANT_URL !== undefined)  {
   db = require('./lib/db-cloudant')(process.env);
 } else if (process.env.MONGO_USERNAME !== undefined) {
   db = require('./lib/db-mongo')(process.env);
