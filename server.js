@@ -31,7 +31,7 @@ if (result.error) {
   console.log('credentials.env =', result.parsed)
 }
 
-let db;
+let db = null;
 // Cloud Foundry -----------------------------------------------------------
 // Run in Cloud Foundry - Read VCAP variables
 // if (!appEnv.isLocal) {
@@ -70,9 +70,12 @@ if (process.env.CE_SERVICES !== undefined){
   db = require('./lib/db-cloudant')(process.env);
 } else if (process.env.MONGO_USERNAME !== undefined) {
   db = require('./lib/db-mongo')(process.env);
-} else {
+}
+
+if (!db) {
   db = require('./lib/in-memory')();
 }
+
 console.log('Using', db.type());
 
 app.use(bodyParser.urlencoded({
