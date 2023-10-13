@@ -59,8 +59,6 @@ let db;
 if (process.env.CE_SERVICES !== undefined){
   console.log('Running in Code Engine');
   const ceServices = JSON.parse(process.env.CE_SERVICES)
-  console.log("CE_SERVICE=", ceServices);
-
   if (ceServices["databases-for-mongodb"]) {
     const serviceKey = ceServices["databases-for-mongodb"][0];
     db = require('./lib/db-mongo')({
@@ -133,6 +131,7 @@ app.get('/api/todos', (req, res) => {
   db.search().then(todos => {
     res.send(todos);
   }).catch(err => {
+    console.log(err);
     res.status(500).send({ error: err });
   });
 });
@@ -142,6 +141,7 @@ app.post('/api/todos', (req, res) => {
     .then(todo  => db.search())
     .then(todos => res.send(todos))
     .catch(err => { 
+      console.log(err);
       res.status(500).send({ error: err });
   });
 });
@@ -150,6 +150,7 @@ app.get('/api/todos/:id', (req, res) => {
   db.get(req.params.id).then(todo => {
     res.send(todo);
   }).catch(err => {
+    console.log(err);
     res.status(500).send({ error: err });
   });
 });
@@ -159,6 +160,7 @@ app.put('/api/todos/:id', (req, res) => {
     .then(todo => db.search())
     .then(todos => res.send(todos))
     .catch(err => {
+      console.log(err);
       res.status(500).send({ error: err });
   });
 });
@@ -168,6 +170,7 @@ app.delete('/api/todos/:id', (req, res) => {
     .then(todo => db.search())
     .then(todos => res.send(todos))
     .catch(err => {
+    console.error(err);
     res.status(500).send({ error: err });
   });
 });
