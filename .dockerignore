@@ -1,5 +1,5 @@
 node_modules
-credentials.env
+*.env
 npm-debug.log
 vcap-local.json
 

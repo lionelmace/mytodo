@@ -31,6 +31,7 @@ if (result.error) {
   console.log('credentials.env =', result.parsed)
 }
 
+let db = null;
 // Cloud Foundry -----------------------------------------------------------
 // Run in Cloud Foundry - Read VCAP variables
 // if (!appEnv.isLocal) {
@@ -54,14 +55,27 @@ if (result.error) {
 // }
 
 // Database ----------------------------------------------------------------
-let db;
-if (process.env.CLOUDANT_URL !== undefined)  {
+// in Code Engine
+if (process.env.CE_SERVICES !== undefined){
+  console.log('Running in Code Engine');
+  const ceServices = JSON.parse(process.env.CE_SERVICES)
+  if (ceServices["databases-for-mongodb"]) {
+    const serviceKey = ceServices["databases-for-mongodb"][0];
+    db = require('./lib/db-mongo')({
+      connectionUrl: serviceKey.credentials.connection.mongodb.composed[0],
+      "MONGO_CERTIFICATE_BASE64": serviceKey.credentials.connection.mongodb.certificate.certificate_base64,
+    });
+  }
+} else if (process.env.CLOUDANT_URL !== undefined)  {
   db = require('./lib/db-cloudant')(process.env);
 } else if (process.env.MONGO_USERNAME !== undefined) {
   db = require('./lib/db-mongo')(process.env);
-} else {
+}
+
+if (!db) {
   db = require('./lib/in-memory')();
 }
+
 console.log('Using', db.type());
 
 app.use(bodyParser.urlencoded({
@@ -120,6 +134,7 @@ app.get('/api/todos', (req, res) => {
   db.search().then(todos => {
     res.send(todos);
   }).catch(err => {
+    console.log(err);
     res.status(500).send({ error: err });
   });
 });
@@ -129,6 +144,7 @@ app.post('/api/todos', (req, res) => {
     .then(todo  => db.search())
     .then(todos => res.send(todos))
     .catch(err => { 
+      console.log(err);
       res.status(500).send({ error: err });
   });
 });
@@ -137,6 +153,7 @@ app.get('/api/todos/:id', (req, res) => {
   db.get(req.params.id).then(todo => {
     res.send(todo);
   }).catch(err => {
+    console.log(err);
     res.status(500).send({ error: err });
   });
 });
@@ -146,6 +163,7 @@ app.put('/api/todos/:id', (req, res) => {
     .then(todo => db.search())
     .then(todos => res.send(todos))
     .catch(err => {
+      console.log(err);
       res.status(500).send({ error: err });
   });
 });
@@ -155,6 +173,7 @@ app.delete('/api/todos/:id', (req, res) => {
     .then(todo => db.search())
     .then(todos => res.send(todos))
     .catch(err => {
+    console.error(err);
     res.status(500).send({ error: err });
   });
 });
