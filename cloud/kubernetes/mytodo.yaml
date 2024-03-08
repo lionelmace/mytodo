@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: mytodo
-        image: de.icr.io/mace/mytodo:lts-alpine3.16
+        image: de.icr.io/mace/mytodo:lts-alpine3.18
         imagePullPolicy: Always
         resources:
           requests:
@@ -63,16 +63,16 @@ metadata:
   name: mytodo-ingress
   namespace: default
   annotations:
-    kubernetes.io/ingress.class: "public-iks-k8s-nginx"
-    #kubernetes.io/ingress.class: "private-iks-k8s-nginx"
     ingress.bluemix.net/redirect-to-https: "True"
 spec:
+  ingressClassName: public-iks-k8s-nginx
+  # ingressClassName: private-iks-k8s-nginx
   tls:
     - hosts:
-      - app.mytodo-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
-      secretName: mytodo-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+      - app.icn-yh3gea-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+      secretName: icn-yh3gea-iks-483cccd2f0d38128dd40d2b711142ba9-0000
   rules:
-  - host: app.mytodo-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  - host: app.icn-yh3gea-iks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
     http:
       paths:
       - path: /
