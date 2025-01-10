@@ -1,4 +1,3 @@
-# FROM node:lts-alpine3.21
 FROM registry.access.redhat.com/ubi8/nodejs-18:latest
 
 # Create app directory

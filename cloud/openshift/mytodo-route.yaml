@@ -19,7 +19,7 @@ spec:
       containers:
       - name: mytodo
         # image: de.icr.io/mace2/mytodo:lts-alpine3.19
-        image: de.icr.io/mace2/mytodo:rh7
+        image: de.icr.io/mace2/mytodo:rh10
         imagePullPolicy: Always
         resources:
           requests:

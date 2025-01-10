@@ -1,29 +1,12 @@
 
 const express = require('express');
-// const cfenv = require('cfenv');
 const favicon = require('serve-favicon');
 const app = express();
 const bodyParser = require('body-parser');
 const os = require('os');
 
 // Set up Port variable (required for Kubernetes)
-// if (!process.env.PORT) process.env.PORT = 8080;
 const PORT = process.env.PORT || 8080;
-
-// load local VCAP configuration
-//LMA BEGIN
-// let vcapLocal = null
-// try {
-//   vcapLocal = require('./vcap-local.json');
-//   console.log("Loaded local VCAP", vcapLocal);
-// } catch (e) {
-//   //console.log('Cannot find module ./vcap-local.json');
-// }
-//LMA END
-
-//LMA const appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {}
-//LMA const appEnv = cfenv.getAppEnv(appEnvOpts);
-//LMA END
 
 // Run locally - Load env variables from .env file
 const result = require('dotenv').config({
@@ -147,14 +130,9 @@ app.delete('/api/todos/:id', (req, res) => {
 //   res.status(404).send('Not found');
 // });
 
-// LMA BEGIN
-// app.listen(appEnv.port, function () {
-//   console.log("server starting on " + appEnv.url);
-// });
 app.listen(PORT, function () {
   console.log("Server starting on http://localhost:" + PORT);
 });
-// LMA END
 
 // Try to reconnect to the DB after 5sec
 function initDb() {
