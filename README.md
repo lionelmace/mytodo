@@ -17,13 +17,13 @@ In order to use the cloud services required to run this app, you can provision t
 1. Build docker image with the architecture platform for ROKS (x86_64)
 
     ```sh
-    podman build --platform linux/amd64 . -t de.icr.io/mace2/mytodo:rh10
+    podman build --platform linux/amd64 . -t de.icr.io/<namespace>/<img-name>:<tag>
     ```
 
 1. Push the image to the ICR
 
     ```sh
-    podman push de.icr.io/mace2/mytodo:rh10
+    podman push de.icr.io/<namespace>/<img-name>:<tag>
     ```
 
 ## Additional Resources
