@@ -1,25 +1,29 @@
 
 const express = require('express');
-const cfenv = require('cfenv');
+// const cfenv = require('cfenv');
 const favicon = require('serve-favicon');
 const app = express();
 const bodyParser = require('body-parser');
 const os = require('os');
 
 // Set up Port variable (required for Kubernetes)
-if (!process.env.PORT) process.env.PORT = 8080;
+// if (!process.env.PORT) process.env.PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 // load local VCAP configuration
-let vcapLocal = null
-try {
-  vcapLocal = require('./vcap-local.json');
-  console.log("Loaded local VCAP", vcapLocal);
-} catch (e) {
-  //console.log('Cannot find module ./vcap-local.json');
-}
+//LMA BEGIN
+// let vcapLocal = null
+// try {
+//   vcapLocal = require('./vcap-local.json');
+//   console.log("Loaded local VCAP", vcapLocal);
+// } catch (e) {
+//   //console.log('Cannot find module ./vcap-local.json');
+// }
+//LMA END
 
-const appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {}
-const appEnv = cfenv.getAppEnv(appEnvOpts);
+//LMA const appEnvOpts = vcapLocal ? { vcap: vcapLocal } : {}
+//LMA const appEnv = cfenv.getAppEnv(appEnvOpts);
+//LMA END
 
 // Run locally - Load env variables from .env file
 const result = require('dotenv').config({
@@ -30,28 +34,6 @@ if (result.error) {
 } else {
   console.log('credentials.env =', result.parsed)
 }
-
-// Cloud Foundry -----------------------------------------------------------
-// Run in Cloud Foundry - Read VCAP variables
-// if (!appEnv.isLocal) {
-//   console.log('Running in Cloud Foundry');
-//   console.log('appEnv=', appEnv);
-//   var services = appEnv.getServices();
-//   console.log('services=', services);
-//   for (var svcName in services) {
-//     console.log('svcName=', svcName);
-//     if (services.hasOwnProperty(svcName)) {
-//       console.log('svc=', svc);
-//       var svc = services[svcName];
-//       console.log('Service name=' + svc.name + ', Label=' + svc.label);
-//       if (svc.label == "cloudantNoSQLDB") {
-//         cloudantCreds =  svc.credentials;
-//         process.env.CLOUDANT_URL=cloudantCreds.url;
-//         process.env.CLOUDANT_APIKEY=cloudantCreds.apikey;
-//       }
-//     }
-//   }
-// }
 
 // Database ----------------------------------------------------------------
 let db;
@@ -165,9 +147,14 @@ app.delete('/api/todos/:id', (req, res) => {
 //   res.status(404).send('Not found');
 // });
 
-app.listen(appEnv.port, function () {
-  console.log("server starting on " + appEnv.url);
+// LMA BEGIN
+// app.listen(appEnv.port, function () {
+//   console.log("server starting on " + appEnv.url);
+// });
+app.listen(PORT, function () {
+  console.log("Server starting on http://localhost:" + PORT);
 });
+// LMA END
 
 // Try to reconnect to the DB after 5sec
 function initDb() {

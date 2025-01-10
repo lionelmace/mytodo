@@ -18,7 +18,8 @@ spec:
     spec:
       containers:
       - name: mytodo
-        image: de.icr.io/mace/mytodo:lts-alpine3.16
+        # image: de.icr.io/mace2/mytodo:lts-alpine3.19
+        image: de.icr.io/mace2/mytodo:rh7
         imagePullPolicy: Always
         resources:
           requests:
@@ -73,7 +74,7 @@ metadata:
     app: mytodo
     tier: frontend
 spec:
-  host: mytodo-roks-483cccd2f0d38128dd40d2b711142ba9-0000.eu-de.containers.appdomain.cloud
+  host: icn-wbkaqs-roks-7d23ce9b99cc281f754f713c0a27f19a-0000.eu-de.containers.appdomain.cloud
   to:
     kind: Service
     name: mytodo-service
