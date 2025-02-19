@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app: mytodo
-  template:   # create pods using pod definition in this template
+  template:
     metadata:
       labels:
         app: mytodo
@@ -39,7 +39,6 @@ spec:
         #     name: database-credentials
 
 ---
-# Service to expose frontend
 apiVersion: v1
 kind: Service
 metadata:

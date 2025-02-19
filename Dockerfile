@@ -1,4 +1,5 @@
-FROM registry.access.redhat.com/ubi8/nodejs-18:latest
+FROM registry.access.redhat.com/ubi9/nodejs-22-minimal:latest
+# FROM registry.access.redhat.com/ubi9/nodejs-22:latest
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -11,8 +12,9 @@ RUN chown -R 1001:0 /usr/src/app
 COPY package*.json ./
 
 # RUN npm install
+RUN npm ci --omit=dev
 # If you are building your code for production
-RUN npm ci --only=production
+# RUN npm ci --only=production
 
 # Bundle app source
 COPY . .
