@@ -1,3 +1,4 @@
+# FROM registry.access.redhat.com/ubi10/nodejs-22-minimal:latest
 FROM registry.access.redhat.com/ubi9/nodejs-22-minimal:latest
 # FROM registry.access.redhat.com/ubi9/nodejs-22:latest
 
